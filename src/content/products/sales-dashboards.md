@@ -25,8 +25,7 @@ sections:
       - View your team's sales progress by stage and by client
       - Take action to capture the opportunities on the table
       - View opportunities at risk
-    image: ../../assets/img/products/sales-dashboards/sales-dasboards.webp
-    imageAlt: BeeCastle sales dashboard charts of opportunity forecast revenue by stage and by tier for the coming months
+    replica: sales-dashboard
   - heading: Open Opportunities
     paragraphs:
       - Get the granularity you need on deals in progress.
@@ -37,8 +36,7 @@ sections:
       - Conduct multiple searches by filter
       - All Accounts vs Assigned Accounts
       - Used in sales meetings and strategic planning sessions
-    image: ../../assets/img/products/sales-dashboards/open-opportunites.webp
-    imageAlt: BeeCastle open opportunities table with total pipeline revenue, revenue closing this month, and each deal's stage, expected close and last meeting
+    replica: whitespace-actions
     cta: demo
   - heading: Contract Tracker
     paragraphs:
@@ -50,8 +48,7 @@ sections:
       - What is the value of those contracts?
       - How much time has your account manager spent on a particular client?
       - What are the next best actions to capture value?
-    image: ../../assets/img/products/sales-dashboards/contract-tracker-2.webp
-    imageAlt: BeeCastle contract tracker with active contract counts and values expiring in the next 90 and 180 days, and a table of contracts by end date
+    replica: company-overview
     cta: signup
 closing: Ready to see how BeeCastle can improve your sales pipeline?
 ---

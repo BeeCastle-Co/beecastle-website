@@ -2,6 +2,16 @@ import { defineCollection, z, type SchemaContext } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { CATEGORY_SLUGS } from './data/categories';
 
+/* Replica names, kept in a plain module (not the .astro registry) so this
+   config does not import components. Must match REPLICA_NAMES in
+   src/components/product/registry.ts. */
+const REPLICAS = [
+  'portfolio-health', 'company-overview', 'revenue-chart', 'whitespace-grid', 'whitespace-actions',
+  'profitability', 'profitability-table', 'account-profitability', 'meeting-planner', 'health-score',
+  'health-breakdown', 'client-stack', 'prospecting', 'product-summary', 'tiering', 'sales-dashboard',
+  'activity', 'meeting-note', 'contacts', 'onboarding',
+] as const;
+
 /* Every collection here is shaped to become a Contentful content type later:
    one collection is one content type, and each frontmatter field is one field
    on that type. Keep fields flat and typed so that move needs no rewrite. */
@@ -38,6 +48,9 @@ const featureSection = ({ image }: SchemaContext) =>
     bullets: z.array(z.string()).default([]),
     image: image().optional(),
     imageAlt: z.string().optional(),
+    /** A product replica (src/components/product/) shown instead of the image.
+        Preferred over screenshots: sharp, current, and no real customer data. */
+    replica: z.enum(REPLICAS).optional(),
     /** Optional button under the text. */
     cta: z.enum(['signup', 'demo']).optional(),
   });

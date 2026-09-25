@@ -1,0 +1,40 @@
+---
+/* Replica: a company's activity timeline. Meetings, calls and emails logged
+   automatically from Microsoft 365, each tagged with the contact's role and
+   the tone BeeCastle read in it. */
+import Frame from './Frame.astro';
+import Pill from './Pill.astro';
+import { activity } from '../../data/demo';
+
+interface Props {
+  bare?: boolean;
+  class?: string;
+}
+const { bare = false, class: extra } = Astro.props;
+const icons = { meeting: '▣', email: '✉', call: '☏' };
+const tints = { meeting: 'bg-periwinkle-soft', email: 'bg-cyan-soft', call: 'bg-mint-soft' };
+const tones = { warm: ['ok', 'Warm'], neutral: ['neutral', 'Neutral'], frustrated: ['bad', 'Frustrated'] } as const;
+---
+<Frame active="Companies" bare={bare} class={extra}
+  label="A BeeCastle company activity timeline: meetings, calls and emails logged automatically, with each contact's role and the tone of the conversation">
+  <div class="rounded-xs border border-rule bg-card p-3">
+    <div class="flex items-baseline justify-between">
+      <p class="m-0 text-[12.5px] font-bold">Activity</p>
+      <p class="m-0 text-[10px] text-ink-3">Logged from Microsoft 365</p>
+    </div>
+    {activity.map((a) => (
+      <div class="mt-2.5 flex gap-2.5 border-t border-rule pt-2.5">
+        <span class:list={['grid size-7 shrink-0 place-items-center rounded-full text-[12px] text-ink', tints[a.kind]]} aria-hidden="true">{icons[a.kind]}</span>
+        <span class="min-w-0 flex-1">
+          <span class="flex items-center justify-between gap-2">
+            <span class="truncate text-[11.5px] font-semibold">{a.what}</span>
+            <span class="shrink-0 text-[10px] text-ink-3">{a.when}</span>
+          </span>
+          <span class="mt-0.5 flex flex-wrap items-center gap-1.5 text-[10px] text-ink-3">
+            {a.who} · {a.role} <Pill tone={tones[a.tone][0]} label={tones[a.tone][1]} />
+          </span>
+        </span>
+      </div>
+    ))}
+  </div>
+</Frame>

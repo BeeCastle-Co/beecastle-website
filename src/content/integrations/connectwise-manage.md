@@ -11,10 +11,13 @@ logo: ../../assets/img/integrations/connectwise-manage/connectwise-beecastle.web
 icon: integrations-stack
 accent: cyan
 order: 1
+sections:
+  - heading: Your data, your permissions
+    paragraphs:
+      - "BeeCastle synchronises company, contact, agreement, sales, and financial data from ConnectWise Manage to help you manage your customers quickly and easily. Data is kept in sync in real-time via ConnectWise Manage webhooks, ensuring BeeCastle has the latest view of your customers' position."
+      - "You're in control of the data and permissions via the ConnectWise API permissioning system."
+    replica: onboarding
+    cta: signup
 closing: Ready to see how BeeCastle can improve your business relationships?
 seoTitle: Integrate ConnectWise Manage & sync with BeeCastle
 ---
-
-BeeCastle synchronises company, contact, agreement, sales, and financial data from ConnectWise Manage to help you manage your customers quickly and easily. Data is kept in sync in real-time via ConnectWise Manage webhooks, ensuring BeeCastle has the latest view of your customers' position.
-
-You're in control of the data and permissions via the ConnectWise API permissioning system.

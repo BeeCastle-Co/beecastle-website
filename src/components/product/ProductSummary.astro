@@ -1,0 +1,38 @@
+---
+/* Replica: Whitespace summary. What each product bills across the book, how
+   many clients take it, and the monthly potential if the rest did. */
+import Frame from './Frame.astro';
+import { productSummary as s } from '../../data/demo';
+import { money } from '../../lib/inline';
+
+interface Props {
+  bare?: boolean;
+  class?: string;
+}
+const { bare = false, class: extra } = Astro.props;
+const max = Math.max(...s.rows.map((r) => r.companies));
+const cols = 'grid-cols-[minmax(0,2fr)_minmax(0,1fr)_minmax(0,1.1fr)_minmax(0,1fr)]';
+---
+<Frame active="Whitespace" bare={bare} class={extra}
+  label="BeeCastle whitespace summary: billed revenue per product, how many clients take each one, and the monthly potential">
+  <div class="flex flex-wrap gap-6">
+    <p class="m-0"><span class="block text-[9.5px] font-semibold uppercase tracking-[.06em] text-ink-3">Billed, last 365 days</span><span class="text-[17px] font-bold">{money(s.billed)}</span></p>
+    <p class="m-0"><span class="block text-[9.5px] font-semibold uppercase tracking-[.06em] text-ink-3">Potential a month</span><span class="text-[17px] font-bold text-warn-deep">{money(s.potential)}</span></p>
+  </div>
+  <div class="mt-3 overflow-hidden rounded-xs border border-rule bg-card">
+    <div class:list={['grid gap-3 border-b border-rule px-3 py-2 text-[9px] font-semibold uppercase tracking-[.06em] text-ink-3', cols]}>
+      <span>Product</span><span>Billed</span><span>Companies</span><span>Potential / mo</span>
+    </div>
+    {s.rows.map((r) => (
+      <div class:list={['grid items-center gap-3 border-b border-rule px-3 py-2 last:border-b-0', cols]}>
+        <span class="min-w-0"><span class="block truncate text-[11.5px] font-semibold">{r.product}</span><span class="block truncate text-[9.5px] text-ink-3">{r.category}</span></span>
+        <span class="text-[11px] font-semibold">{money(r.billed)}</span>
+        <span class="flex items-center gap-1.5">
+          <span class="h-1.5 flex-1 overflow-hidden rounded-full bg-paper-2"><span class="block h-full rounded-full bg-periwinkle" style={`width: ${(r.companies / max) * 100}%`}></span></span>
+          <span class="text-[10.5px] text-ink-3">{r.companies}</span>
+        </span>
+        <span class="text-[11px] font-semibold text-warn-deep">{money(r.potential)}</span>
+      </div>
+    ))}
+  </div>
+</Frame>

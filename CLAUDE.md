@@ -150,6 +150,21 @@ with jump links, alternating image and text sections, sign-up panel, closing
 CTA band. `src/content/products/revenue-analytics.md` is the worked example.
 Frontmatter strings allow `**bold**`, `*italic*` and `[links](/x/)` only.
 
+### Product replicas (instead of screenshots)
+
+`src/components/product/` holds simplified HTML copies of real BeeCastle
+screens: portfolio health, whitespace, profitability, the sales dashboard,
+onboarding and more. Preview them all at `/replicas/` (hidden from search).
+Put one on any feature page section with `replica: <name>`; the names are in
+`src/components/product/registry.ts`.
+
+- **All data is invented**, in `src/data/demo.ts`. Never copy a real
+  customer, contact, email or figure across from the app.
+- Status colours (`ok`, `warn`, `bad`) and tier metals are for replicas only.
+- Replicas are pictures of the app: each is one `role="img"` with a written
+  description, so their small UI-sized text is exempt from the 11px rule.
+- When the app changes, update the replica, not a screenshot.
+
 ### Blog
 
 Filename is the URL. Frontmatter: `title`, `date`, `categories` (slugs from
@@ -164,9 +179,11 @@ Filename is the URL. Frontmatter: `title`, `date`, `categories` (slugs from
 - **Everything else** (contact, newsletter, downloads, demo requests): Netlify
   Forms. Build new ones with `NetlifyForm.astro` from a list of fields, not by
   hand. Submissions appear in the Netlify dashboard; set up notifications there.
-- **Dev server gotcha**: Tailwind sometimes misses classes in files created
-  after `pnpm dev` started. If a new page looks unstyled, restart the server
-  before touching the markup.
+- **Dev server gotchas**: Tailwind sometimes misses classes in files created
+  after `pnpm dev` started, and after a change to `content.config.ts` the
+  dev content cache can go stale (images render broken). In either case:
+  `pnpm astro dev stop`, delete `.astro/data-store.json`, start it again.
+  `pnpm build` is always the source of truth.
 
 ## Moving to Contentful
 

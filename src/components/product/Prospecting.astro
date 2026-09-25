@@ -1,0 +1,45 @@
+---
+/* Replica: Whitespace prospecting. Pick a product; BeeCastle splits the book
+   into clients who do not buy it yet (ranked by what they spend) and those who
+   already do. */
+import Frame from './Frame.astro';
+import Avatar from './Avatar.astro';
+import TierBadge from './TierBadge.astro';
+import { prospecting as p } from '../../data/demo';
+import { money } from '../../lib/inline';
+
+interface Props {
+  bare?: boolean;
+  class?: string;
+}
+const { bare = false, class: extra } = Astro.props;
+const cols = [
+  { title: `Prospects (${p.prospectCount})`, sub: 'Do not have it yet, ranked by revenue', rows: p.prospects, accent: 'text-warn-deep' },
+  { title: `Already have (${p.haveCount})`, sub: 'Context: clients that already buy it', rows: p.have, accent: 'text-ok-deep' },
+];
+---
+<Frame active="Whitespace" bare={bare} class={extra}
+  label={`BeeCastle prospecting: the clients who do not yet buy ${p.product}, ranked by revenue, beside those who already do`}>
+  <div class="flex flex-wrap items-center gap-2 text-[11px]">
+    <span class="font-semibold">Sell</span>
+    <span class="rounded-xs border border-rule bg-card px-2 py-1 font-semibold">{p.product}</span>
+    <span class="text-ink-3">to customers who already have</span>
+    <span class="rounded-xs border border-rule bg-card px-2 py-1 text-ink-3">Any product</span>
+  </div>
+  <div class="mt-3 grid gap-2.5 sm:grid-cols-2">
+    {cols.map((c) => (
+      <div class="rounded-xs border border-rule bg-card p-3">
+        <p class:list={['m-0 text-[12px] font-bold', c.accent]}>{c.title}</p>
+        <p class="m-0 text-[10px] text-ink-3">{c.sub}</p>
+        {c.rows.map((r) => (
+          <div class="mt-2 flex items-center gap-2 border-t border-rule pt-2">
+            <Avatar name={r.name} face={r.face} />
+            <TierBadge tier={r.tier} label={false} />
+            <span class="min-w-0 flex-1 truncate text-[11.5px] font-semibold">{r.name}</span>
+            <span class="text-[11px] font-semibold">{money(r.mrr)}</span>
+          </div>
+        ))}
+      </div>
+    ))}
+  </div>
+</Frame>

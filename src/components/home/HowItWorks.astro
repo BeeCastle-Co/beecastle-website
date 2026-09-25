@@ -4,6 +4,7 @@ import Band from './Band.astro';
 import Head from './Head.astro';
 import Illustration from '../Illustration.astro';
 import Button from '../Button.astro';
+import Onboarding from '../product/Onboarding.astro';
 
 const steps = [
   { title: 'Create an account', body: 'Create a **free account** on BeeCastle.', icon: 'bee', tint: 'bg-honey-soft', tilt: '-rotate-2' },
@@ -33,4 +34,6 @@ const bold = (s: string) => s.replace(/\*\*(.+?)\*\*/g, '<strong class="font-sem
       </li>
     ))}
   </ol>
+  <!-- What step 2 looks like: the self-service PSA setup and its permission check. -->
+  <Onboarding class="rv mt-10" />
 </Band>

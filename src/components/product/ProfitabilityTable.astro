@@ -1,0 +1,40 @@
+---
+/* Replica: the customer profitability table. Revenue, direct costs, gross
+   profit and margin per client, with the cost basis marked complete. */
+import Frame from './Frame.astro';
+import Pill from './Pill.astro';
+import { profitRows } from '../../data/demo';
+import { money } from '../../lib/inline';
+
+interface Props {
+  bare?: boolean;
+  class?: string;
+}
+const { bare = false, class: extra } = Astro.props;
+const cols = 'grid-cols-[minmax(0,1.6fr)_repeat(3,minmax(0,1fr))_62px] sm:grid-cols-[minmax(0,1.6fr)_repeat(3,minmax(0,1fr))_62px_44px]';
+---
+<Frame active="Customer profitability" bare={bare} class={extra}
+  label="BeeCastle customer profitability table: revenue, direct costs, gross profit and margin for each client, with a loss-making client in red">
+  <p class="m-0 text-[17px] font-bold tracking-[-.01em]">Customer profitability</p>
+  <p class="m-0 text-[10.5px] text-ink-3">Last 30 days · all tiers</p>
+  <div class="mt-3 overflow-hidden rounded-xs border border-rule bg-card">
+    <div class:list={['grid gap-3 border-b border-rule px-3 py-2 text-[9px] font-semibold uppercase tracking-[.06em] text-ink-3', cols]}>
+      <span>Customer</span><span>Revenue</span><span>Direct costs</span><span>Gross profit</span><span>Margin</span><span class="max-sm:hidden">Hours</span>
+    </div>
+    {profitRows.map((r) => {
+      const gp = r.revenue - r.costs;
+      const m = (gp / r.revenue) * 100;
+      return (
+        <div class:list={['grid items-center gap-3 border-b border-rule px-3 py-2 last:border-b-0 text-[11.5px]', cols]}>
+          <span class="truncate font-semibold">{r.name}</span>
+          <span>{money(r.revenue)}</span>
+          <span class="text-ink-2">{money(r.costs)}</span>
+          <span><span class:list={['rounded-[4px] px-1.5 py-0.5 font-semibold', gp < 0 ? 'bg-bad-soft text-bad-deep' : 'bg-ok-soft text-ok-deep']}>{gp < 0 ? '-' : ''}{money(Math.abs(gp))}</span></span>
+          <span class:list={['font-semibold', m < 0 ? 'text-bad' : m < 35 ? 'text-warn' : 'text-ok']}>{m.toFixed(1)}%</span>
+          <span class="text-ink-3 max-sm:hidden">{r.hours}</span>
+        </div>
+      );
+    })}
+  </div>
+  <p class="m-0 mt-2 flex items-center gap-2 text-[10px] text-ink-3"><Pill tone="ok" label="Complete" /> cost basis matched for every client shown</p>
+</Frame>

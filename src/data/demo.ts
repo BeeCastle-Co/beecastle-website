@@ -124,3 +124,146 @@ export const meetings = [
   { name: 'Bluegum Architects', tier: 'gold' as Tier, status: 'ok', cadence: 'Every 6 weeks', last: '4 days ago', manager: 'Sam Okafor' },
   { name: 'Coastal Physio Group', tier: 'silver' as Tier, status: 'ok', cadence: 'Every 6 months', last: '12 days ago', manager: 'Tom Walsh' },
 ];
+
+/** One company's profitability tab. */
+export const accountProfit = {
+  revenue: 16133,
+  directCosts: 6921,
+  grossProfit: 9212,
+  margin: 57.1,
+  effectiveRate: 394,
+  hours: 41,
+  costs: [
+    { label: 'Products, licensing and expenses', value: 5023 },
+    { label: 'Contract labour', value: 1805 },
+  ],
+  /** Monthly revenue and direct costs, $. */
+  months: ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+  revenueByMonth: [14200, 15100, 14800, 16900, 15600, 16133],
+  costsByMonth: [6100, 6400, 9800, 7200, 6600, 6921],
+};
+
+/** Customer profitability table rows. */
+export const profitRows = [
+  { name: 'Kestrel Freight', revenue: 62827, costs: 20414, hours: 101 },
+  { name: 'Bluegum Architects', revenue: 58888, costs: 24504, hours: 141 },
+  { name: 'Mapleton Legal', revenue: 31779, costs: 10817, hours: 76 },
+  { name: 'Summit Wealth', revenue: 24379, costs: 5099, hours: 52 },
+  { name: 'Harbourline Dental', revenue: 19467, costs: 11181, hours: 24 },
+  { name: 'Ridgeway Builders', revenue: 9160, costs: 10410, hours: 68 },
+];
+
+/** A single client's product stack, for the company whitespace tab. */
+export const clientStack = {
+  name: 'Security stack',
+  met: 3,
+  total: 7,
+  monthly: 3065,
+  items: [
+    { name: 'Managed detection and response', has: false, note: '6 of 9 similar clients have it', value: 692 },
+    { name: 'Microsoft 365 backup', has: true },
+    { name: 'Email security', has: false, note: '5 of 9 similar clients have it', value: 515 },
+    { name: 'Application control', has: true },
+    { name: 'SIEM', has: false, note: '3 of 9 similar clients have it', value: 1203 },
+    { name: 'Security awareness training', has: true },
+    { name: 'Password manager', has: false, note: '4 of 9 similar clients have it', value: 152 },
+  ],
+};
+
+/** Prospecting: sell a product to clients that do not have it yet. */
+export const prospecting = {
+  product: 'Managed VoIP',
+  prospects: [
+    { name: 'Summit Wealth', tier: 'platinum' as Tier, face: 'periwinkle' as Face, mrr: 42827 },
+    { name: 'Mapleton Legal', tier: 'gold' as Tier, face: 'periwinkle' as Face, mrr: 31779 },
+    { name: 'Ironbark Engineering', tier: 'gold' as Tier, face: 'honey' as Face, mrr: 24379 },
+    { name: 'Coastal Physio Group', tier: 'silver' as Tier, face: 'mint' as Face, mrr: 16597 },
+    { name: 'Northgate Accounting', tier: 'silver' as Tier, face: 'cyan' as Face, mrr: 13284 },
+  ],
+  prospectCount: 40,
+  have: [
+    { name: 'Kestrel Freight', tier: 'platinum' as Tier, face: 'honey' as Face, mrr: 58888 },
+    { name: 'Bluegum Architects', tier: 'gold' as Tier, face: 'honey' as Face, mrr: 19620 },
+    { name: 'Harbourline Dental', tier: 'gold' as Tier, face: 'cyan' as Face, mrr: 13712 },
+    { name: 'Parkside Vets', tier: 'bronze' as Tier, face: 'mint' as Face, mrr: 6635 },
+    { name: 'Ridgeway Builders', tier: 'bronze' as Tier, face: 'magenta' as Face, mrr: 4927 },
+  ],
+  haveCount: 33,
+};
+
+/** Whitespace summary: billed revenue and potential by product. */
+export const productSummary = {
+  billed: 6834916,
+  potential: 506393,
+  rows: [
+    { category: 'MSA, device based', product: 'Managed workstation', billed: 2411478, companies: 51, potential: 30965 },
+    { category: 'MSA, device based', product: 'Managed server', billed: 729591, companies: 49, potential: 11265 },
+    { category: 'SaaS sales', product: 'Microsoft 365 Business Premium', billed: 367592, companies: 39, potential: 13148 },
+    { category: 'SaaS sales', product: 'Application control', billed: 203898, companies: 20, potential: 17730 },
+    { category: 'BCDR sales', product: 'Cloud backup, infinite retention', billed: 141910, companies: 21, potential: 13956 },
+    { category: 'MSA, VoIP', product: 'Managed VoIP', billed: 100236, companies: 33, potential: 6718 },
+  ],
+};
+
+/** Tier bands: the share of cumulative revenue each tier covers. */
+export const tiering = {
+  bands: [
+    { tier: 'platinum' as Tier, to: 45 },
+    { tier: 'gold' as Tier, to: 80 },
+    { tier: 'silver' as Tier, to: 90 },
+    { tier: 'bronze' as Tier, to: 100 },
+  ],
+  revenue90d: 1590349,
+  tiered: 70,
+  frequencies: [
+    { tier: 'platinum' as Tier, cadence: 'Quarterly', target: 'Quarterly +1' },
+    { tier: 'gold' as Tier, cadence: 'Every 6 weeks', target: 'Every 6 weeks' },
+    { tier: 'silver' as Tier, cadence: 'Every 6 months', target: 'Every 6 months' },
+    { tier: 'bronze' as Tier, cadence: 'Yearly', target: 'Yearly' },
+  ],
+};
+
+/** Sales dashboard: pipeline tiles, value by stage over the next months, top deals. */
+export const sales = {
+  open: 26,
+  pipeline: 184250,
+  outdated: 7,
+  noActivity: 5,
+  months: ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb'],
+  /** [proposal sent, negotiation] per month, $k. */
+  stages: [[62, 14], [9, 22], [18, 6], [26, 11], [4, 15], [12, 3]] as [number, number][],
+  top: [
+    { company: 'Kestrel Freight', deal: 'Managed IT renewal, three years', value: 19923, owner: 'Tom Walsh', close: '18 Sept', stage: 'Proposal sent' },
+    { company: 'Mapleton Legal', deal: 'New starter laptops', value: 12177, owner: 'Priya Sandhu', close: '25 Sept', stage: 'Proposal sent' },
+    { company: 'Bluegum Architects', deal: 'Conditional access review', value: 8600, owner: 'Sam Okafor', close: '29 Sept', stage: 'Negotiation' },
+    { company: 'Coastal Physio Group', deal: 'Replacement switches', value: 4817, owner: 'Tom Walsh', close: '3 Oct', stage: 'Proposal sent' },
+  ],
+};
+
+/** A company's activity timeline and a meeting note. */
+export const activity = [
+  { kind: 'meeting', who: 'Jordan Lee', role: 'Decision maker', what: 'Quarterly business review', when: '3 days ago', tone: 'warm' },
+  { kind: 'email', who: 'Casey Ng', role: 'Senior influencer', what: 'Re: laptop refresh quote', when: '6 days ago', tone: 'neutral' },
+  { kind: 'call', who: 'Jordan Lee', role: 'Decision maker', what: 'Renewal check-in, 14 min', when: '12 days ago', tone: 'warm' },
+  { kind: 'email', who: 'Morgan Diaz', role: 'Team member', what: 'Printer still offline after the move', when: '19 days ago', tone: 'frustrated' },
+] as { kind: 'meeting' | 'email' | 'call'; who: string; role: string; what: string; when: string; tone: 'warm' | 'neutral' | 'frustrated' }[];
+
+export const meetingNote = {
+  title: 'Quarterly business review',
+  when: 'Tue 23 Sept, 10:00',
+  attendees: ['Jordan Lee', 'Casey Ng', 'Priya Sandhu'],
+  body: [
+    'Happy with service since the new helpdesk process. Two escalations this quarter, both closed inside SLA.',
+    'Opening a second site in March: needs 12 laptops, phones and a site-to-site VPN.',
+    'Asked about backup for Microsoft 365 after a lost mailbox scare.',
+  ],
+  actions: ['Quote the new site fit-out', 'Send the M365 backup one-pager'],
+};
+
+/** Contacts at one company, by role, with relationship score. */
+export const contacts = [
+  { name: 'Jordan Lee', title: 'Managing Director', role: 'Decision maker', score: 86, last: '3 days ago' },
+  { name: 'Casey Ng', title: 'Operations Manager', role: 'Senior influencer', score: 71, last: '6 days ago' },
+  { name: 'Morgan Diaz', title: 'Office Coordinator', role: 'Team member', score: 44, last: '19 days ago' },
+  { name: 'Riley Chen', title: 'Finance Lead', role: 'Senior influencer', score: 18, last: '5 months ago' },
+];

@@ -25,23 +25,20 @@ sections:
     paragraphs:
       - A powerful tool that looks into the future at what you and your team have planned, and then marries this with activity to date across the broader team to allow you to strategically plan your next moves.
       - "[See Customer Success](/products/enhanced-account-management/)"
-    image: ../../assets/img/solutions/for-account-managers/bc_module_relationship_keeper.webp
-    imageAlt: BeeCastle Relationship Keeper module illustration of an interlocking blue and green shape
+    replica: company-overview
   - heading: Whitespace Prospecting
     paragraphs:
       - BeeCastle has created a unique view of your accounts with sophisticated data analysis that is both fast to comprehend and simple to execute suggested actions.
       - Review, take action, measure outcome.
       - "[See Whitespace Prospecting](/products/whitespace-prospecting/)"
-    image: ../../assets/img/solutions/for-account-managers/bc_module_whitespace_finder.webp
-    imageAlt: BeeCastle Whitespace Finder module illustration of white cubes with blue gaps
+    replica: whitespace-grid
     cta: signup
   - heading: Sales Dashboards
     paragraphs:
       - BeeCastle's comprehensive and proprietary team dashboards are used by teams across the globe to track engagement, first meetings, follow ups, effort in sectors and much more.
       - Use real time data to help your team collaborate for success.
       - "[See Sales Dashboards](/products/sales-dashboards/)"
-    image: ../../assets/img/solutions/for-account-managers/bc_module_opportunity_assist.webp
-    imageAlt: BeeCastle Opportunity Assist module illustration of an open door onto blue sky
+    replica: sales-dashboard
     cta: demo
 closing: Ready to see how BeeCastle can improve your business relationships?
 ---

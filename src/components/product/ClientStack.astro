@@ -1,0 +1,37 @@
+---
+/* Replica: a company's Whitespace tab. How the client measures up against a
+   product stack: what they have, what is missing, and what similar clients
+   pay for it, each gap one click from an opportunity. */
+import Frame from './Frame.astro';
+import Pill from './Pill.astro';
+import { clientStack as s } from '../../data/demo';
+import { money } from '../../lib/inline';
+
+interface Props {
+  bare?: boolean;
+  class?: string;
+}
+const { bare = false, class: extra } = Astro.props;
+---
+<Frame active="Companies" bare={bare} class={extra}
+  label="A BeeCastle company whitespace tab: the client's security stack, which services they have, which are missing, and the monthly value of each gap">
+  <div class="rounded-xs border border-rule bg-card p-3">
+    <div class="flex items-baseline justify-between gap-3">
+      <p class="m-0 text-[14px] font-bold">{s.name}</p>
+      <p class="m-0 text-[11px] font-semibold text-warn-deep">About {money(s.monthly)} a month of whitespace</p>
+    </div>
+    <p class="m-0 text-[10.5px] text-ink-3">{s.met} of {s.total} requirements met</p>
+    <div class="mt-2 h-1.5 overflow-hidden rounded-full bg-paper-2"><div class="h-full rounded-full bg-mint" style={`width: ${(s.met / s.total) * 100}%`}></div></div>
+    <div class="mt-2">
+      {s.items.map((i) => (
+        <div class="flex items-center justify-between gap-3 border-t border-rule py-2 first:border-t-0">
+          <span class="min-w-0">
+            <span class="flex items-center gap-2"><span class="truncate text-[11.5px] font-semibold">{i.name}</span><Pill tone={i.has ? 'ok' : 'warn'} label={i.has ? 'Has it' : 'Missing'} /></span>
+            {i.note && <span class="block truncate text-[10px] text-ink-3">{i.note} · about {money(i.value!)} a month</span>}
+          </span>
+          {!i.has && <span class="shrink-0 rounded-xs border border-rule px-2 py-1 text-[10px] font-semibold text-ink-2 max-sm:hidden">+ Create opportunity</span>}
+        </div>
+      ))}
+    </div>
+  </div>
+</Frame>

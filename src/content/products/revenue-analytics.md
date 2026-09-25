@@ -26,8 +26,7 @@ sections:
       - Annual revenue by tier
       - Percentage revenue contribution
       - Number of accounts in each tier
-    image: ../../assets/img/products/revenue-analytics/tiering-1.webp
-    imageAlt: BeeCastle account tiering chart showing company count and agreement revenue by tier
+    replica: tiering
   - heading: Total Revenue Trend
     paragraphs:
       - BeeCastle's automated Revenue Trend analysis allows the user to see in real time the composition of revenue and changes to that revenue.
@@ -38,8 +37,7 @@ sections:
       - Churn
       - Growth
       - Revenue per account
-    image: ../../assets/img/products/revenue-analytics/revenue.webp
-    imageAlt: BeeCastle total revenue trend chart
+    replica: revenue-chart
   - heading: Revenue Changes
     paragraphs:
       - Focus exclusively on the changes, drivers and the rate of change over time to identify trends in growth or churn that need to be addressed.
@@ -48,8 +46,7 @@ sections:
       - Understand drivers for churn
       - See where growth is accelerating
       - Focus on the greatest areas for opportunities
-    image: ../../assets/img/products/revenue-analytics/rev-changes.webp
-    imageAlt: BeeCastle revenue changes chart
+    replica: portfolio-health
     cta: signup
   - heading: Product Growth
     paragraphs:
@@ -58,8 +55,7 @@ sections:
       - Compare spending patterns across accounts
       - Deep dive by product sub-category
       - See trends in product growth
-    image: ../../assets/img/products/revenue-analytics/product-1.webp
-    imageAlt: BeeCastle revenue by product sub-category table
+    replica: product-summary
   - heading: Customer Growth
     paragraphs:
       - Customers are the lifeblood of any business. Compare spending patterns and growth trajectory across accounts.
@@ -67,8 +63,7 @@ sections:
       - View critical data metrics over time to understand customer trends
       - Undertake reconciliations
       - Review customer growth data to prepare for quarterly business reviews
-    image: ../../assets/img/products/revenue-analytics/accountgrowth.webp
-    imageAlt: BeeCastle customer growth table by quarter
+    replica: company-overview
     cta: demo
   - heading: Business Benchmarking
     paragraphs:

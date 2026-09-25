@@ -25,23 +25,20 @@ sections:
     paragraphs:
       - Search for any company with our global search and then dive in to a new world of detail.
       - Understand the strength of the relationship and the history of engagement from emails, meetings, Teams calls and meeting notes, all shared with the team in real time and stored in a central cloud for ease of access.
-    image: ../../assets/img/products/account-insights/companie.webp
-    imageAlt: BeeCastle companies list showing each company's tier, team score, last call or meeting, portfolio and account manager
+    replica: activity
   - heading: Meeting Notes
     paragraphs:
       - Add both a star rating and a score to your meeting notes to enhance the quality of your records.
       - BeeCastle's meeting notes are stored centrally and automatically surface against each account for simplicity and convenience.
       - When the note is entered, it is automatically shared via email with the team mates who were invited to the meeting and any others you want to copy. Any user can access the note and add to the contents, all of which is carefully tracked.
-    image: ../../assets/img/products/account-insights/meeting-note.webp
-    imageAlt: BeeCastle meeting note form with attendees, companies, subject, date, people to copy and the note content
+    replica: meeting-note
     cta: signup
   - id: reminders
     heading: Recommendations that drive results
     paragraphs:
       - BeeCastle will automatically reach out to you to prompt you to take action. The system and methodology, driven by our proprietary algorithms, helps you stay on top of clients to nurture the relationship.
       - The science behind relationship equity and reciprocity is compelling. As you build equity into your relationships, the dividends you receive in referrals, low churn, more sales and ease of issue resolution are rewarding.
-    image: ../../assets/img/products/account-insights/recommendations.webp
-    imageAlt: BeeCastle relationship suggestions prompting a reach-out to a platinum decision maker not contacted in 365 days and to a contact with a low relationship score
+    replica: contacts
     cta: demo
 closing: Ready to see how BeeCastle can improve your business relationships?
 ---

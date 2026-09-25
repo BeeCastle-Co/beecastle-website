@@ -23,14 +23,12 @@ sections:
     paragraphs:
       - BeeCastle's [revenue analytics](/products/revenue-analytics/) helps business owners gain a deeper understanding of their revenue over time and to truly understand revenue composition, churn, trends and growth drivers to enable best practice.
       - As a business owner, once you understand the key drivers to your revenue movements you can objectively set strategy and take action to drive results.
-    image: ../../assets/img/solutions/for-owners/bc_relationship_keeper_md.webp
-    imageAlt: Two colleagues reviewing figures together on a laptop
+    replica: portfolio-health
   - heading: Account Profitability
     paragraphs:
       - BeeCastle has created a unique view of your accounts with sophisticated data analysis that is both fast to comprehend and simple to execute suggested actions.
       - Review, take action, measure outcome.
-    image: ../../assets/img/solutions/for-owners/bc_whitespace_finder_md.webp
-    imageAlt: A smiling business owner shaking hands across a desk
+    replica: profitability
     cta: signup
   - heading: Business Benchmarking
     paragraphs:

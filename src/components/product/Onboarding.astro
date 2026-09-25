@@ -1,0 +1,72 @@
+---
+/* Replica: self-service workspace setup. The step list on the left, and the
+   PSA permission check: BeeCastle reads each area the sync needs and shows
+   what the API user can see, before anything is imported. */
+import Pill from './Pill.astro';
+
+interface Props {
+  /** PSA name shown in the check. */
+  psa?: string;
+  class?: string;
+}
+const { psa = 'ConnectWise Manage', class: extra } = Astro.props;
+const steps = [
+  { name: 'Workspace', done: true },
+  { name: 'Choose your PSA', done: true },
+  { name: 'PSA setup', done: false, current: true, sub: [['Connect', true], ['Check permissions', true], ['Choose import scope', false], ['Map your values', false]] },
+  { name: 'Microsoft 365', done: false },
+  { name: 'Your team', done: false },
+  { name: 'First sync', done: false },
+];
+const areas = [
+  { group: 'CRM data', items: [['Companies', '63 visible', true], ['Company ownership', '', false], ['Contacts', '113 visible', true]] },
+  { group: 'PSA data', items: [['Agreements', '56 visible', false], ['Invoices', '1,705 visible', false], ['Products', '29 visible', false], ['Tickets', '272 visible', false], ['Time entries', '', false]] },
+];
+---
+<div role="img" aria-label={`BeeCastle's self-service setup: connect ${psa}, check the API user can read everything the sync needs, then choose what to import`}
+  class:list={['overflow-hidden rounded-sm border border-rule bg-paper text-left text-ink shadow-3 select-none', extra]}>
+  <div class="grid md:grid-cols-[190px_minmax(0,1fr)]">
+    <div class="hidden border-r border-rule bg-honey-soft/40 p-4 md:block" aria-hidden="true">
+      <img src="/logo-beecastle.svg" alt="" width="22" height="16" class="h-4 w-auto" />
+      <p class="m-0 mt-3 text-[14px] font-bold">Set up your workspace</p>
+      <div class="mt-3 grid gap-1">
+        {steps.map((s) => (
+          <>
+            <p class:list={['m-0 flex items-center gap-2 rounded-xs px-2 py-1.5 text-[11px]', s.current ? 'border border-rule bg-card font-semibold' : 'bg-card/50']}>
+              <span class:list={['grid size-3.5 place-items-center rounded-full text-[8px] text-card', s.done ? 'bg-ok' : 'border border-ink-3']}>{s.done && '✓'}</span>{s.name}
+            </p>
+            {s.sub && s.sub.map(([n, d]) => (
+              <p class="m-0 ml-4 flex items-center gap-2 px-2 py-1 text-[10.5px] text-ink-2">
+                <span class:list={['grid size-3 place-items-center rounded-full text-[7px] text-card', d ? 'bg-ok' : 'border border-ink-3']}>{d && '✓'}</span>{n}
+              </p>
+            ))}
+          </>
+        ))}
+      </div>
+      <p class="m-0 mt-3 text-[9.5px] text-ink-3">Your progress is saved. Leave and come back any time.</p>
+    </div>
+    <div class="min-w-0 p-4 md:p-5">
+      <p class="m-0 text-[17px] font-bold tracking-[-.01em]">PSA setup</p>
+      <p class="m-0 text-[10.5px] text-ink-3">Connect your API account, check access and confirm what to import.</p>
+      <div class="mt-3 rounded-xs bg-ok-soft px-3 py-2.5">
+        <p class="m-0 text-[11.5px] font-bold text-ok-deep">All checks passed</p>
+        <p class="m-0 text-[10.5px] text-ink-2">11 of 11 areas are readable by this {psa} API user.</p>
+      </div>
+      {areas.map((g) => (
+        <>
+          <p class="m-0 mt-3 text-[9.5px] font-semibold uppercase tracking-[.08em] text-ink-3">{g.group}</p>
+          <div class="mt-1 overflow-hidden rounded-xs border border-rule bg-card">
+            {g.items.map(([name, count, req]) => (
+              <div class="flex items-center gap-3 border-b border-rule px-3 py-2 last:border-b-0">
+                <span class="min-w-0 flex-1 truncate text-[11.5px] font-semibold">{name}{req && <span class="ml-1.5 rounded-[3px] bg-paper-2 px-1 py-px text-[8px] font-bold uppercase tracking-[.05em] text-ink-3">Required</span>}</span>
+                {count && <span class="text-[10px] text-ink-3">{count}</span>}
+                <Pill tone="ok" label="Granted" />
+              </div>
+            ))}
+          </div>
+        </>
+      ))}
+      <div class="mt-3 flex justify-end"><span class="rounded-xs bg-honey px-3 py-1.5 text-[11px] font-semibold">Continue</span></div>
+    </div>
+  </div>
+</div>

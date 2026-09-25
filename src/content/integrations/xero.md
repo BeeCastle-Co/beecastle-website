@@ -32,8 +32,7 @@ sections:
     paragraphs:
       - A powerful tool that looks into the future as to what you and your team have planned and then marries this with activity to date across the broader team to allow you to strategically plan your next moves.
       - Do we have a busy week coming up? Who are we seeing? Who is responsible for that? Can we share the load? Where are we behind?
-    image: ../../assets/img/integrations/xero/meeting-planner.webp
-    imageAlt: BeeCastle Meeting Planner
+    replica: meeting-planner
   - heading: Segments Overview
     paragraphs:
       - BeeCastle has created a unique view of your accounts with sophisticated data analysis that is both fast to comprehend and simple to execute suggested actions.
@@ -42,8 +41,7 @@ sections:
       - "**Red:** urgent action needed"
       - "**Yellow:** fair relationship"
       - "**Green:** targets are met, opportunity may exist to up-sell etc. Instantly see the results of your efforts. Review, take action, measure outcome"
-    image: ../../assets/img/integrations/xero/bc_segments_overview_product.webp
-    imageAlt: BeeCastle Segments Overview
+    replica: portfolio-health
     cta: signup
   - heading: Engagement Summary
     paragraphs:
@@ -53,8 +51,7 @@ sections:
       - How many meetings have we had in a particular sector?
       - How many new clients have we met with last month, and how does this compare to our normal run rate?
       - How much time has John spent on a particular client? and much, much more.
-    image: ../../assets/img/integrations/xero/bc_dummy_product_feature.webp
-    imageAlt: BeeCastle Engagement Summary dashboard with total meetings and companies met by sector
+    replica: health-breakdown
 closing: Ready to unlock the full potential of your Xero data and transform your customer engagement?
 seoTitle: Integrate Xero with BeeCastle for CRM
 ---

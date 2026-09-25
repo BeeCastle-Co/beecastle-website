@@ -23,8 +23,7 @@ sections:
       - Territory
       - Account Manager, or
       - Tier (Platinum, Gold, Silver and Bronze) to narrow the data set for review
-    image: ../../assets/img/products/account-profitability/account-profitability-2.webp
-    imageAlt: BeeCastle account profitability chart of revenue, cost and profit over time, filtered by territory and account manager
+    replica: account-profitability
     cta: signup
   - heading: Customer Profitability
     paragraphs:
@@ -35,8 +34,7 @@ sections:
       - Gross profitability
       - Gross margin
       - Ranking of profitability
-    image: ../../assets/img/products/account-profitability/customer-profit.webp
-    imageAlt: BeeCastle customer profitability table listing each company's tier, gross profitability and gross margin, with loss-making accounts highlighted
+    replica: profitability-table
     cta: demo
 closing: Ready to see how BeeCastle can increase your account profitability?
 ---

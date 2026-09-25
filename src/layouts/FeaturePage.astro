@@ -52,7 +52,7 @@ const schema = [
   {sections.map((s, i) => (
     <>
       {d.signup && i === signupAt && <SignupPanel />}
-      <FeatureSection {...s} reverse={i % 2 === 1} accent={d.accent} />
+      <FeatureSection {...s} reverse={i % 2 === 1} accent={d.accent} replicaProps={{ psa: d.name }} />
     </>
   ))}
 

@@ -11,10 +11,13 @@ logo: ../../assets/img/integrations/datto-autotask/integrations-autotask-beecast
 icon: integrations-stack
 accent: periwinkle
 order: 2
+sections:
+  - heading: Your data, your permissions
+    paragraphs:
+      - "BeeCastle synchronises company, contact, agreement, sales, and financial data from Datto Autotask to help you manage your customers quickly and easily. Company and Contacts data is kept in sync in real-time via Datto Autotask webhooks, ensuring BeeCastle has the latest view of your customers' position."
+      - "You're in control of the data and permissions via the Datto Autotask API permissioning system."
+    replica: onboarding
+    cta: signup
 closing: Ready to see how BeeCastle can improve your business relationships?
 seoTitle: Integrate Datto Autotask & sync with BeeCastle
 ---
-
-BeeCastle synchronises company, contact, agreement, sales, and financial data from Datto Autotask to help you manage your customers quickly and easily. Company and Contacts data is kept in sync in real-time via Datto Autotask webhooks, ensuring BeeCastle has the latest view of your customers' position.
-
-You're in control of the data and permissions via the Datto Autotask API permissioning system.

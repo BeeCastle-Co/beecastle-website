@@ -11,10 +11,13 @@ logo: ../../assets/img/integrations/halo-psa/integrations-halo-beecastle.webp
 icon: integrations-stack
 accent: mint
 order: 3
+sections:
+  - heading: Your data, your permissions
+    paragraphs:
+      - "BeeCastle synchronises company, contact, agreement, sales, and financial data from HaloPSA to help you manage your customers quickly and easily. Company and Contact data is kept in sync in real-time via HaloPSA webhooks, ensuring BeeCastle has the latest view of your customers' position."
+      - "You're in control of the data and permissions via the HaloPSA API permissioning system."
+    replica: onboarding
+    cta: signup
 closing: Ready to see how BeeCastle can improve your business relationships?
 seoTitle: Integrate HaloPSA & sync with BeeCastle
 ---
-
-BeeCastle synchronises company, contact, agreement, sales, and financial data from HaloPSA to help you manage your customers quickly and easily. Company and Contact data is kept in sync in real-time via HaloPSA webhooks, ensuring BeeCastle has the latest view of your customers' position.
-
-You're in control of the data and permissions via the HaloPSA API permissioning system.

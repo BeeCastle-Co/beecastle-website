@@ -32,8 +32,7 @@ sections:
       - BeeCastle highlights where an urgent reach-out is needed
       - Identify a positive relationship that is fertile ground for upsell and cross sell
       - Monitor the time spent on different sectors to enhance your allocation of resources
-    image: ../../assets/img/products/enhanced-account-management/segments.webp
-    imageAlt: BeeCastle segments overview showing the percentage of companies contacted in the last 365 days and a monthly chart of time spent on calls and meetings
+    replica: portfolio-health
     cta: signup
   - heading: Meeting Planner
     paragraphs:
@@ -42,8 +41,7 @@ sections:
       - Ensure that QBRs, strategic roadmap reviews and project check-ins are occurring as per the plan
       - Are we hitting our targets? Where should we focus?
       - Who are we seeing this week? Who is responsible for that?
-    image: ../../assets/img/products/enhanced-account-management/meeting-planner-1.webp
-    imageAlt: BeeCastle meeting planner showing total and first meetings over time, meetings by pipeline status and companies met
+    replica: meeting-planner
   - heading: Engagement Summary
     paragraphs:
       - BeeCastle's comprehensive and proprietary team dashboards are used by teams across the globe to track engagement, first meetings, follow ups, effort in sectors and much more.
@@ -52,8 +50,7 @@ sections:
       - How many meetings have we had in a particular sector?
       - How many new clients have we met with last month, and how does this compare to our normal run rate?
       - How much time has John spent on a particular client? And much, much more.
-    image: ../../assets/img/products/enhanced-account-management/engagement.webp
-    imageAlt: BeeCastle engagement summary with totals for meetings, first meetings, calls and emails, a meetings trend line and companies met by market
+    replica: health-breakdown
     cta: demo
 closing: Ready to see how BeeCastle can improve your business relationships?
 ---
