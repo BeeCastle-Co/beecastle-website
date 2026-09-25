@@ -1,12 +1,11 @@
 ---
-/* ROI calculator teaser, with the example table in an app window. */
+/* ROI calculator teaser, with the calculator's example result. */
 import Band from './Band.astro';
 import Eyebrow from './Eyebrow.astro';
 import Marker from './Marker.astro';
 import Sticker from './Sticker.astro';
-import AppWindow from './AppWindow.astro';
+import RoiTable from '../product/RoiTable.astro';
 import Icon from '../Icon.astro';
-import roi from '../../assets/img/roi-calculator.webp';
 ---
 <Band>
   <div class="grid items-center gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
@@ -19,10 +18,8 @@ import roi from '../../assets/img/roi-calculator.webp';
       </a>
     </div>
     <div class="rv relative min-w-0">
-      <Sticker name="benchmarking" tone="honey" art="w-16" class="absolute -bottom-8 -left-6 z-10 rotate-6 max-sm:hidden" />
-      <AppWindow src={roi} label="beecastle.com/roi-calculator"
-      alt="Example ROI table: time saved, total saved and money made per BeeCastle module"
-      sizes="(max-width: 1024px) 100vw, 680px" widths={[600, 900, 1200, 1600]} />
+      <Sticker name="benchmarking" tone="honey" art="w-16" class="absolute -bottom-20 -left-8 z-10 rotate-6 max-sm:hidden" />
+      <RoiTable />
     </div>
   </div>
 </Band>

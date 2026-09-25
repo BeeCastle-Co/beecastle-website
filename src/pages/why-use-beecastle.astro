@@ -5,42 +5,34 @@ import FeatureSection from '../components/FeatureSection.astro';
 import Button from '../components/Button.astro';
 import CTABand from '../components/CTABand.astro';
 import profitTrack from '../assets/img/products/account-profitability/bc_module_profit_track.webp';
-import revenueAnalyzer from '../assets/img/solutions/for-team-managers/bc_module_revenue_analyzer.webp';
-import customerProfit from '../assets/img/solutions/for-team-managers/customer-profit.webp';
-import salesDashboards from '../assets/img/solutions/for-team-managers/sales-dasboards.webp';
 import { site } from '../data/site';
 
 const sections = [
   {
     heading: 'Your customers are valuable to you',
     paragraphs: ['We know how hard it is to acquire new customers. So, it’s critical to retain your larger and most profitable customers. We provide data insights specifically designed to help drive customer engagement and reduce the risk of churn.'],
-    image: revenueAnalyzer,
-    imageAlt: 'BeeCastle Revenue Analytics',
+    replica: 'portfolio-health' as const,
   },
   {
     heading: 'You’re serious about selling',
     paragraphs: ['BeeCastle brings clarity and accountability to your sales team and data from your PSA. Our pipeline management and forecasting solution transforms your PSA data into actionable insights that drive results. Make better decisions, faster, at every level.'],
-    image: customerProfit,
-    imageAlt: 'BeeCastle Account Profitability',
+    replica: 'whitespace-actions' as const,
     cta: 'signup' as const,
   },
   {
     heading: 'A platform that your sales reps will actually use',
     paragraphs: ['The most powerful tools are worthless without user adoption. Built by MSPs for MSP sales professionals, BeeCastle is the only whitespace, pipeline management and forecasting tool conceived specifically to support all users across your MSP. BeeCastle users spend less time on tedious data entry, and more time selling.'],
-    image: salesDashboards,
-    imageAlt: 'BeeCastle Sales Dashboards',
+    replica: 'sales-dashboard' as const,
   },
   {
     heading: 'Seamless and secure PSA integration',
     paragraphs: ['BeeCastle connects to your PSA ([ConnectWise](/integrations/connectwise-manage/), [HaloPSA](/integrations/halo-psa/) and [Datto Autotask](/integrations/datto-autotask/)) and fits right into your existing workflow. Any changes made to your PSA are automatically reflected in BeeCastle.'],
-    image: revenueAnalyzer,
-    imageAlt: 'BeeCastle Revenue Analytics',
+    replica: 'onboarding' as const,
   },
   {
     heading: 'Account Profitability',
     paragraphs: ['We have worked with MSPs for years to determine what cost savings and efficiencies BeeCastle can drive, as well as calculating what net increase in sales, and thus profits, BeeCastle can drive.'],
-    image: customerProfit,
-    imageAlt: 'BeeCastle Account Profitability',
+    replica: 'profitability-table' as const,
     cta: 'signup' as const,
   },
 ];

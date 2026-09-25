@@ -69,7 +69,5 @@ sections:
     paragraphs:
       - Benchmarking is important because it allows MSPs to form objective assessments of their performance on a larger scale. It helps companies make meaning from their metrics and use them to encourage improvement and achieve best practice.
       - Our data is sourced from BeeCastle users, market research we conduct, and data supplied or published by our partners that we consider credible.
-    image: ../../assets/img/products/revenue-analytics/benchmarking-2.webp
-    imageAlt: BeeCastle recurring revenue percentage benchmark chart
 closing: Ready to see how BeeCastle can enhance your revenue?
 ---

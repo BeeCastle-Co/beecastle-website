@@ -1,0 +1,46 @@
+---
+/* The ROI calculator's example result, drawn in HTML: time saved and money
+   made per BeeCastle module for one account manager on $1m revenue at $360
+   an hour. The same figures the calculator on /roi-calculator/ produces. */
+import { money } from '../../lib/inline';
+
+interface Props {
+  class?: string;
+}
+const { class: extra } = Astro.props;
+const rows = [
+  ['Customer engagement', 407, 4884, 0],
+  ['Whitespace', 158, 1896, 33915],
+  ['Opportunities', 324, 3888, 20000],
+  ['Revenue analytics', 72, 864, 16000],
+  ['Profitability', 48, 576, 3000],
+] as const;
+const hours = rows.reduce((s, r) => s + r[1], 0);
+const saved = rows.reduce((s, r) => s + r[2], 0);
+const made = rows.reduce((s, r) => s + r[3], 0);
+/* On phones, just hours and total: five columns truncate the module names. */
+const cols = 'grid-cols-[minmax(0,1.6fr)_repeat(2,minmax(0,1fr))] sm:grid-cols-[minmax(0,1.6fr)_repeat(4,minmax(0,1fr))]';
+const wide = 'max-sm:hidden';
+---
+<div role="img" aria-label={`Example BeeCastle ROI: ${hours} hours and ${money(saved)} saved a year per account manager, ${money(made)} in extra revenue, ${money(saved + made)} in total`}
+  class:list={['overflow-hidden rounded-sm border border-rule bg-card text-ink shadow-3 select-none', extra]}>
+  <div class="flex items-center justify-between border-b border-rule bg-paper px-4 py-2.5">
+    <p class="m-0 text-[12px] font-bold">Your estimated return</p>
+    <p class="m-0 text-[10px] text-ink-3">1 account manager · $1m revenue · $360/hr</p>
+  </div>
+  <div class:list={['grid gap-2 border-b border-rule px-4 py-2 text-[9px] font-semibold uppercase tracking-[.06em] text-ink-3', cols]}>
+    <span>Module</span><span class="text-right">Hours saved</span><span class:list={['text-right', wide]}>Saved</span><span class:list={['text-right', wide]}>Revenue</span><span class="text-right">Total</span>
+  </div>
+  {rows.map(([m, h, s, r]) => (
+    <div class:list={['grid items-center gap-2 border-b border-rule px-4 py-2 text-[11.5px]', cols]}>
+      <span class="truncate font-semibold">{m}</span>
+      <span class="text-right text-ink-2">{h}</span>
+      <span class:list={['text-right text-ink-2', wide]}>{money(s)}</span>
+      <span class:list={['text-right text-ink-2', wide]}>{money(r)}</span>
+      <span class="text-right font-semibold">{money(s + r)}</span>
+    </div>
+  ))}
+  <div class:list={['grid items-center gap-2 bg-honey-soft px-4 py-2.5 text-[12px] font-bold', cols]}>
+    <span>A year</span><span class="text-right">{hours}</span><span class:list={['text-right', wide]}>{money(saved)}</span><span class:list={['text-right', wide]}>{money(made)}</span><span class="text-right text-ok-deep">{money(saved + made)}</span>
+  </div>
+</div>

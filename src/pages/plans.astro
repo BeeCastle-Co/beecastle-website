@@ -13,7 +13,7 @@ import IconCard from '../components/IconCard.astro';
 import TestimonialCard from '../components/TestimonialCard.astro';
 import CTABand from '../components/CTABand.astro';
 import { planSupport } from '../data/planSupport';
-import heroImage from '../assets/img/plans/bc_home_stack_mobile.webp';
+import heroImage from '../assets/illustrations/integrations-stack.svg';
 
 const plans = (await getCollection('plans')).sort((a, b) => a.data.order - b.data.order);
 const testimonials = (await getCollection('testimonials', ({ data }) => data.featured))
