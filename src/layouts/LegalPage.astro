@@ -1,0 +1,27 @@
+---
+/* Terms, privacy and the data processing addendum: a title, the date last
+   updated and the Markdown body as prose. Content is src/content/legal/. */
+import { render, type CollectionEntry } from 'astro:content';
+import Layout from './Layout.astro';
+import Section from '../components/Section.astro';
+import { formatDate } from '../lib/inline';
+
+interface Props {
+  entry: CollectionEntry<'legal'>;
+}
+const { entry } = Astro.props;
+const d = entry.data;
+const { Content } = await render(entry);
+---
+<Layout title={`${d.title} | BeeCastle`} description={d.summary}>
+  <Section width="prose" class="pt-[128px]">
+    <header class="mb-10 border-b border-rule pb-8">
+      <p class="m-0 mb-3 font-mono text-[12px] font-medium uppercase tracking-[.14em] text-cyan-deep">Legal</p>
+      <h1 class="m-0 text-h1 font-extrabold leading-[1.05]">{d.title}</h1>
+      {d.updated && (
+        <p class="m-0 mt-4 text-[14.5px] text-ink-3">Last updated <time datetime={d.updated.toISOString().slice(0, 10)}>{formatDate(d.updated)}</time></p>
+      )}
+    </header>
+    <div class="prose"><Content /></div>
+  </Section>
+</Layout>

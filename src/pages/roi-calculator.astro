@@ -1,0 +1,193 @@
+---
+/* The time saving and revenue growth calculator, rebuilt from the old site's
+   inline script with the same model:
+     time value per module = hours saved per AM per year x AMs x hourly rate / 30
+     money made per module = dollars per USD 1m of annual revenue x revenue
+   Module figures live in the array below; the table and the script read them. */
+import Layout from '../layouts/Layout.astro';
+import Section from '../components/Section.astro';
+import Button from '../components/Button.astro';
+import CTABand from '../components/CTABand.astro';
+import { site } from '../data/site';
+
+const modules = [
+  { name: 'Customer Engagement', hours: 407, perMillion: 0 },
+  { name: 'Whitespace Finder', hours: 158, perMillion: 33915 },
+  { name: 'Opportunity Assist', hours: 324, perMillion: 20000 },
+  { name: 'Revenue Analyzer', hours: 72, perMillion: 16000 },
+  { name: 'Profitability Analysis', hours: 48, perMillion: 3000 },
+];
+const totalHours = modules.reduce((sum, m) => sum + m.hours, 0);
+
+const inputs = [
+  { id: 'roi-ams', label: 'Number of account managers (including you)', placeholder: '5', step: '1' },
+  { id: 'roi-revenue', label: 'Approximate annual revenue in USD millions', placeholder: '10', step: 'any' },
+  { id: 'roi-rate', label: 'Account manager hourly rate in USD (e.g. 150)', placeholder: '150', step: 'any' },
+];
+
+const cell = 'px-4 py-3 text-right tabular-nums';
+---
+<Layout title="ROI Calculator | BeeCastle" description="See how much time your account managers can save and how much revenue they can generate with BeeCastle. A time saving and revenue growth calculator for MSPs.">
+  <section class="px-gut pb-6 pt-[104px]">
+    <div class="relative mx-auto max-w-wrap overflow-hidden rounded-xl bg-magenta-soft px-[clamp(20px,5vw,64px)] py-[clamp(32px,6vw,72px)] text-center">
+      <div aria-hidden="true" class="pointer-events-none absolute -right-24 -top-24 size-[420px] rounded-full bg-brand-gradient opacity-25 blur-3xl"></div>
+      <div class="relative mx-auto max-w-[760px]">
+        <p class="rv m-0 mb-4 inline-flex items-center gap-2 rounded-full bg-card/80 px-3 py-1 font-mono text-[12px] font-medium uppercase tracking-[.14em] text-ink">
+          <span class="size-2 rounded-full bg-magenta"></span>ROI calculator
+        </p>
+        <h1 class="rv m-0 text-h1 font-extrabold leading-[1.05]">Time saving and revenue growth calculator</h1>
+        <p class="rv m-0 mt-5 text-lede leading-relaxed text-ink-2">See how much time your account managers can save and how much revenue they can generate with BeeCastle.</p>
+        <div class="rv mt-7"><Button href={site.demoUrl} variant="outline" size="lg">Book a demo</Button></div>
+      </div>
+
+      <form id="roi-form" class="relative mx-auto mt-10 grid max-w-[900px] gap-4 rounded-lg bg-card p-[clamp(20px,3vw,32px)] text-left shadow-2 md:grid-cols-[1fr_1fr_1fr_auto] md:items-end" novalidate>
+        {inputs.map((f) => (
+          <label class="grid gap-1.5">
+            <span class="text-[13px] font-semibold leading-snug text-ink-2">{f.label}</span>
+            <input id={f.id} type="number" min="0" step={f.step} inputmode="decimal" required placeholder={f.placeholder}
+                   class="w-full rounded-sm border border-rule-2 bg-card px-3.5 py-2.5 text-[16px] text-ink outline-none transition-colors placeholder:text-ink-3 focus:border-cyan-deep" />
+          </label>
+        ))}
+        <button type="submit" class="cursor-pointer rounded-full bg-honey px-7 py-3 text-[15.5px] font-semibold text-ink transition-colors hover:bg-honey-hover">Calculate</button>
+        <p id="roi-error" class="m-0 text-[14px] font-semibold text-ink md:col-span-4" role="alert" hidden>Enter a number above zero in each field.</p>
+      </form>
+    </div>
+  </section>
+
+  <Section tight>
+    <div id="roi-result" hidden>
+      <div class="rv grid items-center gap-6 rounded-xl bg-navy p-[clamp(24px,4vw,48px)] md:grid-cols-[1fr_auto]">
+        <div>
+          <p class="m-0 font-mono text-[12px] font-medium uppercase tracking-[.14em] text-cyan-light">Annual value add from BeeCastle</p>
+          <p class="m-0 mt-2 text-display font-extrabold leading-none text-honey" id="roi-summary" aria-live="polite">$0</p>
+          <p class="m-0 mt-3 text-[15px] text-navy-muted"><span data-roi="valuePct">0%</span> of your current revenue, <span data-roi="valueMonthly">$0</span> a month.</p>
+        </div>
+        <form name="roi-calculator" method="POST" action="/contact/thanks/" data-netlify="true" netlify-honeypot="company-website" class="grid gap-3 md:w-[360px]">
+          <input type="hidden" name="form-name" value="roi-calculator" />
+          <p hidden><label>Leave this empty <input name="company-website" /></label></p>
+          <input type="hidden" name="accountManagers" />
+          <input type="hidden" name="revenueMillions" />
+          <input type="hidden" name="hourlyRate" />
+          <input type="hidden" name="annualValue" />
+          <label class="grid gap-1.5">
+            <span class="text-[14px] leading-snug text-white">Enter your email for a more in depth analysis of what BeeCastle can do for your business.</span>
+            <input name="email" type="email" required autocomplete="email" placeholder="you@yourmsp.com"
+                   class="w-full rounded-sm border border-navy-line bg-navy-2 px-3.5 py-2.5 text-[15px] text-white outline-none transition-colors placeholder:text-navy-muted focus:border-cyan" />
+          </label>
+          <button type="submit" class="w-fit cursor-pointer rounded-full bg-cyan px-6 py-2.5 text-[14.5px] font-semibold text-ink transition-colors hover:bg-cyan-light">Submit</button>
+        </form>
+      </div>
+
+      <div class="rv mt-8 overflow-x-auto rounded-lg border border-rule bg-card shadow-1">
+        <table class="w-full min-w-[640px] border-collapse text-[15px]">
+          <caption class="sr-only">BeeCastle value by module, per year</caption>
+          <thead class="bg-magenta-soft text-left font-mono text-[12px] uppercase tracking-[.08em] text-ink">
+            <tr>
+              <th scope="col" class="px-4 py-3">BeeCastle module</th>
+              <th scope="col" class="px-4 py-3 text-right">Time saved (hours/AM/yr)</th>
+              <th scope="col" class="px-4 py-3 text-right">Total saved (USD/yr)</th>
+              <th scope="col" class="px-4 py-3 text-right">Money made (USD/yr)</th>
+              <th scope="col" class="px-4 py-3 text-right">Total value (USD/yr)</th>
+            </tr>
+          </thead>
+          <tbody class="text-ink-2">
+            {modules.map((m) => (
+              <tr class="border-t border-rule" data-module data-hours={m.hours} data-per-million={m.perMillion}>
+                <th scope="row" class="px-4 py-3 text-left font-normal">{m.name}</th>
+                <td class={cell}>{m.hours}</td>
+                <td class={cell} data-cell="saved">$0</td>
+                <td class={cell} data-cell="made">$0</td>
+                <td class={cell} data-cell="value">$0</td>
+              </tr>
+            ))}
+          </tbody>
+          <tfoot class="bg-paper-2 font-semibold text-ink">
+            <tr class="border-t-2 border-rule-2">
+              <th scope="row" class="px-4 py-3 text-left">Annual value add from BeeCastle</th>
+              <td class={cell}>{totalHours}</td>
+              <td class={cell} data-roi="saved">$0</td>
+              <td class={cell} data-roi="made">$0</td>
+              <td class={cell} data-roi="value">$0</td>
+            </tr>
+            <tr class="border-t border-rule">
+              <th scope="row" class="px-4 py-3 text-left">Monthly value add from BeeCastle</th>
+              <td class={cell}></td>
+              <td class={cell} data-roi="savedMonthly">$0</td>
+              <td class={cell} data-roi="madeMonthly">$0</td>
+              <td class={cell} data-roi="valueMonthly">$0</td>
+            </tr>
+            <tr class="border-t border-rule">
+              <th scope="row" class="px-4 py-3 text-left">% of current revenue</th>
+              <td class={cell}></td>
+              <td class={cell}></td>
+              <td class={cell} data-roi="madePct">0%</td>
+              <td class={cell} data-roi="valuePct">0%</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </Section>
+
+  <CTABand />
+</Layout>
+
+<script>
+  const form = document.getElementById('roi-form') as HTMLFormElement;
+  const result = document.getElementById('roi-result') as HTMLElement;
+  const error = document.getElementById('roi-error') as HTMLElement;
+  const usd = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+  const value = (id: string) => Number((document.getElementById(id) as HTMLInputElement).value);
+  const set = (key: string, text: string) =>
+    document.querySelectorAll(`[data-roi="${key}"]`).forEach((el) => (el.textContent = text));
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const ams = value('roi-ams');
+    const revenue = value('roi-revenue');
+    const rate = value('roi-rate');
+    if (![ams, revenue, rate].every((n) => Number.isFinite(n) && n > 0)) {
+      error.hidden = false;
+      return;
+    }
+    error.hidden = true;
+
+    let saved = 0;
+    let made = 0;
+    document.querySelectorAll<HTMLElement>('[data-module]').forEach((row) => {
+      const rowSaved = (Number(row.dataset.hours) * ams * rate) / 30;
+      const rowMade = Number(row.dataset.perMillion) * revenue;
+      saved += rowSaved;
+      made += rowMade;
+      row.querySelector('[data-cell="saved"]')!.textContent = usd.format(rowSaved);
+      row.querySelector('[data-cell="made"]')!.textContent = usd.format(rowMade);
+      row.querySelector('[data-cell="value"]')!.textContent = usd.format(rowSaved + rowMade);
+    });
+    const total = saved + made;
+    const pct = (n: number) => `${((n / (revenue * 1_000_000)) * 100).toFixed(1)}%`;
+
+    set('saved', usd.format(saved));
+    set('made', usd.format(made));
+    set('value', usd.format(total));
+    set('savedMonthly', usd.format(saved / 12));
+    set('madeMonthly', usd.format(made / 12));
+    set('valueMonthly', usd.format(total / 12));
+    set('madePct', pct(made));
+    set('valuePct', pct(total));
+    document.getElementById('roi-summary')!.textContent = usd.format(total);
+
+    const fields: Record<string, string> = {
+      accountManagers: String(ams),
+      revenueMillions: String(revenue),
+      hourlyRate: String(rate),
+      annualValue: usd.format(total),
+    };
+    Object.entries(fields).forEach(([name, v]) => {
+      (document.querySelector(`form[name="roi-calculator"] input[name="${name}"]`) as HTMLInputElement).value = v;
+    });
+
+    result.hidden = false;
+    result.querySelectorAll('.rv').forEach((el) => el.classList.add('in'));
+    result.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+  });
+</script>

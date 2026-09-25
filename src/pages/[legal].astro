@@ -1,0 +1,15 @@
+---
+/* The legal pages at the site root, at the addresses they had on the old
+   site: /terms/, /privacy/ and /beecastle-data-processing-addendum/. The
+   file name in src/content/legal/ is the URL. */
+import { getCollection } from 'astro:content';
+import LegalPage from '../layouts/LegalPage.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('legal');
+  return entries.map((entry) => ({ params: { legal: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+---
+<LegalPage entry={entry} />

@@ -1,0 +1,16 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import FormSplit from '../../components/FormSplit.astro';
+import NewsletterForm from '../../components/NewsletterForm.astro';
+---
+<Layout title="Sign Up to the BeeCastle Newsletter"
+        description="Join our mailing list to hear about everything upcoming at BeeCastle including new feature requests and PSA integrations.">
+  <FormSplit hero eyebrow="Newsletter" heading="Sign Up to our Newsletter"
+             lede="Join our mailing list to hear about everything upcoming at BeeCastle including new feature requests and PSA integrations."
+             cardHeading="Sign up for the newsletter here">
+    <div slot="form">
+      <NewsletterForm id="newsletter-page" />
+      <p class="m-0 mt-5 text-[13px] text-ink-3">We handle your details as set out in our <a href="/privacy/" class="font-semibold text-cyan-deep">Privacy Policy</a>.</p>
+    </div>
+  </FormSplit>
+</Layout>

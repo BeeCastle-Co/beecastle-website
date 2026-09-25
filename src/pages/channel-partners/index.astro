@@ -1,0 +1,57 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import FormSplit from '../../components/FormSplit.astro';
+import NetlifyForm, { type FormField } from '../../components/NetlifyForm.astro';
+import { inline } from '../../lib/inline';
+
+const lists = [
+  {
+    heading: 'Why Become a BeeCastle Ambassador?',
+    items: [
+      '**Monetize Your Influence:** Your knowledge and network are invaluable. Partner with us and we’ll turn that influence into a revenue stream.',
+      '**Earn Generous Commissions:** We believe in rewarding our partners handsomely. Our commission structure is designed to ensure you receive significant earnings for the value you provide.',
+      '**Grow with Us:** As BeeCastle expands, so will the opportunities for our ambassadors. Be at the forefront of innovation and growth.',
+      '**Support At Every Step:** We don’t just hand you a toolkit and send you on your way. Our dedicated partner support ensures you have everything you need to succeed.',
+    ],
+  },
+  {
+    heading: 'How It Works',
+    items: [
+      '**Share:** Utilize your established channels to introduce BeeCastle’s cutting-edge solutions to your network.',
+      '**Earn:** Receive attractive commissions for every MSP that joins our platform through your referral.',
+      '**Expand:** Grow your brand alongside ours, and establish yourself as a key player in MSP’s evolutionary journey.',
+    ],
+  },
+];
+
+const fields: FormField[] = [
+  { name: 'name', label: 'Name', autocomplete: 'name' },
+  { name: 'email', label: 'Email Address', type: 'email', autocomplete: 'email' },
+  { name: 'about', label: 'Tell us about yourself, including your preferred geographical area or state of focus', type: 'textarea' },
+];
+---
+<Layout title="Join the BeeCastle Ambassador Program"
+        description="Are you a trusted voice in the MSP community? Become a BeeCastle ambassador and earn generous commissions for every MSP you refer.">
+  <FormSplit hero eyebrow="Channel partners" heading="Join Our Ambassador Program"
+             cardHeading="Ready to make an impact?"
+             cardLede="Fill in your details and let us know a bit about yourself, your reach, and how you envision this partnership.">
+    <h2 class="m-0 mt-5 text-[clamp(22px,2vw,28px)] font-bold leading-[1.2] text-ink-2">Unlock the Potential of Your Network</h2>
+    <p class="m-0 mt-4 max-w-[60ch] text-lede leading-relaxed text-ink-2">
+      Are you a trusted voice in the MSP community? Do you lead conversations that shape the industry? If you’re nodding yes, then we have an opportunity for you to shine even brighter.
+    </p>
+    {lists.map((list) => (
+      <>
+        <h3 class="m-0 mt-9 text-h3 font-bold">{list.heading}</h3>
+        <ul class="m-0 mt-4 grid list-none gap-3 p-0 text-[16.5px] leading-relaxed text-ink-2 [&_strong]:text-ink">
+          {list.items.map((item) => (
+            <li class="flex gap-3"><span class="mt-2.5 size-1.5 shrink-0 rounded-full bg-honey"></span><span set:html={inline(item)} /></li>
+          ))}
+        </ul>
+      </>
+    ))}
+    <p class="m-0 mt-9 max-w-[60ch] text-[16.5px] leading-relaxed text-ink-2">
+      We’re excited to welcome you to the BeeCastle family, where your network isn’t just a list of contacts: it’s the key to your next level of success.
+    </p>
+    <NetlifyForm slot="form" name="channel-partners" action="/channel-partners/thanks/" fields={fields} submit="Submit" />
+  </FormSplit>
+</Layout>

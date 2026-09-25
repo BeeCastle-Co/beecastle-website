@@ -1,0 +1,12 @@
+---
+/* /demo-landing-whitespace/, /demo-landing-profitability/ and
+   /demo-landing-relationship/, from src/data/demos.ts. */
+import DemoLandingPage from '../components/demo/DemoLandingPage.astro';
+import { demos, type Demo } from '../data/demos';
+
+export function getStaticPaths() {
+  return demos.map((demo) => ({ params: { slug: demo.slug }, props: { demo } }));
+}
+const { demo } = Astro.props as { demo: Demo };
+---
+<DemoLandingPage demo={demo} />

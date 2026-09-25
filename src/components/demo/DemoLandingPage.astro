@@ -1,0 +1,70 @@
+---
+/* One demo landing page (/demo-landing-<slug>/): the pitch, a lead form that
+   sends people on to the matching watch page, what BeeCastle is, how set-up
+   works, and the customer logo wall. Content comes from src/data/demos.ts. */
+import { Image } from 'astro:assets';
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../PageHero.astro';
+import Button from '../Button.astro';
+import Section from '../Section.astro';
+import SectionIntro from '../SectionIntro.astro';
+import Illustration from '../Illustration.astro';
+import FormSplit from '../FormSplit.astro';
+import NetlifyForm, { type FormField } from '../NetlifyForm.astro';
+import TrustLogos from '../TrustLogos.astro';
+import CTABand from '../CTABand.astro';
+import DemoSteps from './DemoSteps.astro';
+import { demoHighlights, type Demo } from '../../data/demos';
+import stack from '../../assets/img/bc_home_stack_mobile_2.webp';
+import cover from '../../assets/img/demo-video-cover.webp';
+
+interface Props {
+  demo: Demo;
+}
+const { demo } = Astro.props;
+const l = demo.landing;
+
+const fields: FormField[] = [
+  { name: 'firstName', label: 'First Name', autocomplete: 'given-name' },
+  { name: 'lastName', label: 'Last Name', autocomplete: 'family-name' },
+  { name: 'email', label: 'Work Email Address', type: 'email', autocomplete: 'email', wide: true },
+  { name: 'companyName', label: 'Company Name', autocomplete: 'organization' },
+  { name: 'phone', label: 'Phone Number', type: 'tel', autocomplete: 'tel' },
+];
+---
+<Layout title={l.title} description={l.description}>
+  <PageHero eyebrow="Product demo" headline={l.heading} intro={[l.lede]} image={stack} imageAlt="BeeCastle integrations" ctas={false}>
+    <div class="rv mt-8"><Button href="#demo-form" size="lg">Watch the demo</Button></div>
+  </PageHero>
+
+  <FormSplit id="demo-form" heading={`See ${demo.name} in action`}
+             lede="Share your details to see our all-access demos showing you how BeeCastle can help your MSP grow revenue, profitability and customer satisfaction through the power of your PSA data."
+             cardHeading="Start demo now">
+    <Image src={cover} alt="A still from the BeeCastle product demo" widths={[480, 800]} sizes="(max-width: 1024px) 100vw, 560px"
+           class="mt-8 h-auto w-full rounded-lg shadow-3" />
+    <NetlifyForm slot="form" name="demo-request" action={`/demo-watch-${demo.slug}/`} fields={fields}
+                 submit="Watch the demo" hidden={{ demo: demo.slug }} />
+  </FormSplit>
+
+  <Section tone="white">
+    <SectionIntro heading="What is BeeCastle" align="center" />
+    <ul class="m-0 grid list-none gap-5 p-0 sm:grid-cols-2 lg:grid-cols-4">
+      {demoHighlights.map((h) => (
+        <li class="rv rounded-lg border border-rule bg-paper p-7 text-center">
+          <Illustration name={h.illustration} class="mx-auto h-28 w-auto" />
+          <h3 class="m-0 mt-5 text-h3 font-bold">{h.title}</h3>
+          <p class="m-0 mt-2 text-[15.5px] leading-relaxed text-ink-2">{h.body}</p>
+        </li>
+      ))}
+    </ul>
+    <div class="mt-10 text-center"><Button href="#demo-form" size="lg">Watch the demo</Button></div>
+  </Section>
+
+  <DemoSteps>
+    <div class="mt-10 text-center"><Button href="#demo-form" size="lg">Watch the demo</Button></div>
+  </DemoSteps>
+
+  <TrustLogos heading="Technology companies trust BeeCastle to supercharge their growth" />
+
+  <CTABand heading="Ready to see how BeeCastle can help you grow revenue, profitability and customer satisfaction at your MSP?" />
+</Layout>

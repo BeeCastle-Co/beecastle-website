@@ -1,0 +1,197 @@
+# BeeCastle Website
+
+Marketing site for [BeeCastle](https://www.beecastle.com), customer success,
+revenue analytics and whitespace for MSPs. **Astro 7 + Tailwind 4**, static,
+hosted on Netlify. It replaces the old Hugo + CloudCannon Bookshop site and is
+being rebuilt alongside the product rewrite in `../beecastle-server`.
+
+Content currently lives in Markdown under `src/content/`. Contentful is the
+planned headless CMS (see "Moving to Contentful" below); it is not wired up yet.
+
+---
+
+## The rules that matter most
+
+### 1. Astro components and Markdown, never raw HTML pages
+
+| Want to | Create | Not |
+|---|---|---|
+| a new page | `src/pages/thing.astro` | `thing.html` |
+| a blog post | `src/content/blog/slug.md` | an HTML page |
+| a product, solution or integration page | `src/content/<collection>/slug.md` | a new `.astro` page |
+| a reusable block | `src/components/Thing.astro` | the same markup pasted twice |
+| a fixed list (nav links, categories) | a typed array in `src/data/` | repeated hand-written blocks |
+
+### 2. Three of anything is a structure
+
+The moment a third testimonial, plan, card or logo gets pasted in by hand, stop
+and make it a collection entry or a data array rendered by one component.
+`pnpm find-repeats` reports blocks written out three or more times.
+
+**Prefer a collection when in doubt.** A collection maps one to one onto a
+Contentful content type later; markup pasted into a page has to be unpicked.
+
+### 3. Every piece of content has its own URL. No modals.
+
+Products, posts, integrations and people are pages. "Book a demo" is a real
+link to the HubSpot meetings page (`site.demoUrl`), not a popup.
+
+**Old URLs are kept exactly** (`/products/revenue-analytics/`,
+`/excellence_in_account_management/`, `/blog/<slug>/`) so links and search
+rankings carry over from the old site. Do not rename a path without adding a
+redirect in `astro.config.mjs` or `netlify.toml`.
+
+### 4. Never scripts that edit source files
+
+Edit the file. If a change is too repetitive to do by hand, the markup should
+be a component with data. The only scripts in `scripts/` are read-only checks.
+
+### 5. Never invent a colour, font or spacing value
+
+Every value lives in the `@theme` block in `src/styles/global.css`, lifted from
+the product design system (`../beecastle-server/src/lib/tokens.ts`). Use tokens:
+`bg-navy text-honey px-gut py-sec`, never `bg-[#172739]`. Need a new value? Add
+a token.
+
+- **Honey** (`#FFCC00`) is the bee and the primary CTA. Keep it scarce.
+- **Cyan, periwinkle, mint, magenta** are fills and tints, never body text.
+  Cyan on white is 1.9:1. Link text on light grounds is `text-cyan-deep`.
+- **Navy** (`#172739`) is the ink and the dark sections. Never pure black.
+- Per-page accent colours go through the `accent` field and `src/lib/accents.ts`.
+
+### 6. Never use an em dash
+
+Not in copy, code comments or commit messages. Use a colon, comma, full stop
+or brackets, or rewrite the sentence. En dashes are fine for ranges
+(`2024–2026`). `pnpm build` runs `scripts/check-dashes.mjs` and fails on one.
+
+### 7. Brand assets: do not invent a logo
+
+The bee is the logo. Use `public/logo-beecastle*.svg` (copied from
+beecastle-server) and the illustrations in `src/assets/illustrations/`
+(navy linework, periwinkle to mint gradient, honey bee). Render them with
+`<Illustration name="hive" />`. Never draw a substitute bee.
+
+### 8. Images go in `src/assets/`, never `public/`
+
+Import and render with `<Image>` from `astro:assets` so Astro emits sized webp.
+Content images are referenced by relative path from the Markdown file. The one
+image at the top of a page gets `loading="eager" fetchpriority="high"`.
+`public/` is only for fixed-URL files: favicons, logos, the OG image, the hero video.
+
+### 9. Minimum 11px text, 4.5:1 contrast
+
+Muted text on light grounds is `text-ink-3`; on navy it is `text-navy-muted`.
+They are not interchangeable.
+
+### 10. Run `pnpm build` before committing
+
+A broken build is a failed deploy. Content schemas are checked at build time.
+
+### 11. Run the `no-ai-slop` skill on new copy
+
+New or rewritten copy goes through it first. Copy ported from the old site is
+kept as written, apart from typo and em dash fixes.
+
+---
+
+## Running it
+
+Node 22.12+ (`.node-version` pins 24.15.0) and **pnpm** (never npm: two
+lockfiles means Netlify may build different dependencies than you tested).
+
+```bash
+pnpm install
+pnpm dev            # Astro 7 runs this as a background daemon; see `pnpm astro dev logs`
+pnpm build          # production build into dist/, after the em dash check
+pnpm preview
+pnpm check          # type-check .astro files
+pnpm find-repeats   # report hand-repeated blocks (read only)
+```
+
+## Where things live
+
+```
+src/
+  pages/          One file per URL, plus [slug] routes for the collections
+  layouts/        Layout (the shell), FeaturePage (products/solutions/integrations),
+                  LegalPage
+  components/     Reusable pieces. components/home/ is the homepage, in order
+  content/        Markdown, one file per entry. Schemas in src/content.config.ts
+    blog/           73 posts ported from the old site
+    products/ solutions/ integrations/   feature pages, one schema
+    testimonials/ plans/ legal/
+  data/           nav.ts, site.ts (emails, URLs), categories.ts
+  assets/         img/ (photos, screenshots), blog/<slug>/, illustrations/ (brand SVGs)
+  styles/         global.css: tokens and base styles
+  lib/            inline.ts (tiny Markdown for frontmatter strings), accents.ts
+public/           favicons, logos, og-default.png, videos/
+docs/private/     internal notes. Gitignored: never commit anything from here
+scripts/          read-only checks
+```
+
+### What the owner asks for, and where it lives
+
+| They say | You change |
+|---|---|
+| "change a product page" | `src/content/products/<slug>.md` |
+| "add a blog post" | a new `.md` in `src/content/blog/` |
+| "add a link to the menu" | `src/data/nav.ts` (products/solutions/integrations are automatic) |
+| "change the footer" | `footerColumns` in `src/data/nav.ts`, contact details in `src/data/site.ts` |
+| "change pricing" | `src/content/plans/*.md` |
+| "add a testimonial" | a new `.md` in `src/content/testimonials/` |
+| "change the terms / privacy policy" | `src/content/legal/*.md` |
+
+### Feature pages (products, solutions, integrations)
+
+All three collections share one schema (`featurePage` in `content.config.ts`)
+and one template (`src/layouts/FeaturePage.astro`): hero, optional overview
+with jump links, alternating image and text sections, sign-up panel, closing
+CTA band. `src/content/products/revenue-analytics.md` is the worked example.
+Frontmatter strings allow `**bold**`, `*italic*` and `[links](/x/)` only.
+
+### Blog
+
+Filename is the URL. Frontmatter: `title`, `date`, `categories` (slugs from
+`src/data/categories.ts`), `summary`, optional `image` (relative path into
+`src/assets/blog/<slug>/`), `draft`. Category listings live at
+`/categories/<slug>/`, as on the old site.
+
+### Forms
+
+- **Sign up**: GETs `site.signupUrl` with `?email=`, as the old site did.
+  Check this against the rewrite before launch.
+- **Everything else** (contact, newsletter, downloads, demo requests): Netlify
+  Forms. Build new ones with `NetlifyForm.astro` from a list of fields, not by
+  hand. Submissions appear in the Netlify dashboard; set up notifications there.
+- **Dev server gotcha**: Tailwind sometimes misses classes in files created
+  after `pnpm dev` started. If a new page looks unstyled, restart the server
+  before touching the markup.
+
+## Moving to Contentful
+
+The pattern: a small client in `src/lib/contentful.ts` that returns `null`
+when the env vars are missing, so the site still builds without them. The plan:
+
+1. Create one Contentful content type per collection, one field per frontmatter
+   field (`featureSection` becomes its own type, referenced from `sections`).
+2. Replace the `glob()` loader in `content.config.ts` with a Contentful loader
+   for that collection. Pages and components do not change: they only see
+   `getCollection()`.
+3. Add a Netlify build hook triggered by Contentful publish.
+
+## Deploying
+
+Netlify builds `pnpm build` and publishes `dist/` (see `netlify.toml`). Branch
+and preview deploys send `X-Robots-Tag: noindex` and robots.txt disallows them.
+Work on a branch; check the preview; merge.
+
+## Status
+
+- [x] Scaffold, tokens from the product design system, Layout, Nav, Footer
+- [x] Blog: 73 posts, categories, RSS
+- [x] Every page on the old sitemap ported (migration notes and open decisions
+      are kept locally in `docs/private/`, which is never committed)
+- [ ] Replace legacy app screenshots with screenshots of the rewrite
+- [ ] Sign-up flow pointed at the rewrite
+- [ ] Contentful

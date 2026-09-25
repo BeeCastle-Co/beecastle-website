@@ -1,0 +1,48 @@
+---
+/* Paid landing pages: /lp/whitespace-prospecting/ and /lp/connectwise-manage/.
+   Content lives in src/data/landingPages.ts. */
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
+import FeatureOverview from '../../components/FeatureOverview.astro';
+import FeatureSection from '../../components/FeatureSection.astro';
+import Section from '../../components/Section.astro';
+import SectionIntro from '../../components/SectionIntro.astro';
+import ActionBand from '../../components/ActionBand.astro';
+import TrustLogos from '../../components/TrustLogos.astro';
+import SignupPanel from '../../components/SignupPanel.astro';
+import CTABand from '../../components/CTABand.astro';
+import { landingPages, type LandingPage } from '../../data/landingPages';
+import { slugify } from '../../lib/inline';
+
+export function getStaticPaths() {
+  return landingPages.map((page) => ({ params: { slug: page.slug }, props: { page } }));
+}
+const { page: p } = Astro.props as { page: LandingPage };
+const sections = p.sections.map((s) => ({ ...s, id: slugify(s.heading) }));
+---
+<Layout title={p.title} description={p.description} image={p.image.src}>
+  <PageHero eyebrow={p.eyebrow} headline={p.headline} intro={p.intro} image={p.image} imageAlt={p.imageAlt} />
+
+  {p.overview && (
+    <FeatureOverview heading={p.overview.heading} body={p.overview.body}
+                     links={sections.map((s) => ({ id: s.id, label: s.heading }))} />
+  )}
+
+  {p.statement && (
+    <Section width="prose" tight>
+      <SectionIntro heading={p.statement.heading} lede={p.statement.body} />
+    </Section>
+  )}
+
+  {p.band && <ActionBand {...p.band} />}
+
+  {p.lead && <FeatureSection {...p.lead} />}
+
+  {sections.map((s, i) => <FeatureSection {...s} reverse={i % 2 === 1} />)}
+
+  {p.trust && <TrustLogos heading={p.trust} />}
+
+  <CTABand heading={p.closing} />
+
+  {p.signup && <SignupPanel lede="Create a free trial account today." />}
+</Layout>

@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+import DownloadHero from '../components/DownloadHero.astro';
+import { downloads } from '../data/downloads';
+---
+<Layout title="Security White Paper | BeeCastle" description="BeeCastle has total commitment to the security of your data. Download our security white paper: application controls, encryption, infrastructure and data centres.">
+  <DownloadHero
+    eyebrow="Security white paper"
+    headline="BeeCastle Has Total Commitment to the Security of Your Data"
+    lede="Fill out the form to download our security white paper."
+    contents={[
+      'Internal Application Controls',
+      'Software Build and Deployment Controls',
+      'Encryption, APIs and Data Storage',
+      'Infrastructure Management',
+      'Data Centre and Services',
+      'Other 3rd Party Services',
+    ]}
+    download={downloads.security}
+  />
+</Layout>

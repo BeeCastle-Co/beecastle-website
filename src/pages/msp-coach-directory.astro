@@ -1,0 +1,43 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import Button from '../components/Button.astro';
+import Section from '../components/Section.astro';
+import ActionBand from '../components/ActionBand.astro';
+import TrustLogos from '../components/TrustLogos.astro';
+import CTABand from '../components/CTABand.astro';
+import logo from '../assets/img/coach-directory-logo.png';
+
+const COACH_DIRECTORY = 'https://mspcoach.directory/';
+const bullets = [
+  'Explore tailored coaching categories: Sales, scalability, financial planning, and more.',
+  'Read reviews and testimonials from other MSP owners.',
+  'Effortlessly find the right coach for your needs.',
+];
+---
+<Layout title="MSP Coach Directory | BeeCastle"
+        description="Find your path to MSP success. The MSP Coach Directory connects you with proven coaches in sales, scalability and financial planning.">
+  <PageHero eyebrow="BeeCastle" headline="MSP Coach Directory" intro={['Find your path to MSP success']}
+            image={logo} imageAlt="BeeCastle MSP Coach Directory logo" accent="mint" ctas={false}>
+    <div class="rv mt-8"><Button href={COACH_DIRECTORY} size="lg">Find a coach</Button></div>
+  </PageHero>
+
+  <Section width="prose">
+    <div class="rv grid gap-4 text-[18px] leading-relaxed text-ink-2">
+      <p class="m-0 text-h3 font-bold text-ink">Looking to scale your MSP business?</p>
+      <p class="m-0">Discover top-tier coaches who specialize in unlocking profitability and driving sustainable growth.</p>
+      <p class="m-0">The MSP Coach Directory connects you with proven experts offering actionable strategies for every stage of your journey.</p>
+    </div>
+    <ul class="rv m-0 mt-6 grid list-none gap-3 p-0 text-[17px] leading-relaxed text-ink-2">
+      {bullets.map((b) => (
+        <li class="flex gap-3"><span class="mt-2.5 size-1.5 shrink-0 rounded-full bg-mint"></span><span>{b}</span></li>
+      ))}
+    </ul>
+  </Section>
+
+  <ActionBand heading="Sign up now and show your coach you mean it!" label="Get Started" href="/sign-up/" />
+
+  <TrustLogos />
+
+  <CTABand heading="Ready to see how BeeCastle can improve your business relationships?" />
+</Layout>

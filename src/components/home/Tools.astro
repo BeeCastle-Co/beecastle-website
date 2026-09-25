@@ -1,0 +1,30 @@
+---
+/* The four headline tools, each linking to its product page. */
+import Section from '../Section.astro';
+import SectionIntro from '../SectionIntro.astro';
+import Illustration from '../Illustration.astro';
+import Icon from '../Icon.astro';
+
+const tools = [
+  { name: 'Whitespace & prospecting', blurb: 'Find the gaps in your service and product penetration across all accounts.', icon: 'whitespace', href: '/products/whitespace-prospecting/' },
+  { name: 'Revenue tracking dashboards', blurb: 'Ready-made dashboards and reporting to visualise, analyse and take action.', icon: 'revenue-dashboard', href: '/products/revenue-analytics/' },
+  { name: 'Customer tiering', blurb: 'Be more intentional about how you nurture accounts through revenue contribution tiering.', icon: 'tiering', href: '/products/account-profitability/' },
+  { name: 'Automated CRM logging', blurb: 'Ditch manual logging. Automatically record activities from M365 and Teams into your CRM.', icon: 'crm-logging', href: '/products/account-insights/' },
+];
+---
+<Section tone="white">
+  <SectionIntro eyebrow="Products" heading="The account growth tools every MSP needs"
+    lede="BeeCastle can turn any account manager into a data-driven super-closer, with these tools at their fingertips." />
+  <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    {tools.map((t) => (
+      <a href={t.href} class="rv group flex flex-col rounded-lg border border-rule bg-paper p-6 no-underline transition-all duration-300 hover:-translate-y-1 hover:border-cyan hover:bg-card hover:shadow-3">
+        <Illustration name={t.icon} class="h-28 w-auto self-start transition-transform duration-500 group-hover:scale-105" />
+        <h3 class="m-0 mt-6 text-[19px] font-bold">{t.name}</h3>
+        <p class="m-0 mt-2 flex-1 text-[15px] text-ink-3">{t.blurb}</p>
+        <span class="mt-5 inline-flex items-center gap-1.5 text-[14px] font-semibold text-cyan-deep">
+          Learn more <Icon name="arrow" class="size-4 transition-transform group-hover:translate-x-1" />
+        </span>
+      </a>
+    ))}
+  </div>
+</Section>

@@ -1,0 +1,17 @@
+---
+/* "Trusted by" band. The logo wall is a single image from the old site.
+   TODO: replace with individual logo files once brand-use approval is on
+   record, so each can be sized, greyed and swapped independently. */
+import { Image } from 'astro:assets';
+import logos from '../../assets/img/bc_logo_grid_sm.webp';
+---
+<section class="px-gut py-[clamp(48px,6vw,88px)]">
+  <div class="mx-auto max-w-wrap">
+    <h2 class="rv m-0 mx-auto max-w-[36ch] text-center text-[clamp(20px,2vw,26px)] font-bold leading-snug text-ink">
+      More and more technology companies trust BeeCastle to retain customers, reduce churn and supercharge their growth
+    </h2>
+    <Image src={logos} alt="Logos of MSPs using BeeCastle, including Control Networks, Rapid Circle, Belton, AfterDark, Fuse and Turrito"
+           widths={[640, 1000, 1400]} sizes="(max-width: 1240px) 100vw, 1100px"
+           class="rv mx-auto mt-10 h-auto w-full max-w-[1100px] opacity-80 mix-blend-multiply grayscale" />
+  </div>
+</section>

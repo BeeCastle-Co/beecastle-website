@@ -1,0 +1,207 @@
+---
+/* Fixed header with dropdown menus.
+
+   Dropdowns are native <details> elements sharing one name, so only one is
+   open at a time and they work with a keyboard and without JavaScript. The
+   script at the bottom only adds niceties: close on outside click, on Escape
+   and after following a link.
+
+   Products, Solutions and Integrations come from their content collections,
+   so a new product .md appears here on its own. */
+import { getCollection } from 'astro:content';
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+import Illustration from './Illustration.astro';
+import { resources, pricing } from '../data/nav';
+import { site } from '../data/site';
+
+const byOrder = (a: { data: { order: number } }, b: { data: { order: number } }) => a.data.order - b.data.order;
+const products = (await getCollection('products', ({ data }) => !data.draft)).sort(byOrder);
+const solutions = (await getCollection('solutions', ({ data }) => !data.draft)).sort(byOrder);
+const integrations = (await getCollection('integrations', ({ data }) => !data.draft)).sort(byOrder);
+
+const path = Astro.url.pathname;
+const inSection = (prefix: string) => path.startsWith(prefix);
+
+const summaryClass =
+  'flex cursor-pointer list-none items-center gap-1 rounded-full px-3 py-2 text-[14.5px] font-semibold text-ink-2 transition-colors hover:bg-paper-2 hover:text-ink [&::-webkit-details-marker]:hidden';
+const panelClass =
+  'absolute left-1/2 top-[calc(100%+10px)] -translate-x-1/2 rounded-lg border border-rule bg-card p-3 shadow-3';
+const itemClass = 'block rounded-md px-3 py-2.5 no-underline transition-colors hover:bg-paper-2';
+---
+
+<header class="fixed inset-x-0 top-0 z-50 px-gut pt-3">
+  <nav
+    aria-label="Main"
+    class="mx-auto flex max-w-wrap items-center gap-2 rounded-full border border-rule/80 bg-card/85 py-2 pl-5 pr-2 shadow-2 backdrop-blur-xl backdrop-saturate-150"
+  >
+    <a href="/" aria-label="BeeCastle home" class="mr-4 shrink-0">
+      <img src="/logo-beecastle-full.svg" alt="BeeCastle" width="150" height="21" class="h-[21px] w-auto" />
+    </a>
+
+    <ul class="m-0 flex list-none items-center gap-0.5 p-0 max-lg:hidden" data-menus>
+      <li class="relative">
+        <details name="nav" class="group">
+          <summary class:list={[summaryClass, inSection('/products') && 'text-ink']}>
+            Products <Icon name="chevron" class="size-3.5 transition-transform group-open:rotate-180" />
+          </summary>
+          <div class:list={[panelClass, 'grid w-[720px] grid-cols-2 gap-1']}>
+            {products.map((p) => (
+              <a href={`/products/${p.id}/`} class:list={[itemClass, 'flex items-start gap-3']}>
+                {p.data.icon && <Illustration name={p.data.icon} class="mt-0.5 w-14 shrink-0" />}
+                <span>
+                  <span class="block text-[14.5px] font-bold text-ink">{p.data.name}</span>
+                  <span class="block text-[13px] leading-snug text-ink-3">{p.data.summary}</span>
+                </span>
+              </a>
+            ))}
+          </div>
+        </details>
+      </li>
+
+      <li class="relative">
+        <details name="nav" class="group">
+          <summary class:list={[summaryClass, inSection('/solutions') && 'text-ink']}>
+            Solutions <Icon name="chevron" class="size-3.5 transition-transform group-open:rotate-180" />
+          </summary>
+          <div class:list={[panelClass, 'w-[400px]']}>
+            {solutions.map((s) => (
+              <a href={`/solutions/${s.id}/`} class={itemClass}>
+                <span class="block text-[14.5px] font-bold text-ink">{s.data.name}</span>
+                <span class="block text-[13px] leading-snug text-ink-3">{s.data.summary}</span>
+              </a>
+            ))}
+          </div>
+        </details>
+      </li>
+
+      <li class="relative">
+        <details name="nav" class="group">
+          <summary class:list={[summaryClass, (inSection('/blog') || inSection('/integrations')) && 'text-ink']}>
+            Resources <Icon name="chevron" class="size-3.5 transition-transform group-open:rotate-180" />
+          </summary>
+          <div class:list={[panelClass, 'grid w-[820px] grid-cols-4 gap-4 p-5']}>
+            {resources.map((group) => (
+              <div>
+                <p class="m-0 mb-2 px-3 font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">{group.heading}</p>
+                {group.links.map((l) => (
+                  <a href={l.href} class:list={[itemClass, 'py-2 text-[14px] font-semibold text-ink']} {...(l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{l.label}</a>
+                ))}
+              </div>
+            ))}
+            <div>
+              <p class="m-0 mb-2 px-3 font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">Integrations</p>
+              {integrations.map((i) => (
+                <a href={`/integrations/${i.id}/`} class:list={[itemClass, 'py-2 text-[14px] font-semibold text-ink']}>{i.data.name}</a>
+              ))}
+            </div>
+          </div>
+        </details>
+      </li>
+
+      <li class="relative">
+        <details name="nav" class="group">
+          <summary class:list={[summaryClass, (inSection('/plans') || inSection('/roi-calculator')) && 'text-ink']}>
+            Pricing <Icon name="chevron" class="size-3.5 transition-transform group-open:rotate-180" />
+          </summary>
+          <div class:list={[panelClass, 'w-[240px]']}>
+            {pricing.map((l) => <a href={l.href} class:list={[itemClass, 'text-[14.5px] font-semibold text-ink']}>{l.label}</a>)}
+          </div>
+        </details>
+      </li>
+
+      <li>
+        <a href="/about/" aria-current={inSection('/about') ? 'page' : undefined} class:list={[summaryClass, 'no-underline']}>About</a>
+      </li>
+    </ul>
+
+    <div class="ml-auto flex items-center gap-2 max-lg:hidden">
+      <a href={site.signInUrl} class="px-3 text-[14.5px] font-semibold text-ink-2 no-underline hover:text-ink">Sign in</a>
+      <Button href={site.demoUrl} variant="outline">Book a demo</Button>
+      <Button href="/sign-up/">Get started</Button>
+    </div>
+
+    <button
+      id="navBurger"
+      type="button"
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="navPanel"
+      class="ml-auto hidden size-11 cursor-pointer place-items-center rounded-full border border-rule bg-card text-ink max-lg:grid"
+    >
+      <Icon name="menu" class="size-5" />
+    </button>
+  </nav>
+
+  <!-- Mobile panel. Hidden from assistive tech and keyboard until opened. -->
+  <div
+    id="navPanel"
+    hidden
+    class="mx-auto mt-2 max-h-[calc(100dvh-90px)] max-w-wrap overflow-y-auto rounded-lg border border-rule bg-card p-4 shadow-3 lg:hidden"
+  >
+    {[
+      { label: 'Products', links: products.map((p) => ({ label: p.data.name, href: `/products/${p.id}/` })) },
+      { label: 'Solutions', links: solutions.map((s) => ({ label: s.data.name, href: `/solutions/${s.id}/` })) },
+      { label: 'Integrations', links: integrations.map((i) => ({ label: i.data.name, href: `/integrations/${i.id}/` })) },
+      { label: 'Resources', links: resources.flatMap((g) => g.links) },
+      { label: 'Pricing', links: pricing },
+    ].map((group) => (
+      <details class="group border-b border-rule">
+        <summary class="flex cursor-pointer list-none items-center justify-between py-3.5 text-[16px] font-bold text-ink [&::-webkit-details-marker]:hidden">
+          {group.label} <Icon name="chevron" class="size-4 transition-transform group-open:rotate-180" />
+        </summary>
+        <ul class="m-0 list-none pb-3 pl-0">
+          {group.links.map((l) => (
+            <li><a href={l.href} class="block rounded-md px-2 py-2 text-[15px] font-medium text-ink-2 no-underline hover:bg-paper-2">{l.label}</a></li>
+          ))}
+        </ul>
+      </details>
+    ))}
+    <a href="/about/" class="block border-b border-rule py-3.5 text-[16px] font-bold text-ink no-underline">About</a>
+    <a href={site.signInUrl} class="block py-3.5 text-[16px] font-bold text-ink no-underline">Sign in</a>
+    <div class="mt-2 grid gap-2">
+      <Button href="/sign-up/" size="lg">Get started</Button>
+      <Button href={site.demoUrl} variant="outline" size="lg">Book a demo</Button>
+    </div>
+  </div>
+</header>
+
+<script>
+  const menus = document.querySelectorAll<HTMLDetailsElement>('[data-menus] details');
+
+  const closeMenus = () => menus.forEach((d) => (d.open = false));
+
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    if (!target.closest('[data-menus] details') || target.closest('a')) closeMenus();
+  });
+
+  const burger = document.getElementById('navBurger');
+  const panel = document.getElementById('navPanel');
+
+  const setPanel = (open: boolean) => {
+    if (!burger || !panel) return;
+    panel.hidden = !open;
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  };
+
+  burger?.addEventListener('click', () => setPanel(!!panel?.hidden));
+  panel?.addEventListener('click', (e) => {
+    if ((e.target as HTMLElement).closest('a')) setPanel(false);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    closeMenus();
+    if (panel && !panel.hidden) {
+      setPanel(false);
+      burger?.focus();
+    }
+  });
+
+  /* Resizing up to desktop must not leave the mobile panel stranded open. */
+  matchMedia('(min-width: 1024px)').addEventListener('change', (e) => {
+    if (e.matches) setPanel(false);
+  });
+</script>

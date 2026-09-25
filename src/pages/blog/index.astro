@@ -1,0 +1,12 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import BlogListing from '../../components/BlogListing.astro';
+import CTABand from '../../components/CTABand.astro';
+import { getPosts } from '../../lib/blog';
+
+const posts = await getPosts();
+---
+<Layout title="Blog | BeeCastle" description="Ideas, guides and product news for MSPs: account management, whitespace, profitability, goal setting and growing recurring revenue.">
+  <BlogListing heading="Insights for growing MSPs" lede="Account management, whitespace, profitability and goal setting, plus everything new in BeeCastle." posts={posts} />
+  <CTABand />
+</Layout>

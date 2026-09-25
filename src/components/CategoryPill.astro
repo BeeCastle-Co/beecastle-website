@@ -1,0 +1,13 @@
+---
+/* A blog category label. Links to the category page unless link is false
+   (inside a card that is already a link, a nested link is invalid). */
+import { categories, type CategorySlug } from '../data/categories';
+interface Props {
+  slug: CategorySlug;
+  link?: boolean;
+}
+const { slug, link = true } = Astro.props;
+const c = categories[slug];
+const cls = `inline-flex rounded-full px-2.5 py-1 font-mono text-[11px] font-medium uppercase tracking-[.1em] no-underline ${c.tone}`;
+---
+{link ? <a href={`/categories/${slug}/`} class={cls}>{c.label}</a> : <span class={cls}>{c.label}</span>}

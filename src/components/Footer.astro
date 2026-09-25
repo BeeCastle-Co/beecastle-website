@@ -1,0 +1,74 @@
+---
+/* Site footer. Link columns come from footerColumns in src/data/nav.ts and
+   contact details from src/data/site.ts. */
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+import Illustration from './Illustration.astro';
+import NewsletterForm from './NewsletterForm.astro';
+import { footerColumns } from '../data/nav';
+import { site } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+<footer class="relative mt-10 bg-navy px-gut pb-10 pt-20 text-navy-muted">
+  <Illustration name="bee" class="absolute -top-9 right-[max(var(--spacing-gut),calc((100%-var(--container-wrap))/2))] w-20 rotate-[-8deg]" />
+
+  <div class="mx-auto grid max-w-wrap gap-12 lg:grid-cols-[1.1fr_2fr]">
+    <div>
+      <img src="/logo-beecastle-full-white-text.svg" alt="BeeCastle" width="170" height="24" class="h-6 w-auto" />
+      <p class="mb-6 mt-5 max-w-[34ch] text-[15px] leading-relaxed">
+        Customer success, revenue analytics and whitespace for managed service providers.
+      </p>
+      <div class="flex flex-wrap gap-2">
+        <Button href="/sign-up/">Get started</Button>
+        <Button href={site.demoUrl} variant="light">Book a demo</Button>
+      </div>
+      <ul class="m-0 mt-8 flex list-none gap-2 p-0">
+        {site.social.map((s) => (
+          <li>
+            <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label}
+               class="grid size-10 place-items-center rounded-full border border-navy-line text-white transition-colors hover:border-cyan hover:text-cyan">
+              <Icon name={s.icon} class="size-4" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="grid gap-10 sm:grid-cols-2 md:grid-cols-4">
+      {footerColumns.map((col) => (
+        <div>
+          <h2 class="m-0 mb-4 font-mono text-[12px] font-medium uppercase tracking-[.14em] text-white">{col.heading}</h2>
+          <ul class="m-0 grid list-none gap-2.5 p-0">
+            {col.links.map((l) => (
+              <li>
+                <a href={l.href} class="text-[14.5px] no-underline transition-colors hover:text-white" {...(l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{l.label}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+      <div>
+        <h2 class="m-0 mb-4 font-mono text-[12px] font-medium uppercase tracking-[.14em] text-white">Get in touch</h2>
+        <address class="grid gap-2.5 text-[14.5px] not-italic">
+          <span>{site.address}</span>
+          <a href={`mailto:${site.email.sales}`} class="no-underline hover:text-white">{site.email.sales}</a>
+          <a href={`mailto:${site.email.help}`} class="no-underline hover:text-white">{site.email.help}</a>
+          <span>{site.supportHours}</span>
+        </address>
+      </div>
+    </div>
+  </div>
+
+  <div class="mx-auto mt-14 grid max-w-wrap gap-8 rounded-lg border border-navy-line bg-navy-2 p-7 md:grid-cols-[1fr_1.4fr] md:items-center">
+    <div>
+      <h2 class="m-0 text-[22px] font-bold text-white">Join the mailing list</h2>
+      <p class="m-0 mt-2 text-[15px]">New features, PSA integrations and practical ideas for growing your MSP.</p>
+    </div>
+    <NewsletterForm onDark id="footer-newsletter" />
+  </div>
+
+  <p class="mx-auto mt-10 max-w-wrap border-t border-navy-line pt-6 text-[13px]">
+    &copy; {year} BeeCastle. All rights reserved.
+  </p>
+</footer>

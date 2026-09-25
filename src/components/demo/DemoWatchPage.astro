@@ -1,0 +1,81 @@
+---
+/* One demo watch page (/demo-watch-<slug>/), where the demo landing form
+   sends people. Content comes from src/data/demos.ts. */
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Button from '../Button.astro';
+import Section from '../Section.astro';
+import SectionIntro from '../SectionIntro.astro';
+import SignupPanel from '../SignupPanel.astro';
+import TrustLogos from '../TrustLogos.astro';
+import CTABand from '../CTABand.astro';
+import DemoSteps from './DemoSteps.astro';
+import { type Demo } from '../../data/demos';
+import { site } from '../../data/site';
+import cover from '../../assets/img/demo-video-cover.webp';
+
+interface Props {
+  demo: Demo;
+}
+const { demo } = Astro.props;
+const w = demo.watch;
+const plans = (await getCollection('plans')).sort((a, b) => a.data.order - b.data.order);
+---
+<Layout title={w.title} description={w.description}>
+  <section class="px-gut pb-6 pt-[104px]">
+    <div class="relative mx-auto grid max-w-wrap items-center gap-[clamp(32px,5vw,72px)] overflow-hidden rounded-xl bg-cyan-soft px-[clamp(24px,5vw,64px)] py-[clamp(40px,6vw,80px)] lg:grid-cols-[1fr_1.15fr]">
+      <div aria-hidden="true" class="pointer-events-none absolute -right-24 -top-24 size-[420px] rounded-full bg-brand-gradient opacity-25 blur-3xl"></div>
+      <div class="rv relative">
+        <p class="m-0 mb-4 font-mono text-[12px] font-medium uppercase tracking-[.14em] text-cyan-deep">Product demo</p>
+        <h1 class="m-0 text-h1 font-extrabold leading-[1.05]">See {demo.name} in action</h1>
+        <div class="mt-6 grid max-w-[60ch] gap-3 text-lede leading-relaxed text-ink-2">
+          {w.paragraphs.map((p) => <p class="m-0">{p}</p>)}
+        </div>
+      </div>
+      <!--
+        PLACEHOLDER: the demo video is not in this repo.
+        The old site played /videos/<slug>_demo.mp4 here. Those recordings
+        (about 240 MB, all showing the legacy app) were removed on purpose.
+        Until a new recording of the rewrite exists, this shows the poster
+        and sends people to book a live demo. To restore a video, host it
+        (YouTube, Vimeo or public/videos/) and replace this block with the
+        player, keeping the poster as its poster frame.
+      -->
+      <figure class="rv relative m-0">
+        <a href={site.demoUrl} target="_blank" rel="noopener noreferrer" class="block overflow-hidden rounded-lg shadow-3 transition-transform hover:-translate-y-0.5">
+          <Image src={cover} alt="A still from the BeeCastle product demo" widths={[480, 800, 1100]} sizes="(max-width: 1024px) 100vw, 640px"
+                 loading="eager" fetchpriority="high" class="h-auto w-full" />
+        </a>
+        <figcaption class="mt-4 text-[15px] text-ink-2">
+          The recorded demo is being updated for the new BeeCastle. In the meantime, <a href={site.demoUrl} target="_blank" rel="noopener noreferrer" class="font-semibold text-cyan-deep">book a live demo</a> and we will walk you through it.
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <SignupPanel heading="Get started for your MSP" lede="Create a free trial account today." />
+
+  <DemoSteps />
+
+  <Section>
+    <SectionIntro heading="Plans to suit every MSP" align="center"
+                  lede="Whether you’re a founder who sells, or an MSP with fully fledged sales and account management teams: there’s a BeeCastle plan to suit your business." />
+    {plans.length > 0 && (
+      <ul class="m-0 grid list-none gap-5 p-0 sm:grid-cols-2 lg:grid-cols-4">
+        {plans.map((p) => (
+          <li class="rv rounded-lg border border-rule bg-card p-7 shadow-1">
+            <h3 class="m-0 text-h3 font-bold">{p.data.name}</h3>
+            <p class="m-0 mt-3 text-[26px] font-extrabold text-ink">{p.data.price}<span class="text-[15px] font-semibold text-ink-3">{p.data.period}</span></p>
+            <p class="m-0 mt-2 text-[15.5px] text-ink-2">{p.data.tagline}</p>
+          </li>
+        ))}
+      </ul>
+    )}
+    <div class="mt-10 text-center"><Button href="/plans/" variant="outline" size="lg">View plans</Button></div>
+  </Section>
+
+  <TrustLogos heading="Technology companies trust BeeCastle to supercharge their growth" />
+
+  <CTABand heading="Ready to see how BeeCastle can help you grow revenue, profitability and customer satisfaction at your MSP?" />
+</Layout>

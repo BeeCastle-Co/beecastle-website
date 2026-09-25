@@ -1,0 +1,113 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import SectionIntro from '../components/SectionIntro.astro';
+import FeatureSection from '../components/FeatureSection.astro';
+import PostCard from '../components/PostCard.astro';
+import Button from '../components/Button.astro';
+import CTABand from '../components/CTABand.astro';
+import dataDiagram from '../assets/img/datadiagram.webp';
+import story from '../assets/img/bc_about_story_desktop.webp';
+import values from '../assets/img/bc_our_team_values.webp';
+import hive from '../assets/illustrations/hive.svg';
+import { getPosts } from '../lib/blog';
+
+const news = (await getPosts()).filter((p) => p.data.categories.includes('news-and-events')).slice(0, 3);
+
+const lifeAtTheHive = [
+  'At BeeCastle, we create software the world’s top MSPs use to deliver exceptional account management, build high-performing teams with data driven KPIs, and provide up-sell and cross-sell opportunities that your clients actually appreciate, because they fit like a glove.',
+  'We are a platform that fundamentally drives the top end practice in account management and have reviewed over 9 million client interactions and $5bn in sales to date.',
+  'Excellence in data analytics facilitates high-quality decision making and collaboration. So what happens if we apply that to account management? Customer engagement, penetration and retention all improve, leading to a win-win situation on profitable commercial relationships.',
+  'Time and experience have proven that high-quality data facilitates high-quality decision making and collaboration. We merge the best-of-the-best in data analytics, together with real-world relationship management experience.',
+  'Before using BeeCastle, MSPs often operated on intuition alone. This meant that monitoring was non-existent, goal setting was devoid of objective facts and account managers did not have the rigor and data intelligence to guide their activities.',
+  'The best account managers approach their network in a scientific manner, and as they understand the data presented to them, they unlock more and more opportunities. BeeCastle strives to help people understand and leverage the data already at their fingertips to deepen, not replace, their human relationships.',
+];
+
+const joinOurTeam = [
+  'When you join us, you’ll be part of a fast paced group that’s empowered to set exciting goals and move quickly to achieve them. New ideas and taking calculated risks are encouraged and complex problems are welcome as we solve them as a team.',
+  'BeeCastle is an equal opportunity employer meaning that all qualified applicants will receive consideration for employment without regard to race, color, religion, sex, sexual orientation, gender identity, national origin, disability, status as a protected veteran, or any other protected characteristic.',
+];
+---
+<Layout title="About BeeCastle | BeeCastle" description="BeeCastle is a data analytics platform built to help MSPs achieve excellence in account management: relationships, whitespace, sales dashboards and KPIs.">
+  <PageHero
+    eyebrow="About us"
+    headline="About BeeCastle"
+    intro={[
+      'BeeCastle is a comprehensive data analytics platform built to help you achieve excellence in account management.',
+      'The platform is based on a foundation of best in class methodology in relationship management and then layered with detailed data analytics related to uncovering whitespace opportunities for up-sell and cross-sell before closing the loop with attribution through sales dashboards, KPI tracking and AI driven recommendations.',
+    ]}
+    image={hive}
+    ctas={false}
+  />
+
+  <Section width="prose">
+    <SectionIntro eyebrow="Our company" heading="Life at the Hive" />
+    <div class="rv grid gap-4 text-[17px] leading-relaxed text-ink-2">
+      {lifeAtTheHive.map((p) => <p class="m-0">{p}</p>)}
+    </div>
+  </Section>
+
+  <FeatureSection
+    heading="Relationship management is science, not serendipity"
+    paragraphs={[
+      '**We know that high-quality data facilitates high-quality decision making and collaboration. So what happens if we apply that to relationship management? Customer engagement, penetration and retention ALL improve.**',
+      'Time and experience have proven that high-quality data facilitates high-quality decision making and collaboration.',
+      'We merge the best-of-the-best in data analytics, together with real-world relationship management experience.',
+      'The result? Where MSPs used to just ‘wing it’, BeeCastle provides rigor and intelligence to guide account management activities. We’ve seen that when the best relationship managers approach their network in a scientific manner, and innately understand it, they unlock more opportunities.',
+      'BeeCastle strives to help people understand and leverage the data already at their fingertips to deepen (not replace) their human relationships.',
+    ]}
+    image={dataDiagram}
+    imageAlt="BeeCastle data stack"
+    reverse
+    accent="periwinkle"
+  />
+
+  <FeatureSection
+    heading="Our History"
+    paragraphs={[
+      'BeeCastle was founded in 2015 and today we are growing fast in 7 countries. Our primary growth areas are ANZ, USA and Canada as well as Great Britain.',
+      'Our integrations started with M365, then quickly grew to MS Teams, [ConnectWise](/integrations/connectwise-manage/), [Datto Autotask](/integrations/datto-autotask/), [HaloPSA](/integrations/halo-psa/) then [Xero](/integrations/xero/) accounting, and more to come!',
+    ]}
+    image={story}
+    imageAlt=""
+    accent="mint"
+  />
+
+  <FeatureSection
+    heading="Our Culture and Values"
+    paragraphs={[
+      'Culture is something we think about every day. It defines how we treat each other, how we approach work, challenges, successes, and learning opportunities and ultimately how we feel at work and how we feel about work.',
+      'We want you to feel amazing, excited, challenged, supported, hungry and an important part of a solution that is helping thousands of people across the globe every minute of the day.',
+      'A few things to note:',
+      '**First of all**, we like to approach our day and our work with purpose. We have a daily stand-up to be open, supportive and to set meaningful goals for ourselves and the team. We are all often in direct contact with clients who are looking for meaningful solutions to their problems and need to treat our clients with the utmost care, meaning we always respond in a timely manner.',
+      '**Second of all**, we are a remote first company, meaning that we need to overcommunicate on Slack and be unafraid of letting our team know when we have family commitments. We understand you may need to be creative to get work done on occasions and that is ok. We love getting together for fun either in person or on Teams and know that time together is precious.',
+      '**Last of all**, we are excited to be building an amazing system that is growing quickly. We all love learning and developing as people together with our clients.',
+    ]}
+    image={values}
+    imageAlt="Our team values"
+    reverse
+    accent="magenta"
+  />
+
+  <Section width="prose" tone="tint">
+    <SectionIntro eyebrow="Careers" heading="Join our Team" />
+    <div class="rv grid gap-4 text-[17px] leading-relaxed text-ink-2">
+      {joinOurTeam.map((p) => <p class="m-0">{p}</p>)}
+    </div>
+  </Section>
+
+  {news.length > 0 && (
+    <Section>
+      <SectionIntro eyebrow="Latest news" heading="Company news" lede="Stay up to date with BeeCastle’s latest news, announcements and insights here." />
+      <div class="grid gap-6 md:grid-cols-3">
+        {news.map((post) => <PostCard post={post} />)}
+      </div>
+      <div class="rv mt-10">
+        <Button href="/categories/news-and-events/" variant="outline">All company news</Button>
+      </div>
+    </Section>
+  )}
+
+  <CTABand heading="Ready to see how BeeCastle can enhance your revenue?" />
+</Layout>

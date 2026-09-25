@@ -1,0 +1,26 @@
+---
+/* Customer quotes on the brand gradient. Featured entries from the
+   testimonials collection; renders nothing until there are some. */
+import { getCollection } from 'astro:content';
+import TestimonialCard from '../TestimonialCard.astro';
+
+const quotes = (await getCollection('testimonials', ({ data }) => data.featured))
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+---
+{quotes.length > 0 && (
+  <section class="relative overflow-hidden px-gut py-sec">
+    <div aria-hidden="true" class="absolute inset-0 bg-brand-gradient"></div>
+    <div class="relative mx-auto max-w-wrap">
+      <header class="rv mb-12 max-w-[680px]">
+        <h2 class="m-0 text-h2 font-extrabold leading-[1.1] text-ink">We get a buzz out of accurate reporting</h2>
+        <p class="m-0 mt-4 text-lede text-ink">
+          Join thousands of users across seven countries who trust BeeCastle to report accurately on their accounts and find new whitespace to grow revenue.
+        </p>
+      </header>
+      <div class="grid gap-6 md:grid-cols-3">
+        {quotes.map((t) => <TestimonialCard testimonial={t} />)}
+      </div>
+    </div>
+  </section>
+)}

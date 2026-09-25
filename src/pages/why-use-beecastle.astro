@@ -1,0 +1,66 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import FeatureSection from '../components/FeatureSection.astro';
+import Button from '../components/Button.astro';
+import CTABand from '../components/CTABand.astro';
+import profitTrack from '../assets/img/products/account-profitability/bc_module_profit_track.webp';
+import revenueAnalyzer from '../assets/img/solutions/for-team-managers/bc_module_revenue_analyzer.webp';
+import customerProfit from '../assets/img/solutions/for-team-managers/customer-profit.webp';
+import salesDashboards from '../assets/img/solutions/for-team-managers/sales-dasboards.webp';
+import { site } from '../data/site';
+
+const sections = [
+  {
+    heading: 'Your customers are valuable to you',
+    paragraphs: ['We know how hard it is to acquire new customers. So, it’s critical to retain your larger and most profitable customers. We provide data insights specifically designed to help drive customer engagement and reduce the risk of churn.'],
+    image: revenueAnalyzer,
+    imageAlt: 'BeeCastle Revenue Analytics',
+  },
+  {
+    heading: 'You’re serious about selling',
+    paragraphs: ['BeeCastle brings clarity and accountability to your sales team and data from your PSA. Our pipeline management and forecasting solution transforms your PSA data into actionable insights that drive results. Make better decisions, faster, at every level.'],
+    image: customerProfit,
+    imageAlt: 'BeeCastle Account Profitability',
+    cta: 'signup' as const,
+  },
+  {
+    heading: 'A platform that your sales reps will actually use',
+    paragraphs: ['The most powerful tools are worthless without user adoption. Built by MSPs for MSP sales professionals, BeeCastle is the only whitespace, pipeline management and forecasting tool conceived specifically to support all users across your MSP. BeeCastle users spend less time on tedious data entry, and more time selling.'],
+    image: salesDashboards,
+    imageAlt: 'BeeCastle Sales Dashboards',
+  },
+  {
+    heading: 'Seamless and secure PSA integration',
+    paragraphs: ['BeeCastle connects to your PSA ([ConnectWise](/integrations/connectwise-manage/), [HaloPSA](/integrations/halo-psa/) and [Datto Autotask](/integrations/datto-autotask/)) and fits right into your existing workflow. Any changes made to your PSA are automatically reflected in BeeCastle.'],
+    image: revenueAnalyzer,
+    imageAlt: 'BeeCastle Revenue Analytics',
+  },
+  {
+    heading: 'Account Profitability',
+    paragraphs: ['We have worked with MSPs for years to determine what cost savings and efficiencies BeeCastle can drive, as well as calculating what net increase in sales, and thus profits, BeeCastle can drive.'],
+    image: customerProfit,
+    imageAlt: 'BeeCastle Account Profitability',
+    cta: 'signup' as const,
+  },
+];
+---
+<Layout title="Why MSPs use BeeCastle | BeeCastle" description="Are you an MSP that values your clients and is serious about growth? See why MSPs use BeeCastle for retention, sales, pipeline and account profitability.">
+  <PageHero
+    eyebrow="Software that drives"
+    headline="Why should MSPs use BeeCastle?"
+    intro={['Are you an MSP that values your clients and is serious about growth? Are you thinking of taking BeeCastle for a test drive? If yes, then read on…']}
+    image={profitTrack}
+    imageAlt="BeeCastle Account Profitability"
+    ctas={false}
+  >
+    <div class="rv mt-8 flex flex-wrap gap-3">
+      <Button href={`mailto:${site.email.help}`} size="lg">Get in touch</Button>
+      <Button href={site.demoUrl} variant="outline" size="lg">Book a demo</Button>
+    </div>
+  </PageHero>
+
+  {sections.map((s, i) => <FeatureSection {...s} reverse={i % 2 === 1} />)}
+
+  <CTABand />
+</Layout>

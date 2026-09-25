@@ -1,0 +1,36 @@
+---
+/* "Leverage the data in your stack": the integrations, as links to their
+   pages (read from the integrations collection) plus the ones that do not
+   have a page of their own yet. */
+import { getCollection } from 'astro:content';
+import Section from '../Section.astro';
+import Illustration from '../Illustration.astro';
+import Button from '../Button.astro';
+import Icon from '../Icon.astro';
+
+const withPages = (await getCollection('integrations', ({ data }) => !data.draft)).sort((a, b) => a.data.order - b.data.order);
+const others = ['Microsoft 365', 'Microsoft Teams'];
+---
+<Section tone="navy">
+  <div class="grid items-center gap-12 lg:grid-cols-2">
+    <div class="rv">
+      <p class="m-0 mb-3 font-mono text-[12px] font-medium uppercase tracking-[.14em] text-cyan-light">Integrations</p>
+      <h2 class="m-0 text-h2 font-extrabold leading-[1.1]">Leverage the data in your stack without breaking a sweat</h2>
+      <p class="m-0 mt-5 text-lede">Have a lot of data, but not a lot of time to invest in understanding it?</p>
+      <p class="m-0 mt-3 text-[16.5px] leading-relaxed">
+        BeeCastle integrates with your key systems to analyse activities, customers and revenue, then presents clear actions for you to take.
+        Integrations take about ten minutes to set up, and you can do it yourself or get a hand from us. Data syncs in real time, so everything stays up to date.
+      </p>
+      <ul class="m-0 mt-7 flex list-none flex-wrap gap-2 p-0">
+        {withPages.map((i) => (
+          <li><a href={`/integrations/${i.id}/`} class="inline-flex items-center gap-1.5 rounded-full border border-navy-line bg-navy-2 px-4 py-2 text-[14px] font-semibold text-white no-underline transition-colors hover:border-cyan hover:text-cyan-light">{i.data.name}<Icon name="arrow" class="size-3.5" /></a></li>
+        ))}
+        {others.map((name) => <li class="rounded-full border border-navy-line px-4 py-2 text-[14px] font-semibold text-navy-muted">{name}</li>)}
+      </ul>
+      <div class="mt-8"><Button href="/sign-up/" size="lg">Connect your PSA</Button></div>
+    </div>
+    <div class="rv rounded-xl bg-card p-[clamp(20px,4vw,48px)]">
+      <Illustration name="integrations-stack" alt="BeeCastle connects with ConnectWise, Microsoft, Datto, HaloPSA and HubSpot" class="w-full" />
+    </div>
+  </div>
+</Section>

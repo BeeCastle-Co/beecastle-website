@@ -1,0 +1,49 @@
+---
+/* One pricing plan, rendered from an entry in src/content/plans/. The
+   highlighted plan gets the accent ring and the honey button; the rest get
+   outline buttons, so there is one primary action in the row. */
+import { render, type CollectionEntry } from 'astro:content';
+import Button from './Button.astro';
+import { inline } from '../lib/inline';
+import { accents } from '../lib/accents';
+
+interface Props {
+  plan: CollectionEntry<'plans'>;
+}
+const { plan } = Astro.props;
+const d = plan.data;
+const a = accents[d.accent];
+const { Content } = await render(plan);
+/* "From USD $2,000" shows "From" as a small label so the figure stays on one line. */
+const [, from, amount] = d.price.match(/^(from\s+)?(.*)$/i) ?? [];
+const hasBody = !!plan.body?.trim();
+---
+<article class:list={[
+  'rv relative flex flex-col overflow-hidden rounded-lg bg-card p-7 shadow-2',
+  d.highlighted && ['ring-2 shadow-3', a.ring],
+]}>
+  <span aria-hidden="true" class:list={['absolute inset-x-0 top-0 h-1.5', a.solid]}></span>
+  <h3 class="m-0 text-h3 font-bold">{d.name}</h3>
+  <p class="m-0 mt-1.5 text-ink-3" set:html={inline(d.tagline)} />
+  {from && <p class="m-0 mt-6 text-[13px] font-semibold uppercase tracking-[.08em] text-ink-3">{from.trim()}</p>}
+  <p class:list={['m-0 flex flex-wrap items-baseline gap-x-1', from ? 'mt-1' : 'mt-6']}>
+    <span class="text-[30px] font-extrabold leading-none tracking-tight text-ink">{amount}</span>
+    <span class="text-[15px] text-ink-3">{d.period}</span>
+  </p>
+  {d.features.length > 0 && (
+    <ul class="m-0 mt-6 grid list-none gap-2.5 p-0 text-[15.5px]">
+      {d.features.map((f) => (
+        <li class="flex gap-3">
+          <span class:list={['mt-[3px] grid size-5 shrink-0 place-items-center rounded-full text-ink', a.soft]}>
+            <svg viewBox="0 0 24 24" class="size-3" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+          </span>
+          <span set:html={inline(f)} />
+        </li>
+      ))}
+    </ul>
+  )}
+  {hasBody && <div class="prose mt-5 text-[14px]"><Content /></div>}
+  <div class="mt-auto pt-8">
+    <Button href={d.ctaHref} variant={d.highlighted ? 'primary' : 'outline'} class="w-full">{d.ctaLabel}</Button>
+  </div>
+</article>

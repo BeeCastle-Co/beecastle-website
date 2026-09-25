@@ -1,0 +1,18 @@
+---
+/* A short mid-page prompt: one headline and one button, centred. For the
+   closing call to action at the foot of a page, use CTABand instead. */
+import Button from './Button.astro';
+
+interface Props {
+  heading: string;
+  label: string;
+  href: string;
+}
+const { heading, label, href } = Astro.props;
+---
+<section class="px-gut py-[clamp(40px,5vw,72px)]">
+  <div class="rv mx-auto max-w-wrap rounded-xl bg-honey-soft px-[clamp(24px,5vw,64px)] py-[clamp(36px,5vw,56px)] text-center">
+    <h2 class="m-0 mx-auto max-w-[28ch] text-[clamp(24px,2.4vw,34px)] font-bold leading-[1.15]">{heading}</h2>
+    <div class="mt-7"><Button href={href} size="lg">{label}</Button></div>
+  </div>
+</section>

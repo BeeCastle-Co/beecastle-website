@@ -1,0 +1,26 @@
+---
+/* Plan summary strip, from the plans collection. Links through to /plans/. */
+import { getCollection } from 'astro:content';
+import Section from '../Section.astro';
+import SectionIntro from '../SectionIntro.astro';
+import Button from '../Button.astro';
+import { accents } from '../../lib/accents';
+
+const plans = (await getCollection('plans')).sort((a, b) => a.data.order - b.data.order);
+---
+{plans.length > 0 && (
+  <Section tone="white">
+    <SectionIntro eyebrow="Pricing" heading="Plans to suit every MSP"
+      lede="Whether you're a founder who sells, or an MSP with fully fledged sales and account management teams, there's a BeeCastle plan to suit your business." />
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {plans.map((p) => (
+        <a href="/plans/#pricing-table" class:list={['rv group relative flex flex-col overflow-hidden rounded-lg p-6 no-underline transition-all duration-300 hover:-translate-y-1 hover:shadow-3', accents[p.data.accent].soft]}>
+          <h3 class="m-0 text-[20px] font-bold">{p.data.name}</h3>
+          <p class="m-0 mt-1 text-[14px] text-ink-3">{p.data.tagline}</p>
+          <p class="m-0 mt-6 text-[28px] font-extrabold tracking-tight text-ink">{p.data.price}<span class="text-[14px] font-medium text-ink-3">{p.data.period}</span></p>
+        </a>
+      ))}
+    </div>
+    <div class="rv mt-8"><Button href="/plans/" variant="outline">Compare plans</Button></div>
+  </Section>
+)}

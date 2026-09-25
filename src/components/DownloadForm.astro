@@ -1,0 +1,28 @@
+---
+/* The lead form in front of a gated download (white papers, the e-book).
+   A Netlify form named after the page; on submit Netlify shows the page's
+   thank-you page, which links to the PDF. Same fields as the old site. */
+import NetlifyForm, { type FormField } from './NetlifyForm.astro';
+import type { Download } from '../data/downloads';
+
+interface Props {
+  download: Download;
+  heading?: string;
+}
+const { download, heading } = Astro.props;
+
+const fields: FormField[] = [
+  { name: 'firstName', label: 'First name', autocomplete: 'given-name' },
+  { name: 'lastName', label: 'Last name', autocomplete: 'family-name' },
+  { name: 'email', label: 'Work email address', type: 'email', autocomplete: 'email', wide: true },
+  { name: 'companyName', label: 'Company name', autocomplete: 'organization' },
+  { name: 'phoneNumber', label: 'Phone number', type: 'tel', autocomplete: 'tel' },
+];
+---
+<div class="rounded-xl border border-rule bg-card p-[clamp(24px,3.5vw,40px)] shadow-2">
+  {heading && <h2 class="m-0 mb-5 text-h3 font-bold leading-tight">{heading}</h2>}
+  <NetlifyForm name={download.slug} action={`/${download.slug}/thanks/`} fields={fields} submit={download.submitLabel} />
+  <p class="m-0 mt-4 text-[13px] leading-relaxed text-ink-3">
+    BeeCastle needs the contact information you provide to us to contact you about our services. You may unsubscribe from these communications at any time.
+  </p>
+</div>

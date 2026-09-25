@@ -1,0 +1,16 @@
+---
+/* One of the brand line illustrations in src/assets/illustrations/: navy
+   linework, the periwinkle to mint gradient, and a honey bee where it fits.
+   Pass the file name without .svg. An unknown name fails the build. */
+const files = import.meta.glob<{ default: ImageMetadata }>('../assets/illustrations/*.svg', { eager: true });
+
+interface Props {
+  name: string;
+  alt?: string;
+  class?: string;
+}
+const { name, alt = '', class: extra } = Astro.props;
+const file = files[`../assets/illustrations/${name}.svg`];
+if (!file) throw new Error(`Illustration "${name}" not found in src/assets/illustrations/`);
+---
+<img src={file.default.src} width={file.default.width} height={file.default.height} alt={alt} class:list={['h-auto', extra]} loading="lazy" />

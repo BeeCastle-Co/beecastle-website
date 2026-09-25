@@ -1,0 +1,36 @@
+---
+/* The closing call to action: a gradient band with a headline and two
+   buttons. One per page, near the end. */
+import Button from './Button.astro';
+import Illustration from './Illustration.astro';
+import { site } from '../data/site';
+
+interface Props {
+  heading?: string;
+  lede?: string;
+  ctaMode?: 'trial' | 'contact';
+}
+const {
+  ctaMode = 'trial',
+  heading = 'Ready to see what BeeCastle can do for your MSP?',
+  lede = 'Connect your PSA in about ten minutes and see your accounts, revenue and whitespace the same day.',
+} = Astro.props;
+---
+<section class="px-gut py-[clamp(40px,5vw,72px)]">
+  <div class="rv relative mx-auto max-w-wrap overflow-hidden rounded-xl bg-navy px-[clamp(24px,5vw,72px)] py-[clamp(40px,5vw,64px)]">
+    <div aria-hidden="true" class="absolute inset-0 bg-brand-gradient opacity-90 [mask-image:radial-gradient(120%_140%_at_100%_0%,#000_20%,transparent_70%)]"></div>
+    <div class="relative grid items-center gap-8 md:grid-cols-[1fr_auto]">
+      <div>
+        <h2 class="m-0 max-w-[22ch] text-h2 font-extrabold leading-[1.08] text-white">{heading}</h2>
+        <p class="m-0 mt-4 max-w-[52ch] text-lede text-white/85">{lede}</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          {ctaMode === 'contact'
+            ? <Button href="/contact/" size="lg">Get in touch</Button>
+            : <Button href="/sign-up/" size="lg">Start free trial</Button>}
+          <Button href={site.demoUrl} variant="light" size="lg">Book a demo</Button>
+        </div>
+      </div>
+      <Illustration name="bee" class="w-36 max-md:hidden" />
+    </div>
+  </div>
+</section>

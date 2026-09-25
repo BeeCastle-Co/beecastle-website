@@ -1,0 +1,35 @@
+---
+/* The blog index and every category page: heading, category links, a lead
+   story, then the grid. All posts are on one page (73 at the time of the
+   port), which keeps every post one click from an indexable listing. */
+import type { CollectionEntry } from 'astro:content';
+import CategoryNav from './CategoryNav.astro';
+import PostCard from './PostCard.astro';
+import type { CategorySlug } from '../data/categories';
+
+interface Props {
+  heading: string;
+  lede: string;
+  posts: CollectionEntry<'blog'>[];
+  current?: CategorySlug;
+}
+const { heading, lede, posts, current } = Astro.props;
+const [lead, ...rest] = posts;
+---
+<section class="px-gut pb-10 pt-[clamp(120px,12vw,160px)]">
+  <div class="mx-auto max-w-wrap">
+    <p class="rv m-0 mb-3 font-mono text-[12px] font-medium uppercase tracking-[.14em] text-cyan-deep">The BeeCastle blog</p>
+    <h1 class="rv m-0 max-w-[18ch] text-h1 font-extrabold leading-[1.05]">{heading}</h1>
+    <p class="rv m-0 mt-5 max-w-[60ch] text-lede text-ink-3">{lede}</p>
+    <div class="rv mt-8"><CategoryNav current={current} /></div>
+  </div>
+</section>
+
+<section class="px-gut pb-sec">
+  <div class="mx-auto grid max-w-wrap gap-6">
+    {lead && <PostCard post={lead} feature headingLevel="h2" />}
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {rest.map((post) => <PostCard post={post} headingLevel="h2" />)}
+    </div>
+  </div>
+</section>

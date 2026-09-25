@@ -1,0 +1,26 @@
+---
+import Layout from '../layouts/Layout.astro';
+import DownloadHero from '../components/DownloadHero.astro';
+import { downloads } from '../data/downloads';
+---
+<Layout title="Excellence in Account Management White Paper | BeeCastle" description="The Art and Science of Enhanced Account Management: download BeeCastle's white paper on data and analytics, relationship equity, profitability and growth targets.">
+  <DownloadHero
+    eyebrow="Excellence in Account Management white paper"
+    headline="The Art and Science of Enhanced Account Management"
+    lede="Fill out the form to download the white paper."
+    contents={[
+      'Introduction',
+      'BeeCastle value-add methodology',
+      'Championing adoption of D&A',
+      'Considerations for D&A software',
+      'A culture of data',
+      'Customer qualification',
+      'Building relationship equity',
+      'Monetising RE',
+      'Assessing profitability',
+      'Cost reduction',
+      'Setting growth targets',
+    ]}
+    download={downloads.excellence}
+  />
+</Layout>

@@ -1,0 +1,24 @@
+---
+/* Eyebrow, heading and lede at the top of a section. */
+import { inline } from '../lib/inline';
+interface Props {
+  eyebrow?: string;
+  heading: string;
+  lede?: string;
+  align?: 'left' | 'center';
+  /** Heading level. Only the page hero is an h1. */
+  as?: 'h1' | 'h2';
+  onDark?: boolean;
+}
+const { eyebrow, heading, lede, align = 'left', as: H = 'h2', onDark = false } = Astro.props;
+---
+<header class:list={['rv mb-10 max-w-[760px]', align === 'center' && 'mx-auto text-center']}>
+  {eyebrow && (
+    <p class:list={['m-0 mb-3 font-mono text-[12px] font-medium uppercase tracking-[.14em]', onDark ? 'text-cyan-light' : 'text-cyan-deep']}>{eyebrow}</p>
+  )}
+  <H class:list={['m-0 font-bold leading-[1.1]', H === 'h1' ? 'text-h1' : 'text-h2', onDark && 'text-white']}>{heading}</H>
+  {lede && (
+    <p class:list={['m-0 mt-4 text-lede leading-[1.6]', onDark ? 'text-navy-muted' : 'text-ink-3']} set:html={inline(lede)} />
+  )}
+  <slot />
+</header>

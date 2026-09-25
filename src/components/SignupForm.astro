@@ -1,0 +1,26 @@
+---
+/* The sign-up controls: Microsoft first, then a work email. The email form
+   GETs the app's sign-up page with ?email=, as the old site did. Used on
+   /sign-up/ and inside SignupPanel, so the two can never drift apart. */
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+
+interface Props {
+  /** Unique per page, so the label still points at the right input. */
+  id?: string;
+}
+const { id = 'signup-email' } = Astro.props;
+---
+<p class="m-0 text-[16px] text-ink-2">Sign up to BeeCastle using your Microsoft account:</p>
+<a href={site.microsoftSignupUrl}
+   class="mt-4 flex items-center justify-center gap-3 rounded-full bg-ink px-6 py-3.5 text-[15.5px] font-semibold text-white no-underline transition-colors hover:bg-navy-2">
+  <Icon name="microsoft" class="size-5" /> Sign up with Microsoft
+</a>
+<p class="my-6 flex items-center gap-3 text-[13px] font-semibold uppercase tracking-[.12em] text-ink-3 before:h-px before:flex-1 before:bg-rule after:h-px after:flex-1 after:bg-rule">or</p>
+<form action={site.signupUrl} method="get" class="grid gap-3">
+  <label for={id} class="text-[14px] font-semibold text-ink-2">Sign up using your work email address <span aria-hidden="true" class="text-ink-3">*</span></label>
+  <input id={id} name="email" type="email" required autocomplete="email" placeholder="you@yourmsp.com"
+         class="rounded-full border-[1.5px] border-rule-2 bg-honey-soft/60 px-5 py-3.5 text-[16px] text-ink outline-none transition-colors placeholder:text-ink-3 focus:border-ink" />
+  <p class="m-0 text-[13px] text-ink-3">* indicates the field is required.</p>
+  <button type="submit" class="mt-1 cursor-pointer rounded-full bg-honey px-6 py-3.5 text-[15.5px] font-semibold text-ink transition-colors hover:bg-honey-hover">Sign up</button>
+</form>

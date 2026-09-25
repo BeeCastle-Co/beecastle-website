@@ -1,0 +1,24 @@
+---
+/* The page a form lands on after it is sent. Keep these pages noindex. */
+import Button from './Button.astro';
+import Illustration from './Illustration.astro';
+
+interface Props {
+  heading: string;
+  message: string;
+  backHref?: string;
+  backLabel?: string;
+}
+const { heading, message, backHref = '/', backLabel = 'Back to the home page' } = Astro.props;
+---
+<section class="px-gut pb-sec pt-[140px]">
+  <div class="rv mx-auto max-w-prose text-center">
+    <Illustration name="bee" class="mx-auto w-28" />
+    <h1 class="m-0 mt-6 text-h1 font-extrabold leading-[1.08]">{heading}</h1>
+    <p class="m-0 mt-4 text-lede text-ink-2">{message}</p>
+    <div class="mt-8 flex flex-wrap justify-center gap-3">
+      <Button href={backHref} size="lg">{backLabel}</Button>
+      <Button href="/blog/" variant="outline" size="lg">Read the blog</Button>
+    </div>
+  </div>
+</section>

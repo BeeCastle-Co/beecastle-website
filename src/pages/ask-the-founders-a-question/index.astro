@@ -1,0 +1,17 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import FormSplit from '../../components/FormSplit.astro';
+import NetlifyForm, { type FormField } from '../../components/NetlifyForm.astro';
+
+const fields: FormField[] = [
+  { name: 'name', label: 'Name', autocomplete: 'name' },
+  { name: 'email', label: 'Email Address', type: 'email', autocomplete: 'email' },
+  { name: 'question', label: 'Your Question', type: 'textarea' },
+];
+---
+<Layout title="Ask the Founders a Question | BeeCastle"
+        description="Ask the BeeCastle founders a question about customer success, revenue analytics or whitespace for MSPs. Anything you want to know.">
+  <FormSplit hero eyebrow="Ask the founders" heading="Ask the Founders a Question" lede="Anything you want to know.">
+    <NetlifyForm slot="form" name="ask-the-founders" action="/ask-the-founders-a-question/thanks/" fields={fields} submit="Ask your Question" />
+  </FormSplit>
+</Layout>

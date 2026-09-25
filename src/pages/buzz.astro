@@ -1,0 +1,28 @@
+---
+/* Buzz was an AI chat assistant embedded from MindStudio. Its embed script
+   (api.youai.ai/v1/embed.js) no longer loads, so the chat is not embedded;
+   the owner decides whether to bring it back or retire the page. */
+import Layout from '../layouts/Layout.astro';
+import Section from '../components/Section.astro';
+import Button from '../components/Button.astro';
+import Illustration from '../components/Illustration.astro';
+---
+<Layout title="Meet Buzz | BeeCastle" description="Buzz is built by MSP Geeks for MSP Geeks. Tech, sales, trivia: ask an MSP question, get an MSP answer. Give it a try and let us know what you think.">
+  <Section width="prose" class="pt-[140px]">
+    <div class="rv grid items-center gap-8 sm:grid-cols-[auto_1fr]">
+      <Illustration name="bee" class="w-28" />
+      <div>
+        <p class="m-0 mb-3 font-mono text-[12px] font-medium uppercase tracking-[.14em] text-cyan-deep">BeeCastle labs</p>
+        <h1 class="m-0 text-h1 font-extrabold leading-[1.05]">Meet Buzz</h1>
+      </div>
+    </div>
+    <div class="rv mt-8 grid gap-4 text-lede leading-relaxed text-ink-2">
+      <p class="m-0">Buzz is built by MSP Geeks for MSP Geeks. Tech, sales, trivia: ask an MSP question, get an MSP answer.</p>
+      <p class="m-0">Curious?</p>
+      <p class="m-0">Give it a try and let us know whether we should be rolling out globally or rolling back ASAP!</p>
+    </div>
+    <div class="rv mt-8 flex flex-wrap gap-3">
+      <Button href="/contact/" size="lg">Let us know</Button>
+    </div>
+  </Section>
+</Layout>

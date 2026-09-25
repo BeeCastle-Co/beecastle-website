@@ -1,0 +1,63 @@
+---
+/* /plans/: the pricing page. Plans come from src/content/plans/, the support
+   cards from src/data/planSupport.ts, the quotes from the featured
+   testimonials. #pricing-table is linked from the nav, keep the id. */
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import SectionIntro from '../components/SectionIntro.astro';
+import Button from '../components/Button.astro';
+import PlanCard from '../components/PlanCard.astro';
+import IconCard from '../components/IconCard.astro';
+import TestimonialCard from '../components/TestimonialCard.astro';
+import CTABand from '../components/CTABand.astro';
+import { planSupport } from '../data/planSupport';
+import heroImage from '../assets/img/plans/bc_home_stack_mobile.webp';
+
+const plans = (await getCollection('plans')).sort((a, b) => a.data.order - b.data.order);
+const testimonials = (await getCollection('testimonials', ({ data }) => data.featured))
+  .sort((a, b) => a.data.order - b.data.order);
+---
+<Layout title="Plans and pricing | BeeCastle"
+        description="Drive growth with our range of plans for MSPs of all shapes and sizes, from smaller MSPs to those operating at scale.">
+  <PageHero
+    eyebrow="Pricing"
+    headline="You're in the right place to invest in your future"
+    intro={['Drive growth with our range of plans for MSPs of all shapes and sizes. Get started for free with our **ProfitTrack** plan and gain instant revenue insights. Level up with a premium **Growth Suite** plan and access our five powerful modules for nurturing customers, uncovering opportunities and maximizing your profitability.']}
+    image={heroImage}
+    imageAlt="BeeCastle integrates with ConnectWise, Datto, HaloPSA, Microsoft and HubSpot"
+    ctas={false}
+  />
+
+  <Section id="pricing-table">
+    <SectionIntro heading="BeeCastle's Plans">
+      <div class="mt-6"><Button href="/contact/" variant="outline">Get in touch</Button></div>
+    </SectionIntro>
+    <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+      {plans.map((plan) => <PlanCard plan={plan} />)}
+    </div>
+  </Section>
+
+  <Section tone="tint">
+    <SectionIntro heading="Get extra support and empower your team" />
+    <div class="grid gap-6 md:grid-cols-3">
+      {planSupport.map((item) => <IconCard {...item} />)}
+    </div>
+  </Section>
+
+  <Section>
+    <SectionIntro
+      heading="We get a real buzz out of boosting our partners' bottom lines"
+      lede="BeeCastle is trusted by a growing number of strategic MSPs across the globe. Here are just some of the managed service providers and IT resellers using BeeCastle to kick their growth goals today:"
+    />
+    <div class="grid gap-6 lg:grid-cols-3">
+      {testimonials.map((t) => <TestimonialCard testimonial={t} />)}
+    </div>
+  </Section>
+
+  <CTABand
+    heading="Prefer to get started with a personal demo?"
+    lede="Let us show you how you can use BeeCastle to get happier clients, more sales and a healthier bottom line. Book in a demo with one of our experts now or send us an email at sales@beecastle.com."
+  />
+</Layout>

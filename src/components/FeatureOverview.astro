@@ -1,0 +1,37 @@
+---
+/* "Overview" and "Features" side by side under a hero: a short summary on the
+   left and jump links to each section on the right. */
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+import { accents, type Accent } from '../lib/accents';
+import { site } from '../data/site';
+
+interface Props {
+  heading: string;
+  body: string;
+  links: { id: string; label: string }[];
+  accent?: Accent;
+}
+const { heading, body, links, accent = 'cyan' } = Astro.props;
+---
+<section class="px-gut py-12">
+  <div class="mx-auto grid max-w-wrap gap-5 md:grid-cols-2">
+    <div class="rv rounded-lg bg-navy p-[clamp(28px,4vw,44px)] text-navy-muted">
+      <h2 class="m-0 text-[26px] font-bold text-white">{heading}</h2>
+      <p class="m-0 mt-4 text-[16.5px] leading-relaxed">{body}</p>
+      <div class="mt-7"><Button href={site.demoUrl} variant="light">Book a demo</Button></div>
+    </div>
+    <div class:list={['rv rounded-lg p-[clamp(28px,4vw,44px)]', accents[accent].soft]}>
+      <h2 class="m-0 text-[26px] font-bold">Features</h2>
+      <ul class="m-0 mt-4 grid list-none gap-1 p-0">
+        {links.map((l) => (
+          <li>
+            <a href={`#${l.id}`} class="group flex items-center justify-between rounded-md px-3 py-2.5 text-[16px] font-semibold text-ink no-underline transition-colors hover:bg-card">
+              {l.label}<Icon name="arrow" class="size-4 transition-transform group-hover:translate-x-1" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>

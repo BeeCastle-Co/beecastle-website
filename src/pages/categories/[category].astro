@@ -1,0 +1,20 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import BlogListing from '../../components/BlogListing.astro';
+import CTABand from '../../components/CTABand.astro';
+import { CATEGORY_SLUGS, categories } from '../../data/categories';
+import { getPosts } from '../../lib/blog';
+
+/* /categories/<slug>/, the same addresses the old site used. */
+export function getStaticPaths() {
+  return CATEGORY_SLUGS.map((category) => ({ params: { category } }));
+}
+
+const { category } = Astro.params as { category: (typeof CATEGORY_SLUGS)[number] };
+const c = categories[category];
+const posts = (await getPosts()).filter((p) => p.data.categories.includes(category));
+---
+<Layout title={`${c.label} | BeeCastle blog`} description={c.blurb}>
+  <BlogListing heading={c.label} lede={c.blurb} posts={posts} current={category} />
+  <CTABand />
+</Layout>

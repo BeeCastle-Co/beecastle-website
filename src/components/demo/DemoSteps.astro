@@ -1,0 +1,30 @@
+---
+/* "How it works": the four setup steps shown on every demo page. */
+import { Image } from 'astro:assets';
+import Section from '../Section.astro';
+import SectionIntro from '../SectionIntro.astro';
+import Illustration from '../Illustration.astro';
+import { demoSteps } from '../../data/demos';
+import { inline } from '../../lib/inline';
+import w from '../../assets/img/w.webp';
+import m365 from '../../assets/img/m365-1.webp';
+
+const images = { 'w.webp': w, 'm365-1.webp': m365 };
+---
+<Section tone="tint">
+  <SectionIntro heading="How it works" align="center" />
+  <ol class="m-0 grid list-none gap-5 p-0 sm:grid-cols-2 lg:grid-cols-4">
+    {demoSteps.map((s) => (
+      <li class="rv flex flex-col rounded-lg bg-card p-7 text-center shadow-1">
+        <div class="grid h-32 place-items-center">
+          {s.image
+            ? <Image src={images[s.image]} alt={s.imageAlt ?? ''} widths={[240, 400]} sizes="240px" class="h-auto max-h-32 w-auto max-w-full object-contain" />
+            : <Illustration name={s.illustration ?? 'bee'} class="max-h-28 w-auto" />}
+        </div>
+        <h3 class="m-0 mt-5 text-h3 font-bold">{s.title}</h3>
+        <p class="m-0 mt-2 text-[15.5px] leading-relaxed text-ink-2 [&_strong]:text-ink" set:html={inline(s.body)} />
+      </li>
+    ))}
+  </ol>
+  <slot />
+</Section>

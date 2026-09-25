@@ -1,0 +1,12 @@
+---
+/* /demo-watch-whitespace/, /demo-watch-profitability/ and
+   /demo-watch-relationship/, from src/data/demos.ts. */
+import DemoWatchPage from '../components/demo/DemoWatchPage.astro';
+import { demos, type Demo } from '../data/demos';
+
+export function getStaticPaths() {
+  return demos.map((demo) => ({ params: { slug: demo.slug }, props: { demo } }));
+}
+const { demo } = Astro.props as { demo: Demo };
+---
+<DemoWatchPage demo={demo} />

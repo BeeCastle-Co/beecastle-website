@@ -1,0 +1,37 @@
+---
+/* Words on the left, a form in a card on the right. The sign-up, newsletter,
+   ask-the-founders, channel partner and demo request pages all use it.
+
+   hero: the section sits at the top of the page, so it clears the fixed nav
+   and the heading is the page's h1. Left-column extras go in the default
+   slot; the form goes in slot="form". */
+import { inline } from '../lib/inline';
+
+interface Props {
+  id?: string;
+  eyebrow?: string;
+  heading: string;
+  lede?: string;
+  cardHeading?: string;
+  cardLede?: string;
+  hero?: boolean;
+}
+const { id, eyebrow, heading, lede, cardHeading, cardLede, hero = false } = Astro.props;
+const H = hero ? 'h1' : 'h2';
+---
+<section id={id} class:list={['relative overflow-hidden px-gut', hero ? 'pb-sec pt-[128px]' : 'py-sec']}>
+  {hero && <div aria-hidden="true" class="pointer-events-none absolute -left-40 -top-40 size-[520px] rounded-full bg-brand-gradient opacity-20 blur-3xl"></div>}
+  <div class="relative mx-auto grid max-w-wrap items-start gap-[clamp(32px,5vw,72px)] lg:grid-cols-[1.05fr_1fr]">
+    <div class="rv">
+      {eyebrow && <p class="m-0 mb-3 font-mono text-[12px] font-medium uppercase tracking-[.14em] text-cyan-deep">{eyebrow}</p>}
+      <H class:list={['m-0 font-extrabold leading-[1.08]', hero ? 'text-h1' : 'text-h2']}>{heading}</H>
+      {lede && <p class="m-0 mt-5 max-w-[60ch] text-lede leading-relaxed text-ink-2" set:html={inline(lede)} />}
+      <slot />
+    </div>
+    <div class="rv rounded-xl border border-rule bg-card p-[clamp(24px,4vw,44px)] shadow-2">
+      {cardHeading && <h2 class="m-0 text-[clamp(24px,2.2vw,30px)] font-bold leading-[1.15]">{cardHeading}</h2>}
+      {cardLede && <p class="m-0 mt-2 text-[16px] text-ink-3" set:html={inline(cardLede)} />}
+      <div class:list={[(cardHeading || cardLede) && 'mt-6']}><slot name="form" /></div>
+    </div>
+  </div>
+</section>

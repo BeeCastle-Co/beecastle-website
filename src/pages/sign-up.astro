@@ -1,0 +1,35 @@
+---
+import Layout from '../layouts/Layout.astro';
+import FormSplit from '../components/FormSplit.astro';
+import SignupForm from '../components/SignupForm.astro';
+import { site } from '../data/site';
+
+const steps = [
+  { title: 'Step 1: sign up', body: 'Sign up using your email address or Microsoft account.' },
+  { title: 'Step 2: integrate', body: 'Choose your PSA and DIY or shout out for help to get your integration going and your data flowing.' },
+];
+---
+<Layout title="Sign Up to BeeCastle"
+        description="Your relationship nurturing, opportunity finding, sales generating, profit boosting journey begins here. Sign up with Microsoft or your work email.">
+  <FormSplit hero eyebrow="Sign up"
+             heading="Your relationship nurturing, opportunity finding, sales generating, profit boosting journey begins here"
+             lede="Whether you’ve decided to try freemium or go **premium**, your BeeCastle journey begins with these two small steps:"
+             cardHeading="Sign up">
+    <ol class="m-0 mt-8 grid list-none gap-4 p-0">
+      {steps.map((s, i) => (
+        <li class="flex gap-4 rounded-lg bg-card p-5 shadow-1">
+          <span class="grid size-10 shrink-0 place-items-center rounded-full bg-honey text-[17px] font-bold text-ink">{i + 1}</span>
+          <div>
+            <h2 class="m-0 text-[18px] font-bold">{s.title}</h2>
+            <p class="m-0 mt-1 text-[16px] leading-relaxed text-ink-2">{s.body}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+    <p class="m-0 mt-8 text-[15px] text-ink-2 [&_a]:font-semibold [&_a]:text-cyan-deep">
+      By signing up, you accept our <a href="/terms/">Terms of Service</a> and <a href="/privacy/">Privacy Policy</a>.
+    </p>
+    <p class="m-0 mt-2 text-[15px] text-ink-2">Already have an account? <a href={site.signInUrl} class="font-semibold text-cyan-deep">Log in</a></p>
+    <SignupForm slot="form" />
+  </FormSplit>
+</Layout>

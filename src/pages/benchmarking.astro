@@ -1,0 +1,78 @@
+---
+/* The old page embedded the benchmarking tool from the app itself. The tool
+   now lives in the app (free with a BeeCastle account), so this page explains
+   it and sends people to sign up. Copy is from the launch post. */
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import SectionIntro from '../components/SectionIntro.astro';
+import FeatureSection from '../components/FeatureSection.astro';
+import SignupPanel from '../components/SignupPanel.astro';
+import Illustration from '../components/Illustration.astro';
+import chart from '../assets/img/benchmarking-1.webp';
+import quartiles from '../assets/img/products/revenue-analytics/benchmarking-2.webp';
+
+const metrics = [
+  'Recurring revenue growth',
+  'Number of paying customers',
+  'Recurring revenue percentage',
+  'Yearly revenue',
+  'Top five customers',
+  'Average customer revenue',
+];
+---
+<Layout title="MSP Benchmarking | BeeCastle" description="Free MSP benchmarking from BeeCastle: see which quartile your MSP sits in on six key account management metrics, set a goal and track progress against peers.">
+  <PageHero
+    eyebrow="MSP Benchmarking"
+    headline="MSP Benchmarking enables data driven growth"
+    intro={[
+      'As part of the global MSP community, we look forward to continuing to support MSPs growth through data and insights.',
+      'With MSP Benchmarking, which is **free and does not require integration with PSA data**, MSPs can gain objective assessments of their performance against other MSPs.',
+    ]}
+    image={chart}
+    imageAlt="Recurring revenue percentage benchmark: input your raw data to see where you rank, then set a goal to keep on track"
+    accent="magenta"
+  />
+
+  <Section>
+    <div class="grid items-center gap-10 lg:grid-cols-[1fr_auto]">
+      <div>
+        <SectionIntro
+          eyebrow="Compare, prioritize, action"
+          heading="Six key account management metrics"
+          lede="This tracks metrics that matter and helps move the needle for business growth, and to inform sales and account management decisions."
+        />
+        <ul class="rv m-0 grid list-none gap-3 p-0 sm:grid-cols-2 lg:grid-cols-3">
+          {metrics.map((m) => (
+            <li class="rounded-md border border-rule bg-card px-5 py-4 text-[16px] font-semibold text-ink shadow-1">{m}</li>
+          ))}
+        </ul>
+      </div>
+      <Illustration name="benchmarking" class="rv w-64 max-lg:hidden" />
+    </div>
+  </Section>
+
+  <FeatureSection
+    heading="See where you rank, then set a goal"
+    paragraphs={[
+      'MSPs are able to submit their current data for each of these metrics, which shows which quartile they are positioned in. From here, MSPs can then set a goal (with quartile) that they want to achieve.',
+      'By understanding this relative position, goals can be adjusted as needed and in context of comparison with peers and relative overall business priority of the metric.',
+      'Compare, prioritize and then action the highest priority metrics for improvement.',
+    ]}
+    image={quartiles}
+    imageAlt="BeeCastle benchmarking quartiles"
+    accent="magenta"
+  />
+
+  <FeatureSection
+    heading="Anonymized data, personal impact"
+    paragraphs={[
+      'All data is anonymized and stored securely. You can read more in our [privacy statement](/privacy/).',
+      'The data can be updated by MSPs whenever they want, allowing them to track progress against goals.',
+      '**Track performance against peers.** Most MSPs are good at tracking their own individual performance. However, many often question how their strategies and best practices are converting into a competitive advantage in the market against their peers. Now, MSPs can monitor their key metrics and see the impact of any account management strategy or operational changes.',
+    ]}
+    reverse
+  />
+
+  <SignupPanel lede="Create a free trial account today, which gives you free access to benchmarking." />
+</Layout>

@@ -1,0 +1,78 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Section from '../../components/Section.astro';
+import NetlifyForm from '../../components/NetlifyForm.astro';
+import Icon from '../../components/Icon.astro';
+import { site } from '../../data/site';
+
+const linkedin = site.social.find((s) => s.icon === 'linkedin')!;
+
+const channels = [
+  {
+    eyebrow: 'General enquiries',
+    heading: 'New around here?',
+    body: 'If you’ve made it this far, by now you can tell we’re pretty passionate about what we do, so now we’d love to understand how we can help your business. Here are a few options to get in touch with our team:',
+    links: [
+      { label: site.email.hello, href: `mailto:${site.email.hello}`, icon: 'mail' },
+      { label: 'Follow us on LinkedIn', href: linkedin.href, icon: 'linkedin' },
+    ],
+  },
+  {
+    eyebrow: 'Customer support',
+    heading: 'Need some help?',
+    body: 'Our BeeCastle team of experts are on hand and ready to assist with your business needs. Please reach out using any of the options below to discuss how we can help grow your business.',
+    links: [
+      { label: site.email.help, href: `mailto:${site.email.help}`, icon: 'mail' },
+      { label: 'Visit the Help Centre', href: site.helpUrl, icon: 'arrow' },
+    ],
+  },
+] as const;
+---
+<Layout title="Contact us | BeeCastle" description="Get in touch with BeeCastle: general enquiries, sales and customer support for MSPs. Email us, visit the Help Centre or send us a message.">
+  <Section class="pt-[128px]">
+    <header class="rv max-w-[760px]">
+      <p class="m-0 mb-3 font-mono text-[12px] font-medium uppercase tracking-[.14em] text-cyan-deep">Contact</p>
+      <h1 class="m-0 text-h1 font-extrabold leading-[1.05]">How can we help you today?</h1>
+    </header>
+
+    <div class="mt-12 grid gap-10 lg:grid-cols-[1fr_minmax(0,500px)]">
+      <div class="grid content-start gap-6">
+        {channels.map((c) => (
+          <div class="rv rounded-lg border border-rule bg-card p-7 shadow-1">
+            <p class="m-0 font-mono text-[12px] font-medium uppercase tracking-[.14em] text-cyan-deep">{c.eyebrow}</p>
+            <h2 class="m-0 mt-2 text-h3 font-bold">{c.heading}</h2>
+            <p class="m-0 mt-3 text-[16px] leading-relaxed text-ink-2">{c.body}</p>
+            <ul class="m-0 mt-5 grid list-none gap-2.5 p-0">
+              {c.links.map((l) => (
+                <li>
+                  <a href={l.href} {...(/^https?:/.test(l.href) ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                     class="inline-flex items-center gap-2.5 font-semibold text-cyan-deep no-underline hover:underline">
+                    <Icon name={l.icon} class="size-4.5" />{l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+        <div class="rv grid gap-1 text-[15px] text-ink-2">
+          <p class="m-0"><strong class="text-ink">Office:</strong> {site.address}</p>
+          <p class="m-0"><strong class="text-ink">Sales:</strong> <a href={`mailto:${site.email.sales}`} class="font-semibold text-cyan-deep">{site.email.sales}</a></p>
+          <p class="m-0"><strong class="text-ink">Support hours:</strong> {site.supportHours}</p>
+        </div>
+        <p class="rv m-0 text-[15px] text-ink-3">Pssst! Be sure to follow us on <a href={linkedin.href} target="_blank" rel="noopener noreferrer" class="font-semibold text-cyan-deep">LinkedIn</a> for the latest MSP growth inspiration, industry updates and company news.</p>
+      </div>
+
+      <div class="rv rounded-xl border border-rule bg-card p-[clamp(24px,3.5vw,40px)] shadow-2 lg:self-start">
+        <h2 class="m-0 text-h3 font-bold">Send us a message</h2>
+        <div class="mt-6">
+          <NetlifyForm name="contact" action="/contact/thanks/" submit="Send message" fields={[
+            { name: 'name', label: 'Name', autocomplete: 'name' },
+            { name: 'email', label: 'Work email', type: 'email', autocomplete: 'email' },
+            { name: 'company', label: 'Company', autocomplete: 'organization', required: false, wide: true },
+            { name: 'message', label: 'Message', type: 'textarea' },
+          ]} />
+        </div>
+      </div>
+    </div>
+  </Section>
+</Layout>

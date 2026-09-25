@@ -1,0 +1,45 @@
+---
+/* The top of a gated download page: headline, what is inside, and the lead
+   form alongside. Extra copy (the e-book's lists) goes in the default slot. */
+import DownloadForm from './DownloadForm.astro';
+import type { Download } from '../data/downloads';
+
+interface Props {
+  eyebrow: string;
+  headline: string;
+  lede: string;
+  intro?: string;
+  /** Numbered table of contents, shown under "Contents:". */
+  contents?: string[];
+  download: Download;
+  formHeading?: string;
+}
+const { eyebrow, headline, lede, intro, contents = [], download, formHeading } = Astro.props;
+---
+<section class="px-gut pb-sec pt-[104px]">
+  <div class="relative mx-auto max-w-wrap overflow-hidden rounded-xl bg-periwinkle-soft px-[clamp(20px,5vw,64px)] py-[clamp(32px,6vw,72px)]">
+    <div aria-hidden="true" class="pointer-events-none absolute -right-24 -top-24 size-[420px] rounded-full bg-brand-gradient opacity-25 blur-3xl"></div>
+    <div class="relative grid items-start gap-10 lg:grid-cols-[1fr_minmax(0,460px)]">
+      <div>
+        <p class="rv m-0 mb-4 inline-flex items-center gap-2 rounded-full bg-card/80 px-3 py-1 font-mono text-[12px] font-medium uppercase tracking-[.14em] text-ink">
+          <span class="size-2 rounded-full bg-periwinkle"></span>{eyebrow}
+        </p>
+        <h1 class="rv m-0 text-h1 font-extrabold leading-[1.05]">{headline}</h1>
+        <p class="rv m-0 mt-5 max-w-[56ch] text-lede leading-relaxed text-ink-2">{lede}</p>
+        {intro && <p class="rv m-0 mt-4 text-[16.5px] text-ink-2">{intro}</p>}
+        {contents.length > 0 && (
+          <div class="rv mt-7">
+            <h2 class="m-0 font-mono text-[12px] font-medium uppercase tracking-[.14em] text-ink">Contents</h2>
+            <ol class="m-0 mt-3 grid list-decimal gap-2 pl-6 text-[16px] text-ink-2 marker:font-semibold marker:text-ink-3">
+              {contents.map((item) => <li>{item}</li>)}
+            </ol>
+          </div>
+        )}
+        <slot />
+      </div>
+      <div class="rv">
+        <DownloadForm download={download} heading={formHeading} />
+      </div>
+    </div>
+  </div>
+</section>

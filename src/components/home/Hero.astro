@@ -1,0 +1,47 @@
+---
+/* Homepage hero. The animated module montage from the old site plays on the
+   right, over a soft blob of the brand gradient. */
+import Button from '../Button.astro';
+import { site } from '../../data/site';
+---
+<section class="relative overflow-hidden px-gut pb-[clamp(48px,6vw,96px)] pt-[clamp(128px,13vw,176px)]">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+    <div class="absolute -right-40 -top-40 size-[720px] rounded-full bg-brand-gradient opacity-30 blur-[120px]"></div>
+    <div class="absolute -left-40 top-1/2 size-[480px] rounded-full bg-honey opacity-15 blur-[120px]"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(var(--color-rule)_1px,transparent_1px)] [background-size:28px_28px] [mask-image:linear-gradient(to_bottom,#000,transparent_80%)]"></div>
+  </div>
+
+  <div class="mx-auto grid max-w-wrap items-center gap-12 lg:grid-cols-[1.1fr_1fr]">
+    <div>
+      <p class="rv m-0 inline-flex items-center gap-2 rounded-full border border-rule bg-card px-3.5 py-1.5 text-[13.5px] font-semibold text-ink shadow-1">
+        <span class="font-mono text-[12px] tracking-[.06em] text-cyan-deep">Retention</span>
+        <span aria-hidden="true" class="text-ink-3">&rsaquo;</span>
+        <span class="font-mono text-[12px] tracking-[.06em] text-cyan-deep">Sales</span>
+        <span aria-hidden="true" class="text-ink-3">&rsaquo;</span>
+        <span class="font-mono text-[12px] tracking-[.06em] text-cyan-deep">Reporting</span>
+      </p>
+      <h1 class="rv m-0 mt-6 text-display font-extrabold leading-[1.02] tracking-[-.035em]">
+        The customer success platform <span class="text-brand-gradient">for MSPs</span>
+      </h1>
+      <p class="rv m-0 mt-6 max-w-[56ch] text-lede leading-relaxed text-ink-2">
+        BeeCastle helps you optimise your customers' experience using AI-driven insights uncovered from your PSA and M365 data.
+        It recommends actions that drive results, and empowers everyone in your team to improve retention and win upsell and
+        cross-sell opportunities with our whitespace technology.
+      </p>
+      <div class="rv mt-9 flex flex-wrap gap-3">
+        <Button href="/sign-up/" size="lg">Create a free account</Button>
+        <Button href={site.demoUrl} variant="outline" size="lg">Book a demo</Button>
+      </div>
+      <p class="rv m-0 mt-5 text-[14px] text-ink-3">Connects to ConnectWise, Autotask and HaloPSA in about ten minutes.</p>
+    </div>
+
+    <div class="rv relative">
+      <div class="relative mx-auto aspect-square w-full max-w-[560px] overflow-hidden rounded-xl bg-card shadow-3">
+        <video autoplay muted loop playsinline preload="metadata" aria-hidden="true" class="size-full object-cover">
+          <source src="/videos/bc_modules_animated.webm" type="video/webm" />
+          <source src="/videos/bc_modules_animated.mp4" type="video/mp4" />
+        </video>
+      </div>
+    </div>
+  </div>
+</section>

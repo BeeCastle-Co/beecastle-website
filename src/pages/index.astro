@@ -1,0 +1,34 @@
+---
+/* The homepage, top to bottom. Each section is a component in
+   src/components/home/; to find one, read this list. */
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/home/Hero.astro';
+import Customers from '../components/home/Customers.astro';
+import Tools from '../components/home/Tools.astro';
+import Testimonials from '../components/home/Testimonials.astro';
+import HowItWorks from '../components/home/HowItWorks.astro';
+import Integrations from '../components/home/Integrations.astro';
+import Roi from '../components/home/Roi.astro';
+import Plans from '../components/home/Plans.astro';
+import Story from '../components/home/Story.astro';
+import LatestPosts from '../components/home/LatestPosts.astro';
+import SignupPanel from '../components/SignupPanel.astro';
+import CTABand from '../components/CTABand.astro';
+---
+<Layout
+  title="BeeCastle: the customer success platform for MSPs"
+  description="Customer retention, revenue analytics and whitespace prospecting for MSPs. Connect ConnectWise, Autotask or HaloPSA and see where to grow in minutes."
+>
+  <Hero />
+  <Customers />
+  <Tools />
+  <Testimonials />
+  <HowItWorks />
+  <Integrations />
+  <Roi />
+  <Plans />
+  <SignupPanel />
+  <Story />
+  <LatestPosts />
+  <CTABand />
+</Layout>

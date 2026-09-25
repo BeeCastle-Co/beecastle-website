@@ -1,0 +1,27 @@
+---
+/* A small card: a brand illustration, a heading, a line or two of copy and
+   an optional link. Body allows the inline Markdown subset (bold, links). */
+import Illustration from './Illustration.astro';
+import Icon from './Icon.astro';
+import { inline } from '../lib/inline';
+
+interface Props {
+  icon: string;
+  heading: string;
+  body: string;
+  link?: { label: string; href: string };
+}
+const { icon, heading, body, link } = Astro.props;
+const external = link && /^https?:/.test(link.href);
+---
+<article class="rv flex flex-col rounded-lg bg-card p-7 shadow-1">
+  <Illustration name={icon} class="max-h-24 w-auto max-w-[70%] self-start" />
+  <h3 class="m-0 mt-5 text-h3 font-bold leading-snug">{heading}</h3>
+  <p class="m-0 mt-3 text-[15.5px] leading-relaxed [&_a]:font-semibold [&_a]:text-cyan-deep [&_strong]:text-ink" set:html={inline(body)} />
+  {link && (
+    <a href={link.href} {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+       class="mt-auto inline-flex items-center gap-1.5 pt-5 font-semibold text-cyan-deep no-underline hover:text-ink">
+      {link.label}<Icon name="arrow" />
+    </a>
+  )}
+</article>

@@ -1,0 +1,16 @@
+---
+/* Thank-you pages for the gated downloads: /security/thanks/,
+   /e-book/thanks/ and /excellence_in_account_management/thanks/. Netlify
+   shows one after the page's form is sent. Kept out of search. */
+import Layout from '../../layouts/Layout.astro';
+import ThanksPanel from '../../components/ThanksPanel.astro';
+import { downloads, type Download } from '../../data/downloads';
+
+export function getStaticPaths() {
+  return Object.values(downloads).map((download) => ({ params: { download: download.slug }, props: { download } }));
+}
+const { download } = Astro.props as { download: Download };
+---
+<Layout title="Thanks | BeeCastle" description={`Thanks for your interest. Download ${download.label} from BeeCastle.`} noindex>
+  <ThanksPanel heading={download.thanksHeading} message="Your download is ready. The link opens the PDF in a new tab." backHref={download.pdfUrl} backLabel="Download the PDF" />
+</Layout>

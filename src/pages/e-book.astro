@@ -1,0 +1,54 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import DownloadHero from '../components/DownloadHero.astro';
+import cover from '../assets/img/bc_ebook_cover.webp';
+import { downloads } from '../data/downloads';
+
+const lists = [
+  {
+    heading: 'What’s inside',
+    items: [
+      ['Growth Levers', 'Learn the key actions that drive MSP growth.'],
+      ['Proactive Account Management', 'Get actionable tips to enhance upsell and cross-sell opportunities.'],
+      ['Tools and Recommendations', 'Find out how to review and optimize your team’s performance.'],
+    ],
+  },
+  {
+    heading: 'Why download this eBook?',
+    items: [
+      ['Proven Strategies', 'Based on insights from successful MSPs.'],
+      ['Actionable Tips', 'Easy to implement and designed to deliver results.'],
+      ['Focused on Growth', 'Perfect for MSPs looking to scale their business.'],
+    ],
+  },
+];
+---
+<Layout title="Unlock Growth for Your MSP: free eBook | BeeCastle" description="Are you ready to grow your MSP? Download our free eBook, It Pays to Be Proactive, and discover the proven strategies top MSPs use to boost their business.">
+  <DownloadHero
+    eyebrow="Free eBook"
+    headline="Unlock Growth for Your MSP"
+    lede="Are you ready to grow your MSP? Download our free eBook, “It Pays to Be Proactive”, and discover the proven strategies top MSPs use to boost their business."
+    download={downloads.ebook}
+    formHeading="Download your e-book here"
+  >
+    <Image src={cover} alt="It Pays to Be Proactive: the BeeCastle eBook for MSPs" widths={[320, 480, 640]} sizes="(max-width: 640px) 70vw, 320px"
+           loading="eager" fetchpriority="high" class="rv mt-8 h-auto w-full max-w-[320px] drop-shadow-[0_24px_40px_rgba(23,39,57,.18)]" />
+    <div class="rv mt-8 grid gap-8 sm:grid-cols-2">
+      {lists.map((list) => (
+        <div>
+          <h2 class="m-0 text-[19px] font-bold">{list.heading}</h2>
+          <ul class="m-0 mt-3 grid list-none gap-3 p-0 text-[15.5px] text-ink-2">
+            {list.items.map(([term, text]) => (
+              <li class="flex gap-2.5"><span class="mt-2 size-1.5 shrink-0 rounded-full bg-periwinkle"></span><span><strong class="text-ink">{term}:</strong> {text}</span></li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+    <div class="rv mt-8">
+      <h2 class="m-0 text-[19px] font-bold">Take your MSP to the next level</h2>
+      <p class="m-0 mt-3 max-w-[60ch] text-[16px] text-ink-2">Don’t miss out on valuable growth opportunities. Download your free eBook now and start implementing proactive strategies to drive your MSP’s success!</p>
+    </div>
+  </DownloadHero>
+</Layout>

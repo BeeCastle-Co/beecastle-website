@@ -1,0 +1,21 @@
+---
+/* "MSPs trust BeeCastle": a heading beside the wall of customer logos.
+   Shared by the landing pages, the demo pages and the coach directory. */
+import { Image } from 'astro:assets';
+import Section from './Section.astro';
+import logos from '../assets/img/bc_logo_grid_sm.webp';
+
+interface Props {
+  heading?: string;
+}
+const { heading = 'More and more MSPs are trusting BeeCastle to supercharge their growth' } = Astro.props;
+---
+<Section tone="white">
+  <div class="grid items-center gap-10 lg:grid-cols-[1fr_1.5fr]">
+    <h2 class="rv m-0 max-w-[18ch] text-h2 font-bold leading-[1.1]">{heading}</h2>
+    <div class="rv">
+      <Image src={logos} alt="Logos of MSPs using BeeCastle" widths={[480, 700]} sizes="(max-width: 1024px) 100vw, 700px"
+             class="mx-auto h-auto w-full max-w-[700px]" />
+    </div>
+  </div>
+</Section>

@@ -1,0 +1,13 @@
+---
+import { getCollection } from 'astro:content';
+import FeaturePage from '../../layouts/FeaturePage.astro';
+
+/* One page per Markdown file in src/content/solutions/, at /solutions/<file-name>/. */
+export async function getStaticPaths() {
+  const entries = await getCollection('solutions', ({ data }) => !data.draft);
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+---
+<FeaturePage entry={entry} section={{ label: 'Solutions', path: '/solutions/' }} />

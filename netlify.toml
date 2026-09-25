@@ -1,0 +1,96 @@
+# Astro builds the whole site into dist/. Only public/ plus rendered pages are
+# published, so nothing else in the repo can leak onto the site.
+
+[build]
+  command = "pnpm build"
+  publish = "dist"
+
+[build.environment]
+  # Astro 7 requires Node 22.12 or newer.
+  NODE_VERSION = "24"
+  # pnpm-lock.yaml is the only lockfile: do not add package-lock.json.
+  PNPM_FLAGS = "--frozen-lockfile"
+  # PUBLIC_-prefixed values are public by definition and belong in the HTML.
+  SECRETS_SCAN_OMIT_KEYS = "PUBLIC_GA_ID"
+
+# Keep previews and branch deploys out of search results. The canonical URL is
+# handled in astro.config.mjs from Netlify's CONTEXT and DEPLOY_PRIME_URL.
+[[context.branch-deploy.headers]]
+  for = "/*"
+  [context.branch-deploy.headers.values]
+    X-Robots-Tag = "noindex"
+
+[[context.deploy-preview.headers]]
+  for = "/*"
+  [context.deploy-preview.headers.values]
+    X-Robots-Tag = "noindex"
+
+# Astro emits sitemap-index.xml; people and tools try /sitemap.xml first.
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "/sitemap-index.xml"
+  status = 301
+  force = true
+
+# The old Hugo site published its feed at /index.xml.
+[[redirects]]
+  from = "/index.xml"
+  to = "/rss.xml"
+  status = 301
+  force = true
+
+# Old URLs. astro.config.mjs also lists these, but Astro can only emit a
+# meta-refresh page on a static host; these are proper 301s for search engines.
+[[redirects]]
+  from = "/categories/"
+  to = "/blog/"
+  status = 301
+
+[[redirects]]
+  from = "/blog/in-case-you-missed-it...beecastle-product-updates-april-may-2021/"
+  to = "/blog/in-case-you-missed-it-beecastle-product-updates-april-may-2021/"
+  status = 301
+
+[[redirects]]
+  from = "/blog/in-case-you-missed-it...beecastle-product-updates-february-2021/"
+  to = "/blog/in-case-you-missed-it-beecastle-product-updates-february-2021/"
+  status = 301
+
+# Security headers.
+#
+# 'unsafe-inline' is needed for scripts: Astro leaves is:inline scripts in the
+# HTML and a static site has no server to mint a nonce. What the policy does
+# buy is a fixed list of places a script, frame or beacon may come from:
+#   blob:, googletagmanager, google-analytics   Google Analytics via Partytown
+#   youtube-nocookie                           video embeds in blog posts
+#   app.netlify.com                            deploy-preview feedback drawer
+#   app.beecastle.com                          the sign-up form's action
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+    Strict-Transport-Security = "max-age=31536000"
+    Content-Security-Policy = """\
+      default-src 'self'; \
+      base-uri 'self'; \
+      object-src 'none'; \
+      frame-ancestors 'self'; \
+      form-action 'self' https://app.beecastle.com; \
+      script-src 'self' 'unsafe-inline' blob: https://www.googletagmanager.com; \
+      style-src 'self' 'unsafe-inline'; \
+      img-src 'self' data: blob: https://i.ytimg.com https://*.google-analytics.com https://*.googletagmanager.com; \
+      font-src 'self'; \
+      media-src 'self'; \
+      connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; \
+      frame-src 'self' https://www.youtube-nocookie.com https://app.netlify.com; \
+      worker-src 'self' blob:; \
+      upgrade-insecure-requests"""
+
+# Hashed build assets never change, so cache them for a year.
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

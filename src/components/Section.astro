@@ -1,0 +1,24 @@
+---
+/* Page section wrapper: the gutter, the vertical rhythm and the max width.
+   tone sets the ground. Use it rather than writing px-gut py-sec by hand. */
+interface Props {
+  id?: string;
+  tone?: 'paper' | 'white' | 'tint' | 'navy';
+  width?: 'wrap' | 'prose';
+  class?: string;
+  /** Tighter top padding, for a section that follows a closely related one. */
+  tight?: boolean;
+}
+const { id, tone = 'paper', width = 'wrap', class: extra, tight } = Astro.props;
+const tones = {
+  paper: 'bg-paper',
+  white: 'bg-card',
+  tint: 'bg-paper-2',
+  navy: 'bg-navy text-navy-muted [&_h2]:text-white [&_h3]:text-white',
+};
+---
+<section id={id} class:list={['px-gut', tight ? 'pb-sec pt-8' : 'py-sec', tones[tone], extra]}>
+  <div class:list={['mx-auto', width === 'wrap' ? 'max-w-wrap' : 'max-w-prose']}>
+    <slot />
+  </div>
+</section>

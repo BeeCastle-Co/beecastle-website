@@ -1,0 +1,68 @@
+---
+/* Renders one product, solution or integration entry. All three collections
+   share a schema (featurePage in src/content.config.ts), so they share this
+   template: hero, optional overview, alternating sections, sign-up, CTA.
+
+   The Markdown body, if any, renders as a prose block after the sections. */
+import { render, type CollectionEntry } from 'astro:content';
+import Layout from './Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import FeatureOverview from '../components/FeatureOverview.astro';
+import FeatureSection from '../components/FeatureSection.astro';
+import SignupPanel from '../components/SignupPanel.astro';
+import CTABand from '../components/CTABand.astro';
+import { slugify } from '../lib/inline';
+
+interface Props {
+  entry: CollectionEntry<'products'> | CollectionEntry<'solutions'> | CollectionEntry<'integrations'>;
+  /** Breadcrumb label and path for structured data, for example "Products". */
+  section: { label: string; path: string };
+}
+const { entry, section } = Astro.props;
+const d = entry.data;
+const { Content } = await render(entry);
+const hasBody = !!entry.body?.trim();
+
+const sections = d.sections.map((s) => ({ ...s, id: s.id ?? slugify(s.heading) }));
+/* The sign-up panel sits about two thirds down, as it did on the old site. */
+const signupAt = Math.min(sections.length, Math.max(2, Math.ceil(sections.length * 0.6)));
+
+const here = new URL(`${section.path}${entry.id}/`, Astro.site).href;
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'BeeCastle', item: Astro.site?.href },
+      { '@type': 'ListItem', position: 2, name: section.label, item: here },
+      { '@type': 'ListItem', position: 3, name: d.name, item: here },
+    ],
+  },
+];
+---
+<Layout title={d.seoTitle ?? `${d.name} | BeeCastle`} description={d.summary} image={d.heroImage?.src} schema={schema}>
+  <PageHero eyebrow={d.eyebrow} headline={d.headline} intro={d.intro} bullets={d.introBullets}
+            image={d.heroImage} imageAlt={d.heroImageAlt} accent={d.accent} ctaMode={d.ctaMode} />
+
+  {d.overview && (
+    <FeatureOverview heading={d.overview.heading} body={d.overview.body} accent={d.accent}
+                     links={sections.map((s) => ({ id: s.id, label: s.heading }))} />
+  )}
+
+  {sections.map((s, i) => (
+    <>
+      {d.signup && i === signupAt && <SignupPanel />}
+      <FeatureSection {...s} reverse={i % 2 === 1} accent={d.accent} />
+    </>
+  ))}
+
+  {hasBody && (
+    <section class="px-gut py-sec">
+      <div class="prose mx-auto max-w-prose"><Content /></div>
+    </section>
+  )}
+
+  {d.signup && sections.length < 2 && <SignupPanel />}
+  <CTABand heading={d.closing} ctaMode={d.ctaMode}
+    lede={d.ctaMode === 'contact' ? 'Talk to us about where your MSP is headed and how we can help.' : undefined} />
+</Layout>

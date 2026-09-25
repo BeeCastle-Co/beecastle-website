@@ -1,0 +1,21 @@
+---
+/* The three newest blog posts. */
+import Section from '../Section.astro';
+import PostCard from '../PostCard.astro';
+import Button from '../Button.astro';
+import { getPosts } from '../../lib/blog';
+
+const posts = (await getPosts()).slice(0, 3);
+---
+<Section tone="tint">
+  <div class="mb-10 flex flex-wrap items-end justify-between gap-4">
+    <div class="rv">
+      <p class="m-0 mb-3 font-mono text-[12px] font-medium uppercase tracking-[.14em] text-cyan-deep">From the blog</p>
+      <h2 class="m-0 text-h2 font-extrabold leading-[1.1]">Ideas for growing MSPs</h2>
+    </div>
+    <Button href="/blog/" variant="outline">All posts</Button>
+  </div>
+  <div class="grid gap-6 md:grid-cols-3">
+    {posts.map((p) => <PostCard post={p} />)}
+  </div>
+</Section>

@@ -1,0 +1,39 @@
+---
+/* One blog post as a card: image, date, title, categories, summary. The whole
+   card is the link. */
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import CategoryPill from './CategoryPill.astro';
+import Illustration from './Illustration.astro';
+import { formatDate } from '../lib/inline';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  /** Larger, horizontal layout for the lead story on the blog index. */
+  feature?: boolean;
+  headingLevel?: 'h2' | 'h3';
+}
+const { post, feature = false, headingLevel: H = 'h3' } = Astro.props;
+const d = post.data;
+---
+<a href={`/blog/${post.id}/`}
+   class:list={['rv group flex overflow-hidden rounded-lg border border-rule bg-card no-underline shadow-1 transition-all duration-300 hover:-translate-y-1 hover:shadow-3',
+     feature ? 'flex-col md:grid md:grid-cols-[1.25fr_1fr]' : 'flex-col']}>
+  <div class:list={['relative overflow-hidden bg-paper-2', feature ? 'aspect-[16/9] md:aspect-auto md:min-h-[340px]' : 'aspect-[16/9]']}>
+    {d.image ? (
+      <Image src={d.image} alt={d.imageAlt ?? ''} widths={feature ? [640, 960, 1280] : [400, 640, 800]}
+             sizes={feature ? '(max-width: 768px) 100vw, 700px' : '(max-width: 768px) 100vw, 400px'}
+             class="absolute inset-0 size-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+    ) : (
+      <div class="absolute inset-0 grid place-items-center"><div class="absolute inset-0 bg-brand-gradient opacity-25"></div><Illustration name="hive" class="relative w-28" /></div>
+    )}
+  </div>
+  <div class:list={['flex flex-1 flex-col', feature ? 'justify-center p-[clamp(24px,3.5vw,44px)]' : 'p-6']}>
+    <time datetime={d.date.toISOString()} class="font-mono text-[12px] text-ink-3">{formatDate(d.date)}</time>
+    <H class:list={['m-0 mt-2 font-bold leading-snug text-ink transition-colors group-hover:text-cyan-deep', feature ? 'text-h3 md:text-[30px]' : 'text-[19px]']}>{d.title}</H>
+    <p class:list={['m-0 mt-3 text-ink-3', feature ? 'text-[16.5px]' : 'line-clamp-3 text-[15px]']}>{d.summary}</p>
+    <div class="mt-auto flex flex-wrap gap-1.5 pt-5">
+      {d.categories.map((c) => <CategoryPill slug={c} link={false} />)}
+    </div>
+  </div>
+</a>

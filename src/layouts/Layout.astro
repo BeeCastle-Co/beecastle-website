@@ -1,0 +1,139 @@
+---
+/* The single HTML shell for every page. Nav, footer, meta tags and analytics
+   live here and nowhere else. */
+import { Font } from 'astro:assets';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  /** Browser tab and search-result title. Keep under about 60 characters. */
+  title: string;
+  /** Search-result summary. Keep between 120 and 155 characters. */
+  description: string;
+  /** Social share image: a path from the site root or an imported image's src. */
+  image?: string;
+  type?: 'website' | 'article';
+  publishedTime?: Date;
+  /** Extra JSON-LD for this page, rendered alongside the site-wide Organization. */
+  schema?: Record<string, unknown>[];
+  /** Keep this page out of search results (thank-you pages and the like). */
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  image = '/og-default.png',
+  type = 'website',
+  publishedTime,
+  schema = [],
+  noindex = false,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const social = new URL(image, Astro.site).href;
+const GA_ID = import.meta.env.PUBLIC_GA_ID;
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <script is:inline>document.documentElement.classList.add('js')</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="canonical" href={canonical} />
+  {noindex && <meta name="robots" content="noindex" />}
+
+  <title>{title}</title>
+  <meta name="description" content={description} />
+
+  <meta property="og:type" content={type} />
+  <meta property="og:site_name" content="BeeCastle" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={social} />
+  {publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@beecastleapp" />
+
+  <link rel="alternate" type="application/rss+xml" title="BeeCastle blog" href={new URL('/rss.xml', Astro.site).href} />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/svg+xml" href="/logo-beecastle.svg" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta name="theme-color" content="#172739" />
+
+  <Font cssVariable="--font-jakarta" preload />
+  <Font cssVariable="--font-geist-mono" />
+
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      '@id': new URL('/#organization', Astro.site).href,
+      name: 'BeeCastle',
+      url: Astro.site?.href,
+      logo: new URL('/logo-beecastle.svg', Astro.site).href,
+      description: 'Customer success, revenue analytics and whitespace prospecting for managed service providers.',
+      sameAs: [
+        'https://www.linkedin.com/company/beecastle/',
+        'https://www.youtube.com/@beecastle',
+        'https://twitter.com/beecastleapp/',
+      ],
+    })}
+  />
+  {schema.map((entry) => <script type="application/ld+json" set:html={JSON.stringify(entry)} />)}
+
+  {GA_ID && (
+    <>
+      <script type="text/partytown" src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
+      <script type="text/partytown" is:inline define:vars={{ GA_ID }}>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { window.dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', GA_ID);
+      </script>
+    </>
+  )}
+</head>
+
+<body>
+  <a
+    class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-ink focus:px-5 focus:py-3 focus:text-white"
+    href="#main">Skip to content</a>
+
+  <Nav />
+
+  <main id="main">
+    <slot />
+  </main>
+
+  <Footer />
+
+  <script>
+    /* Reveal on scroll. Elements marked .rv fade up as they enter the viewport.
+       Honours prefers-reduced-motion by showing everything at once. */
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const items = Array.from(document.querySelectorAll<HTMLElement>('.rv'));
+
+    if (reduce || !('IntersectionObserver' in window)) {
+      items.forEach((el) => el.classList.add('in'));
+    } else {
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry, i) => {
+            if (!entry.isIntersecting) return;
+            const el = entry.target as HTMLElement;
+            setTimeout(() => el.classList.add('in'), i * 60);
+            io.unobserve(el);
+          });
+        },
+        { threshold: 0.06, rootMargin: '0px 0px -4% 0px' }
+      );
+      items.forEach((el) => io.observe(el));
+    }
+  </script>
+</body>
+</html>
