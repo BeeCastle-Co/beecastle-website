@@ -1,0 +1,95 @@
+---
+/* Google Analytics 4, and the handful of events the site cares about.
+
+   Everything is driven by environment variables, read at build time:
+
+     PUBLIC_GA_ID                    GA4 measurement ID, G-XXXXXXXXXX. Unset:
+                                     no tag at all, nothing sent anywhere.
+     PUBLIC_GOOGLE_SITE_VERIFICATION Search Console verification token.
+                                     Unset: no meta tag.
+
+   Changing either in Netlify needs a new deploy, because the site is static.
+
+   Tags are only emitted on production deploys (and locally when the ID is
+   set in .env). Netlify previews and branch deploys never send data, so
+   testing a branch cannot pollute the numbers.
+
+   gtag is loaded directly and async, not through Partytown: GA4's
+   cross-domain linker has to decorate links in the page itself to carry the
+   visitor through to the app on suite.beecastle.com, which it cannot do from
+   a web worker. The script is async, so it does not block rendering.
+
+   Events sent (GA4 recommended names where one exists):
+     sign_up_start   clicked a link to the app's sign-up page (method: link)
+     sign_up         submitted the email sign-up form (method: email)
+     login           clicked Sign in
+     book_demo       clicked through to the demo booking page
+     generate_lead   submitted any Netlify form (form_name: which one)
+   Outbound clicks, scrolls, file downloads and site search come from GA4's
+   enhanced measurement, switched on in the GA4 admin, not here.
+
+   In GA4, mark sign_up, book_demo and generate_lead as key events. */
+import { site } from '../data/site';
+
+const GA_ID = import.meta.env.PUBLIC_GA_ID;
+const VERIFY = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
+const context = process.env.CONTEXT;
+const isPreview = context === 'deploy-preview' || context === 'branch-deploy';
+const enabled = !!GA_ID && !isPreview;
+
+const appHost = new URL(site.appUrl).hostname;
+const cfg = {
+  GA_ID,
+  appHost,
+  signupPath: new URL(site.signupUrl).pathname,
+  loginPath: new URL(site.signInUrl).pathname,
+  demoUrl: site.demoUrl,
+  debug: import.meta.env.DEV,
+};
+---
+{VERIFY && <meta name="google-site-verification" content={VERIFY} />}
+
+{enabled && (
+  <>
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
+    <script is:inline define:vars={{ cfg }}>
+      // window.dataLayer is the one global this site allows: gtag requires it by name.
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { window.dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', cfg.GA_ID, {
+        // Carries the GA client ID across to the app, so a visit here and a
+        // sign-up there are one journey. The app must also list this domain.
+        linker: { domains: [location.hostname, cfg.appHost] },
+        debug_mode: cfg.debug,
+      });
+
+      const track = (name, params) => gtag('event', name, params || {});
+
+      document.addEventListener('click', (e) => {
+        const a = e.target.closest && e.target.closest('a[href]');
+        if (!a) return;
+        let url;
+        try { url = new URL(a.href, location.href); } catch { return; }
+        const label = (a.textContent || '').trim().slice(0, 60);
+        if (url.hostname === cfg.appHost && url.pathname.startsWith(cfg.signupPath)) {
+          track('sign_up_start', { method: 'link', link_text: label });
+        } else if (url.hostname === cfg.appHost && url.pathname.startsWith(cfg.loginPath)) {
+          track('login', { method: 'link' });
+        } else if (a.href.startsWith(cfg.demoUrl)) {
+          track('book_demo', { link_text: label, page_path: location.pathname });
+        }
+      });
+
+      document.addEventListener('submit', (e) => {
+        const form = e.target;
+        if (!(form instanceof HTMLFormElement)) return;
+        if (form.hasAttribute('data-netlify')) {
+          track('generate_lead', { form_name: form.getAttribute('name') || 'unknown' });
+        } else if (form.action && new URL(form.action).hostname === cfg.appHost) {
+          track('sign_up', { method: 'email' });
+        }
+      });
+    </script>
+  </>
+)}

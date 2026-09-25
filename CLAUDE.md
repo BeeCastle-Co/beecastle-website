@@ -216,6 +216,28 @@ when the env vars are missing, so the site still builds without them. The plan:
    `getCollection()`.
 3. Add a Netlify build hook triggered by Contentful publish.
 
+## Analytics
+
+Google Analytics 4, in `src/components/Analytics.astro`, driven by env vars
+set in Netlify (Site configuration, Environment variables):
+
+| Variable | What | Unset |
+|---|---|---|
+| `PUBLIC_GA_ID` | GA4 measurement ID, `G-XXXXXXXXXX` | no tag, nothing sent |
+| `PUBLIC_GOOGLE_SITE_VERIFICATION` | Search Console token | no meta tag |
+| `PUBLIC_APP_URL`, `PUBLIC_HELP_URL` | the app and help centre | production defaults |
+
+- Tags only render on **production** deploys. Previews and branch deploys
+  never send data. Locally, setting the ID in `.env` turns on debug mode.
+- Env vars are read at **build** time: changing one in Netlify needs a redeploy.
+- Events: `sign_up_start`, `sign_up`, `login`, `book_demo`, `generate_lead`
+  (with `form_name`). Mark `sign_up`, `book_demo` and `generate_lead` as key
+  events in GA4. Outbound clicks, scroll and downloads come from GA4's
+  enhanced measurement, switched on in the GA4 admin.
+- Cross-domain: the tag links this site with the app's domain, so set up the
+  same measurement ID (or cross-domain config) in the app to see full journeys.
+- No Partytown: GA4's cross-domain linker must run on the page itself.
+
 ## Deploying
 
 Netlify builds `pnpm build` and publishes `dist/` (see `netlify.toml`). Branch

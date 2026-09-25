@@ -2,7 +2,6 @@
 import { defineConfig, fontProviders } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
-import partytown from '@astrojs/partytown';
 import { readdirSync, readFileSync } from 'node:fs';
 
 const FALLBACK = 'https://www.beecastle.com';
@@ -96,7 +95,6 @@ export default defineConfig({
         return date ? { ...item, lastmod: date } : item;
       },
     }),
-    partytown({ config: { forward: ['dataLayer.push'] } }),
   ],
 
   vite: {
