@@ -18,7 +18,7 @@ const steps = ['Retention', 'Sales', 'Reporting'];
     <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 bottom-0 top-24 border-x border-rule [mask-image:linear-gradient(to_bottom,transparent,var(--color-ink)_160px)]"></div>
     <div aria-hidden="true" class="pointer-events-none absolute inset-0">
       <div class="absolute inset-0 bg-[radial-gradient(var(--color-rule-2)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(70%_60%_at_50%_30%,var(--color-ink),transparent)]"></div>
-      <div class="absolute -top-48 left-1/2 h-[420px] w-[min(900px,120%)] -translate-x-1/2 rounded-full bg-brand-gradient opacity-15 blur-[100px]"></div>
+      <div class="absolute -top-48 left-1/2 h-[420px] w-[min(900px,120%)] -translate-x-1/2 rounded-full bg-brand-gradient opacity-15 glow"></div>
     </div>
 
     <div class="relative mx-auto max-w-[980px] text-center">
@@ -51,7 +51,7 @@ const steps = ['Retention', 'Sales', 'Reporting'];
       <Bee class="absolute -right-2 -top-12 z-10 w-16 md:w-20 lg:-right-6" />
       <PortfolioHealth class="lg:col-span-8" rows={5} />
       <div class="relative overflow-hidden rounded-sm border border-rule bg-paper-2 max-lg:aspect-[715/600] lg:col-span-4">
-        <video autoplay muted loop playsinline preload="metadata" aria-hidden="true" class="absolute inset-0 size-full object-cover mix-blend-multiply">
+        <video data-hero-video autoplay muted loop playsinline preload="metadata" aria-hidden="true" class="absolute inset-0 size-full object-cover mix-blend-multiply">
           <source src="/videos/bc_modules_animated.webm" type="video/webm" />
           <source src="/videos/bc_modules_animated.mp4" type="video/mp4" />
         </video>
@@ -59,3 +59,15 @@ const steps = ['Retention', 'Sales', 'Reporting'];
     </div>
   </div>
 </section>
+
+<script>
+  /* Only play the module animation while it is on screen. Decoding video off
+     screen costs a phone frames it needs for scrolling and the menu. */
+  const video = document.querySelector<HTMLVideoElement>('[data-hero-video]');
+  if (video && 'IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) video.play().catch(() => {});
+      else video.pause();
+    }).observe(video);
+  }
+</script>

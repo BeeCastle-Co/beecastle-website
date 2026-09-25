@@ -113,6 +113,16 @@
 @utility bg-brand-gradient {
   background-image: linear-gradient(100deg, #83A9FF 0%, #36C7F5 54%, #00EBC2 100%);
 }
+/* A soft glow blob. Fades the element's own background to nothing at its
+   edges with a mask, instead of filter: blur(). A 100px blur is re-rasterised
+   by phones whenever anything near it changes, and behind a frosted nav it is
+   re-blurred every frame, which made the mobile menu stutter. A mask is
+   drawn once. Use for decorative background shapes; never blur them. */
+@utility glow {
+  mask-image: radial-gradient(closest-side, var(--color-ink) 0%, transparent 100%);
+  -webkit-mask-image: radial-gradient(closest-side, var(--color-ink) 0%, transparent 100%);
+}
+
 @utility text-brand-gradient {
   background-image: linear-gradient(100deg, #5B8BFF 0%, #1B92C4 50%, #00A88A 100%);
   -webkit-background-clip: text;

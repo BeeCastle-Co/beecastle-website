@@ -59,6 +59,13 @@ a token.
 - **Navy** (`#172739`) is the ink and the dark sections. Never pure black.
 - Per-page accent colours go through the `accent` field and `src/lib/accents.ts`.
 
+### 5b. No blur filters on phones
+
+Decorative glow shapes use the `glow` utility (a mask), never `blur-*`, and the
+nav's frosted-glass `backdrop-blur` is desktop only (`lg:`). Large blurs, and
+any backdrop blur over moving content, made the mobile menu stutter. A desktop
+browser will not show the problem, so do not judge it there.
+
 ### 6. Never use an em dash
 
 Not in copy, code comments or commit messages. Use a colon, comma, full stop

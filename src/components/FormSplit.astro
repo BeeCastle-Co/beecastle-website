@@ -20,7 +20,7 @@ const { id, eyebrow, heading, lede, cardHeading, cardLede, hero = false } = Astr
 const H = hero ? 'h1' : 'h2';
 ---
 <section id={id} class:list={['relative overflow-hidden px-gut', hero ? 'pb-sec pt-[128px]' : 'py-sec']}>
-  {hero && <div aria-hidden="true" class="pointer-events-none absolute -left-40 -top-40 size-[520px] rounded-full bg-brand-gradient opacity-20 blur-3xl"></div>}
+  {hero && <div aria-hidden="true" class="pointer-events-none absolute -left-40 -top-40 size-[520px] rounded-full bg-brand-gradient opacity-20 glow"></div>}
   <div class="relative mx-auto grid max-w-wrap items-start gap-[clamp(32px,5vw,72px)] lg:grid-cols-[1.05fr_1fr]">
     <div class="rv">
       {eyebrow && <p class="m-0 mb-3 font-mono text-[12px] font-medium uppercase tracking-[.14em] text-cyan-deep">{eyebrow}</p>}

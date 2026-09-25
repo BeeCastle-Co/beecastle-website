@@ -25,7 +25,7 @@ const plans = (await getCollection('plans')).sort((a, b) => a.data.order - b.dat
 <Layout title={w.title} description={w.description}>
   <section class="px-gut pb-6 pt-[104px]">
     <div class="relative mx-auto grid max-w-wrap items-center gap-[clamp(32px,5vw,72px)] overflow-hidden rounded-xl bg-cyan-soft px-[clamp(24px,5vw,64px)] py-[clamp(40px,6vw,80px)] lg:grid-cols-[1fr_1.15fr]">
-      <div aria-hidden="true" class="pointer-events-none absolute -right-24 -top-24 size-[420px] rounded-full bg-brand-gradient opacity-25 blur-3xl"></div>
+      <div aria-hidden="true" class="pointer-events-none absolute -right-24 -top-24 size-[420px] rounded-full bg-brand-gradient opacity-25 glow"></div>
       <div class="rv relative">
         <p class="m-0 mb-4 font-mono text-[12px] font-medium uppercase tracking-[.14em] text-cyan-deep">Product demo</p>
         <h1 class="m-0 text-h1 font-extrabold leading-[1.05]">See {demo.name} in action</h1>
