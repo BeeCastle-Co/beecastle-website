@@ -1,0 +1,74 @@
+<!doctype html>
+<!-- Source for public/og-default.png, the social share image. Rendered at
+     1200x630 by scripts/og/render.mjs. Edit this, re-render, commit the PNG. -->
+<html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Geist+Mono:wght@500&display=block" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  body { width: 1200px; height: 630px; overflow: hidden; font-family: 'Plus Jakarta Sans', sans-serif; background: #0E1926; color: #fff; position: relative; }
+  .dots { position: absolute; inset: 0; background-image: radial-gradient(#28374A 1.2px, transparent 1.2px); background-size: 26px 26px; mask-image: radial-gradient(80% 90% at 30% 40%, #000, transparent); }
+  .glow1 { position: absolute; width: 620px; height: 620px; left: -180px; bottom: -360px; border-radius: 50%; background: #36C7F5; opacity: .22; filter: blur(110px); }
+  .glow2 { position: absolute; width: 520px; height: 520px; right: -120px; top: -260px; border-radius: 50%; background: #E664FF; opacity: .16; filter: blur(110px); }
+  .left { position: absolute; left: 72px; top: 68px; width: 560px; }
+  .logo { height: 34px; }
+  .eyebrow { margin-top: 64px; font: 500 15px 'Geist Mono', monospace; letter-spacing: .14em; text-transform: uppercase; color: #8FE0FA; }
+  h1 { margin-top: 18px; font-size: 64px; line-height: 1.02; font-weight: 800; letter-spacing: -.04em; }
+  .mark { position: relative; white-space: nowrap; z-index: 0; }
+  .mark::before { content: ''; position: absolute; left: -6px; right: -6px; bottom: 2px; height: 12px; background: #FFCC00; border-radius: 99px; transform: rotate(-1.2deg); z-index: -1; }
+  .mark span { color: #fff; }
+  .sub { margin-top: 26px; font-size: 22px; line-height: 1.45; color: #9BA9B8; font-weight: 500; }
+  .psas { position: absolute; left: 72px; bottom: 60px; display: flex; gap: 10px; }
+  .psas span { border: 1px solid #28374A; background: #172739; border-radius: 6px; padding: 8px 14px; font-size: 15px; font-weight: 600; color: #fff; }
+  /* The product card, tilted slightly, bleeding off the right edge. */
+  .card { position: absolute; left: 690px; top: 90px; width: 600px; background: #F8FAFC; border-radius: 10px; color: #172739; box-shadow: 0 40px 80px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.08); transform: rotate(-3deg); overflow: hidden; }
+  .bar { display: flex; align-items: center; gap: 10px; background: #fff; border-bottom: 1px solid #E1E7ED; padding: 12px 18px; }
+  .search { flex: 1; height: 26px; border: 1px solid #E1E7ED; border-radius: 6px; background: #F8FAFC; }
+  .new { background: #FFCC00; border-radius: 6px; font-size: 13px; font-weight: 700; padding: 6px 12px; }
+  .body { padding: 18px; }
+  .kicker { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #145A78; }
+  .title { font-size: 21px; font-weight: 700; margin-top: 2px; }
+  .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 12px; }
+  .tile { background: #fff; border: 1px solid #E1E7ED; border-radius: 6px; padding: 10px 12px; }
+  .tile b { display: block; font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: #4E6076; font-weight: 700; }
+  .tile strong { display: block; font-size: 24px; margin-top: 4px; letter-spacing: -.01em; }
+  .tile small { font-size: 11px; color: #4E6076; }
+  .rows { margin-top: 12px; background: #fff; border: 1px solid #E1E7ED; border-radius: 6px; }
+  .row { display: grid; grid-template-columns: 1.5fr 1fr .7fr .7fr; align-items: center; gap: 10px; padding: 11px 14px; border-top: 1px solid #E1E7ED; font-size: 14px; }
+  .row:first-child { border-top: 0; }
+  .co { display: flex; align-items: center; gap: 9px; font-weight: 700; }
+  .av { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: 10px; font-weight: 800; }
+  .pill { font-size: 10px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; border-radius: 4px; padding: 3px 7px; justify-self: start; }
+  .bad { background: #FEE2E2; color: #991B1B; } .warn { background: #FFEDD5; color: #9A3412; } .ok { background: #E5F8EC; color: #15803D; }
+  .num { font-weight: 700; text-align: right; }
+  .red { color: #DC2626; } .green { color: #15A34A; }
+  .bee { position: absolute; width: 120px; left: 620px; top: 38px; transform: rotate(-10deg); filter: drop-shadow(0 12px 20px rgba(0,0,0,.4)); }
+</style></head>
+<body>
+  <div class="dots"></div><div class="glow1"></div><div class="glow2"></div>
+  <div class="left">
+    <img class="logo" src="logo-beecastle-full-white-text.svg" alt="">
+    <p class="eyebrow">Retention › Sales › Reporting</p>
+    <h1>The customer success platform <span class="mark"><span>for MSPs</span></span></h1>
+    <p class="sub">See which clients are profitable, who is drifting, and where your next sale is.</p>
+  </div>
+  <div class="psas"><span>ConnectWise</span><span>Autotask</span><span>HaloPSA</span><span>Microsoft 365</span></div>
+  <div class="card">
+    <div class="bar"><div class="search"></div><div class="new">+ New</div></div>
+    <div class="body">
+      <p class="kicker">Customer success</p>
+      <p class="title">Portfolio health</p>
+      <div class="tiles">
+        <div class="tile"><b>MRR needing attention</b><strong>$48,950</strong><small>Across 12 companies</small></div>
+        <div class="tile"><b>Needs attention</b><strong>17</strong><small>4 critical</small></div>
+        <div class="tile"><b>Margin review</b><strong>9</strong><small>3 indeterminate</small></div>
+      </div>
+      <div class="rows">
+        <div class="row"><span class="co"><span class="av" style="background:#DAF5FE">HD</span>Harbourline Dental</span><span class="pill bad">◆ Critical</span><span class="num">$13,712</span><span class="num red">29.4%</span></div>
+        <div class="row"><span class="co"><span class="av" style="background:#FFF3CC">KF</span>Kestrel Freight</span><span class="pill ok">● No flags</span><span class="num">$21,370</span><span class="num green">64.2%</span></div>
+        <div class="row"><span class="co"><span class="av" style="background:#E4ECFF">ML</span>Mapleton Legal</span><span class="pill warn">▲ Watch</span><span class="num">$12,281</span><span class="num green">57.1%</span></div>
+        <div class="row"><span class="co"><span class="av" style="background:#D6FBF4">CP</span>Coastal Physio</span><span class="pill ok">● No flags</span><span class="num">$4,482</span><span class="num green">86.4%</span></div>
+      </div>
+    </div>
+  </div>
+  <img class="bee" src="bee.svg" alt="">
+</body></html>

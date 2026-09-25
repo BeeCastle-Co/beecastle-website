@@ -10,6 +10,9 @@ heroImageAlt: ""
 icon: honeycomb
 accent: mint
 order: 7
+# Hidden until the goal setting product is rebuilt in the new app. Remove
+# this line (and the redirect in netlify.toml) to publish it again.
+draft: true
 seoTitle: Goal Setting for MSPs | BeeCastle
 overview:
   heading: System Goals and Custom Goals

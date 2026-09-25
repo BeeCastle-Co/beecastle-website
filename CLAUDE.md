@@ -150,6 +150,25 @@ with jump links, alternating image and text sections, sign-up panel, closing
 CTA band. `src/content/products/revenue-analytics.md` is the worked example.
 Frontmatter strings allow `**bold**`, `*italic*` and `[links](/x/)` only.
 
+### Hiding a page without deleting it
+
+Two ways, both keep the source in the repo:
+
+- **Content entries** (products, solutions, blog...): add `draft: true` to the
+  frontmatter. Goal Setting is hidden this way until the rewrite has it.
+- **Standalone pages**: prefix the file or folder in `src/pages/` with `_`
+  (Astro never publishes those). Buzz, benchmarking, ask the founders, the MSP
+  coach directory, the six demo pages and the two `/lp/` pages are hidden so.
+
+Then add a **302** in `netlify.toml` from the old address to the closest live
+page, so old links still land somewhere. To bring a page back: remove the `_`
+or the draft line, and delete its redirect.
+
+### The social share image
+
+`public/og-default.png` is rendered from `scripts/og/og.html` (1200x630). Edit
+the HTML, run `node scripts/og/render.mjs`, commit the PNG.
+
 ### Product replicas (instead of screenshots)
 
 `src/components/product/` holds simplified HTML copies of real BeeCastle

@@ -21,14 +21,12 @@ export const resources: { heading: string; links: NavLink[] }[] = [
       { label: 'Excellence in Account Management', href: '/excellence_in_account_management/' },
       { label: 'Security white paper', href: '/security/' },
       { label: 'E-book', href: '/e-book/' },
-      { label: 'MSP coach directory', href: '/msp-coach-directory/' },
     ],
   },
   {
     heading: 'Get in touch',
     links: [
       { label: 'Contact us', href: '/contact/' },
-      { label: 'Ask the founders a question', href: '/ask-the-founders-a-question/' },
       { label: 'Channel partners', href: '/channel-partners/' },
     ],
   },

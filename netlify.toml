@@ -39,8 +39,19 @@
   status = 301
   force = true
 
-# Old URLs. astro.config.mjs also lists these, but Astro can only emit a
-# meta-refresh page on a static host; these are proper 301s for search engines.
+# ------------------------------------------------------------------
+# Redirects from the old Hugo site.
+#
+# Every page in the old sitemap is still published at the same address, so
+# only what changed is listed here. Checked against every internal link on
+# the old site (docs/private/migration.md has the audit).
+#
+# 301 = moved for good. 302 = hidden for now and may come back, so search
+# engines keep the old address. Netlify matches with or without the trailing
+# slash, and rules only fire when no published page exists at the address.
+# ------------------------------------------------------------------
+
+# The old categories index, and two posts whose slugs contained "...".
 [[redirects]]
   from = "/categories/"
   to = "/blog/"
@@ -55,6 +66,108 @@
   from = "/blog/in-case-you-missed-it...beecastle-product-updates-february-2021/"
   to = "/blog/in-case-you-missed-it-beecastle-product-updates-february-2021/"
   status = 301
+
+# RSS. The old site had a feed per section; the new one has a single feed.
+# These come before the pagination rules, which would otherwise catch them.
+[[redirects]]
+  from = "/blog/index.xml"
+  to = "/rss.xml"
+  status = 301
+
+[[redirects]]
+  from = "/categories/index.xml"
+  to = "/rss.xml"
+  status = 301
+
+[[redirects]]
+  from = "/categories/:category/index.xml"
+  to = "/rss.xml"
+  status = 301
+
+# Paginated listings. The new blog and category pages show every post on one
+# page, so /blog/2/ to /blog/13/ and /categories/<name>/2/ onwards go to the
+# first page. Only numbered pages match: real posts are published files.
+[[redirects]]
+  from = "/blog/:page/"
+  to = "/blog/"
+  status = 301
+
+[[redirects]]
+  from = "/categories/:category/:page/"
+  to = "/categories/:category/"
+  status = 301
+
+[[redirects]]
+  from = "/images/favicon.ico"
+  to = "/favicon.ico"
+  status = 301
+
+# Hidden for now. The source is kept (files prefixed with _ in src/pages, or
+# draft: true in content); each sends visitors to the closest live page.
+[[redirects]]
+  from = "/products/goal-setting/"
+  to = "/solutions/for-team-managers/"
+  status = 302
+
+[[redirects]]
+  from = "/buzz/"
+  to = "/"
+  status = 302
+
+[[redirects]]
+  from = "/benchmarking/"
+  to = "/products/revenue-analytics/"
+  status = 302
+
+[[redirects]]
+  from = "/ask-the-founders-a-question/*"
+  to = "/contact/"
+  status = 302
+
+[[redirects]]
+  from = "/msp-coach-directory/"
+  to = "/blog/"
+  status = 302
+
+[[redirects]]
+  from = "/demo-landing-whitespace/"
+  to = "/products/whitespace-prospecting/"
+  status = 302
+
+[[redirects]]
+  from = "/demo-watch-whitespace/"
+  to = "/products/whitespace-prospecting/"
+  status = 302
+
+[[redirects]]
+  from = "/demo-landing-profitability/"
+  to = "/products/account-profitability/"
+  status = 302
+
+[[redirects]]
+  from = "/demo-watch-profitability/"
+  to = "/products/account-profitability/"
+  status = 302
+
+[[redirects]]
+  from = "/demo-landing-relationship/"
+  to = "/products/enhanced-account-management/"
+  status = 302
+
+[[redirects]]
+  from = "/demo-watch-relationship/"
+  to = "/products/enhanced-account-management/"
+  status = 302
+
+[[redirects]]
+  from = "/lp/whitespace-prospecting/"
+  to = "/products/whitespace-prospecting/"
+  status = 302
+
+[[redirects]]
+  from = "/lp/connectwise-manage/"
+  to = "/integrations/connectwise-manage/"
+  status = 302
 
 # Security headers.
 #
