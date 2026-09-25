@@ -1,0 +1,16 @@
+---
+/* A status pill as the app draws it: small caps on a soft tint. */
+interface Props {
+  tone: 'bad' | 'warn' | 'ok' | 'info' | 'neutral';
+  label: string;
+}
+const { tone, label } = Astro.props;
+const tones = {
+  bad: 'bg-bad-soft text-bad-deep', warn: 'bg-warn-soft text-warn-deep', ok: 'bg-ok-soft text-ok-deep',
+  info: 'bg-cyan-soft text-cyan-deep', neutral: 'bg-paper-2 text-ink-3',
+};
+const marks = { bad: '◆', warn: '▲', ok: '●', info: '+', neutral: '○' };
+---
+<span class:list={['inline-flex items-center gap-1 whitespace-nowrap rounded-[4px] px-1.5 py-0.5 text-[9.5px] font-bold uppercase tracking-[.06em]', tones[tone]]}>
+  <span aria-hidden="true" class="text-[8px]">{marks[tone]}</span>{label}
+</span>

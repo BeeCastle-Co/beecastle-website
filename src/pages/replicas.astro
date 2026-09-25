@@ -1,0 +1,45 @@
+---
+/* Every product replica on one page, for reviewing them. Not linked from the
+   site and kept out of search. The replicas live in src/components/product/
+   and all of their data is invented, in src/data/demo.ts. */
+import Layout from '../layouts/Layout.astro';
+import Section from '../components/Section.astro';
+import PortfolioHealth from '../components/product/PortfolioHealth.astro';
+import CompanyOverview from '../components/product/CompanyOverview.astro';
+import RevenueChart from '../components/product/RevenueChart.astro';
+import WhitespaceGrid from '../components/product/WhitespaceGrid.astro';
+import WhitespaceActions from '../components/product/WhitespaceActions.astro';
+import Profitability from '../components/product/Profitability.astro';
+import MeetingPlanner from '../components/product/MeetingPlanner.astro';
+import HealthScore from '../components/product/HealthScore.astro';
+
+const items = [
+  { name: 'Portfolio health', use: 'Homepage hero, Customer Success', C: PortfolioHealth },
+  { name: 'Company overview', use: 'Account Insights, Enhanced Account Management', C: CompanyOverview },
+  { name: 'Whitespace stack grid', use: 'Whitespace Prospecting, homepage tools', C: WhitespaceGrid },
+  { name: 'Whitespace actions', use: 'Whitespace Prospecting, Sales Dashboards', C: WhitespaceActions },
+  { name: 'Customer profitability', use: 'Account Profitability, For Owners', C: Profitability },
+  { name: 'Meeting planner', use: 'Customer Experience, homepage tools', C: MeetingPlanner },
+  { name: 'Health score settings', use: 'Customer Success', C: HealthScore },
+];
+---
+<Layout title="Product replicas | BeeCastle" description="Simplified replicas of BeeCastle screens, for review." noindex>
+  <Section class="pt-[clamp(120px,12vw,160px)]">
+    <h1 class="m-0 text-h1 font-extrabold">Product replicas</h1>
+    <p class="m-0 mt-4 max-w-[64ch] text-lede text-ink-3">Simplified copies of real BeeCastle screens, built in HTML. Every company, person and number is invented. Not linked from the site.</p>
+    <div class="mt-12 grid gap-16">
+      {items.map(({ name, use, C }) => (
+        <div>
+          <h2 class="m-0 text-h3 font-bold">{name}</h2>
+          <p class="m-0 mb-5 mt-1 text-[14px] text-ink-3">Suggested for: {use}</p>
+          <C />
+        </div>
+      ))}
+      <div>
+        <h2 class="m-0 text-h3 font-bold">Revenue chart</h2>
+        <p class="m-0 mb-5 mt-1 text-[14px] text-ink-3">Suggested for: Revenue Analytics</p>
+        <RevenueChart class="max-w-[520px]" />
+      </div>
+    </div>
+  </Section>
+</Layout>

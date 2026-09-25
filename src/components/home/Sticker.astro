@@ -1,0 +1,21 @@
+---
+/* A brand illustration on a small tinted card, tilted like a sticker slapped
+   on the page. Position it with absolute classes from the caller. */
+import Illustration from '../Illustration.astro';
+
+interface Props {
+  name: string;
+  tone?: 'cyan' | 'mint' | 'periwinkle' | 'honey' | 'magenta' | 'card';
+  class?: string;
+  /** Classes for the illustration itself (size). */
+  art?: string;
+}
+const { name, tone = 'card', class: extra, art = 'w-24' } = Astro.props;
+const tones = {
+  cyan: 'bg-cyan-soft', mint: 'bg-mint-soft', periwinkle: 'bg-periwinkle-soft',
+  honey: 'bg-honey-soft', magenta: 'bg-magenta-soft', card: 'bg-card',
+};
+---
+<div aria-hidden="true" class:list={['rounded-sm p-4 shadow-3 ring-4 ring-card', tones[tone], extra]}>
+  <Illustration name={name} class={art} />
+</div>

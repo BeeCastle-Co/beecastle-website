@@ -1,0 +1,26 @@
+---
+/* The closing call to action: a centred headline on the dot grid with the
+   bee, the honey button and a demo link. Closes the ruled sheet. */
+import Button from '../Button.astro';
+import Bee from './Bee.astro';
+import Marker from './Marker.astro';
+import { site } from '../../data/site';
+---
+<section class="px-gut pb-[clamp(40px,5vw,72px)]">
+  <div class="relative mx-auto max-w-wrap overflow-hidden rounded-b-sm border border-navy-line bg-navy-deep px-5 py-[clamp(72px,9vw,128px)] text-center sm:px-[clamp(24px,4vw,64px)]">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0">
+      <div class="absolute inset-0 bg-[radial-gradient(var(--color-navy-line)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(60%_70%_at_50%_50%,var(--color-ink),transparent)]"></div>
+      <div class="absolute -bottom-40 -left-20 size-[380px] rounded-full bg-cyan opacity-20 blur-[110px]"></div>
+      <div class="absolute -right-24 -top-32 size-[340px] rounded-full bg-magenta opacity-15 blur-[110px]"></div>
+    </div>
+    <div class="relative">
+      <Bee class="rv mx-auto w-24" />
+      <h2 class="rv m-0 mx-auto mt-8 max-w-[20ch] text-h1 font-extrabold leading-[1.02] tracking-[-.04em] text-white">Ready to see what BeeCastle can do for <span class="whitespace-nowrap"><Marker tone="honey">your MSP?</Marker></span></h2>
+      <p class="rv m-0 mx-auto mt-6 max-w-[52ch] text-lede text-navy-muted">Connect your PSA in about ten minutes and see your accounts, revenue and whitespace the same day.</p>
+      <div class="rv mt-9 flex flex-wrap justify-center gap-3">
+        <Button shape="app" href="/sign-up/" size="lg">Start free trial</Button>
+        <Button shape="app" href={site.demoUrl} variant="light" size="lg">Book a demo</Button>
+      </div>
+    </div>
+  </div>
+</section>

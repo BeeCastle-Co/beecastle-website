@@ -1,0 +1,25 @@
+---
+/* The bee mascot, peeking over the edge of a block. It hovers gently unless
+   the visitor prefers reduced motion. Position it from the caller. */
+import Illustration from '../Illustration.astro';
+
+interface Props {
+  class?: string;
+  float?: boolean;
+}
+const { class: extra, float = true } = Astro.props;
+---
+<div aria-hidden="true" class:list={['pointer-events-none', extra]}>
+  <div class:list={[float && 'bee-float']}><Illustration name="bee" class="w-full" /></div>
+</div>
+
+<style>
+  @keyframes bee-float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-8px) rotate(-4deg); }
+  }
+  .bee-float { animation: bee-float 4.5s ease-in-out infinite; }
+  @media (prefers-reduced-motion: reduce) {
+    .bee-float { animation: none; }
+  }
+</style>

@@ -3,6 +3,7 @@
    src/components/home/; to find one, read this list. */
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/home/Hero.astro';
+import Ribbon from '../components/home/Ribbon.astro';
 import Customers from '../components/home/Customers.astro';
 import Tools from '../components/home/Tools.astro';
 import Testimonials from '../components/home/Testimonials.astro';
@@ -10,16 +11,17 @@ import HowItWorks from '../components/home/HowItWorks.astro';
 import Integrations from '../components/home/Integrations.astro';
 import Roi from '../components/home/Roi.astro';
 import Plans from '../components/home/Plans.astro';
+import Signup from '../components/home/Signup.astro';
 import Story from '../components/home/Story.astro';
 import LatestPosts from '../components/home/LatestPosts.astro';
-import SignupPanel from '../components/SignupPanel.astro';
-import CTABand from '../components/CTABand.astro';
+import Closing from '../components/home/Closing.astro';
 ---
 <Layout
   title="BeeCastle: the customer success platform for MSPs"
   description="Customer retention, revenue analytics and whitespace prospecting for MSPs. Connect ConnectWise, Autotask or HaloPSA and see where to grow in minutes."
 >
   <Hero />
+  <Ribbon />
   <Customers />
   <Tools />
   <Testimonials />
@@ -27,8 +29,8 @@ import CTABand from '../components/CTABand.astro';
   <Integrations />
   <Roi />
   <Plans />
-  <SignupPanel />
+  <Signup />
   <Story />
   <LatestPosts />
-  <CTABand />
+  <Closing />
 </Layout>

@@ -1,0 +1,16 @@
+---
+/* Tier marker: the metal's colour in a small disc, with the tier name. The
+   app uses a crown for Platinum and a medal for the rest. */
+import type { Tier } from '../../data/demo';
+interface Props {
+  tier: Tier;
+  label?: boolean;
+}
+const { tier, label = true } = Astro.props;
+const discs = { platinum: 'bg-tier-platinum', gold: 'bg-tier-gold', silver: 'bg-tier-silver', bronze: 'bg-tier-bronze' };
+const names = { platinum: 'Platinum', gold: 'Gold', silver: 'Silver', bronze: 'Bronze' };
+---
+<span class="inline-flex items-center gap-1 text-[10.5px] text-ink-2">
+  <span class:list={['grid size-3.5 place-items-center rounded-full text-[7px] text-ink', discs[tier]]} aria-hidden="true">{tier === 'platinum' ? '♛' : '●'}</span>
+  {label && names[tier]}
+</span>

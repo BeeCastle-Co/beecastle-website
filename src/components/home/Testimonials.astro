@@ -1,26 +1,32 @@
 ---
-/* Customer quotes on the brand gradient. Featured entries from the
-   testimonials collection; renders nothing until there are some. */
+/* Customer quotes: the first featured quote large, the next two beside it.
+   Renders nothing until the collection has featured entries. */
 import { getCollection } from 'astro:content';
-import TestimonialCard from '../TestimonialCard.astro';
+import Band from './Band.astro';
+import Head from './Head.astro';
+import Quote from './Quote.astro';
+import Bee from './Bee.astro';
 
 const quotes = (await getCollection('testimonials', ({ data }) => data.featured))
   .sort((a, b) => a.data.order - b.data.order)
   .slice(0, 3);
+const [lead, ...rest] = quotes;
 ---
-{quotes.length > 0 && (
-  <section class="relative overflow-hidden px-gut py-sec">
-    <div aria-hidden="true" class="absolute inset-0 bg-brand-gradient"></div>
-    <div class="relative mx-auto max-w-wrap">
-      <header class="rv mb-12 max-w-[680px]">
-        <h2 class="m-0 text-h2 font-extrabold leading-[1.1] text-ink">We get a buzz out of accurate reporting</h2>
-        <p class="m-0 mt-4 text-lede text-ink">
-          Join thousands of users across seven countries who trust BeeCastle to report accurately on their accounts and find new whitespace to grow revenue.
-        </p>
-      </header>
-      <div class="grid gap-6 md:grid-cols-3">
-        {quotes.map((t) => <TestimonialCard testimonial={t} />)}
+{lead && (
+  <Band tone="card">
+    <Head index="02" label="Customers" heading="We get a buzz out of accurate reporting" mark="buzz"
+      lede="Join thousands of users across seven countries who trust BeeCastle to report accurately on their accounts and find new whitespace to grow revenue." />
+
+    <div class="mt-12 grid gap-4 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
+      <div class="relative flex flex-col rounded-sm bg-navy p-[clamp(28px,4vw,56px)]">
+        <Bee class="absolute -top-10 right-8 w-16" />
+        <div class="relative flex-1"><Quote testimonial={lead} feature /></div>
       </div>
+      {rest.length > 0 && (
+        <div class="grid gap-4">
+          {rest.map((t) => <Quote testimonial={t} />)}
+        </div>
+      )}
     </div>
-  </section>
+  </Band>
 )}

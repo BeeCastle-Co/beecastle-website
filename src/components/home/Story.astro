@@ -1,19 +1,26 @@
 ---
 /* "Science, not serendipity", with the bee equation. */
-import Section from '../Section.astro';
+import Band from './Band.astro';
+import Eyebrow from './Eyebrow.astro';
+import Marker from './Marker.astro';
 import Illustration from '../Illustration.astro';
-import Button from '../Button.astro';
+import Icon from '../Icon.astro';
 ---
-<Section>
-  <div class="grid items-center gap-12 lg:grid-cols-2">
+<Band tone="card">
+  <div class="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16">
     <div class="rv">
-      <h2 class="m-0 text-h2 font-extrabold leading-[1.1]">We believe customer success is science, not serendipity</h2>
-      <p class="m-0 mt-5 text-lede text-ink-3">
+      <Eyebrow index="08" label="Our story" />
+      <h2 class="m-0 mt-4 max-w-[20ch] text-h2 font-bold leading-[1.05] tracking-[-.035em]">We believe customer success is <span class="whitespace-nowrap"><Marker tone="cyan">science</Marker>,</span> not serendipity</h2>
+      <p class="m-0 mt-6 max-w-[50ch] text-lede leading-[1.6] text-ink-3">
         Our systems, algorithms, analytics and platforms are rooted in the belief that anyone can have great relationships by following
         key rules of engagement, with a little help from BeeCastle.
       </p>
-      <div class="mt-8"><Button href="/about/" variant="dark" size="lg">Read our story</Button></div>
+      <a href="/about/" class="group mt-8 inline-flex items-center gap-2 text-[16px] font-semibold text-cyan-deep no-underline">
+        Read our story <Icon name="arrow" class="size-4 transition-transform group-hover:translate-x-1" />
+      </a>
     </div>
-    <Illustration name="bee-equation" alt="Bee equals data plus relationships" class="rv w-full" />
+    <div class="rv rounded-sm border border-rule bg-paper p-[clamp(20px,4vw,48px)]">
+      <Illustration name="bee-equation" alt="Bee equals data plus relationships" class="w-full" />
+    </div>
   </div>
-</Section>
+</Band>

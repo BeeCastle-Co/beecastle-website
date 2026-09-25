@@ -1,43 +1,57 @@
 ---
-/* Homepage hero. The animated module montage from the old site plays on the
-   right, over a soft blob of the brand gradient. */
+/* Homepage hero: a centred headline on a faint dot grid, then the product
+   stage (a replica of the portfolio health screen beside the animated
+   module montage), with two illustration stickers and the bee around it. */
 import Button from '../Button.astro';
+import PortfolioHealth from '../product/PortfolioHealth.astro';
+import Marker from './Marker.astro';
+import Sticker from './Sticker.astro';
+import Bee from './Bee.astro';
 import { site } from '../../data/site';
----
-<section class="relative overflow-hidden px-gut pb-[clamp(48px,6vw,96px)] pt-[clamp(128px,13vw,176px)]">
-  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
-    <div class="absolute -right-40 -top-40 size-[720px] rounded-full bg-brand-gradient opacity-30 blur-[120px]"></div>
-    <div class="absolute -left-40 top-1/2 size-[480px] rounded-full bg-honey opacity-15 blur-[120px]"></div>
-    <div class="absolute inset-0 bg-[radial-gradient(var(--color-rule)_1px,transparent_1px)] [background-size:28px_28px] [mask-image:linear-gradient(to_bottom,#000,transparent_80%)]"></div>
-  </div>
 
-  <div class="mx-auto grid max-w-wrap items-center gap-12 lg:grid-cols-[1.1fr_1fr]">
-    <div>
-      <p class="rv m-0 inline-flex items-center gap-2 rounded-full border border-rule bg-card px-3.5 py-1.5 text-[13.5px] font-semibold text-ink shadow-1">
-        <span class="font-mono text-[12px] tracking-[.06em] text-cyan-deep">Retention</span>
-        <span aria-hidden="true" class="text-ink-3">&rsaquo;</span>
-        <span class="font-mono text-[12px] tracking-[.06em] text-cyan-deep">Sales</span>
-        <span aria-hidden="true" class="text-ink-3">&rsaquo;</span>
-        <span class="font-mono text-[12px] tracking-[.06em] text-cyan-deep">Reporting</span>
+const steps = ['Retention', 'Sales', 'Reporting'];
+---
+<section class="relative px-gut">
+  <div class="relative mx-auto max-w-wrap overflow-hidden px-5 pb-[clamp(56px,7vw,104px)] pt-[clamp(120px,12vw,172px)] sm:px-[clamp(24px,4vw,64px)]">
+    <!-- The page's side rails start below the floating nav and fade in, so the
+         nav reads as sitting above the ruled sheet rather than on its edges. -->
+    <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 bottom-0 top-24 border-x border-rule [mask-image:linear-gradient(to_bottom,transparent,var(--color-ink)_160px)]"></div>
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0">
+      <div class="absolute inset-0 bg-[radial-gradient(var(--color-rule-2)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(70%_60%_at_50%_30%,var(--color-ink),transparent)]"></div>
+      <div class="absolute -top-48 left-1/2 h-[420px] w-[min(900px,120%)] -translate-x-1/2 rounded-full bg-brand-gradient opacity-15 blur-[100px]"></div>
+    </div>
+
+    <div class="relative mx-auto max-w-[980px] text-center">
+      <p class="rv m-0 inline-flex items-center gap-2 rounded-full border border-rule bg-card px-3.5 py-1.5">
+        {steps.map((s, i) => (
+          <>
+            {i > 0 && <span aria-hidden="true" class="text-ink-3">&rsaquo;</span>}
+            <span class="font-mono text-[12px] tracking-[.06em] text-cyan-deep">{s}</span>
+          </>
+        ))}
       </p>
-      <h1 class="rv m-0 mt-6 text-display font-extrabold leading-[1.02] tracking-[-.035em]">
-        The customer success platform <span class="text-brand-gradient">for MSPs</span>
+      <h1 class="rv m-0 mt-7 text-display font-extrabold leading-[.98] tracking-[-.045em]">
+        The customer success platform <span class="whitespace-nowrap"><Marker tone="honey">for MSPs</Marker></span>
       </h1>
-      <p class="rv m-0 mt-6 max-w-[56ch] text-lede leading-relaxed text-ink-2">
+      <p class="rv m-0 mx-auto mt-7 max-w-[62ch] text-lede leading-relaxed text-ink-3">
         BeeCastle helps you optimise your customers' experience using AI-driven insights uncovered from your PSA and M365 data.
         It recommends actions that drive results, and empowers everyone in your team to improve retention and win upsell and
         cross-sell opportunities with our whitespace technology.
       </p>
-      <div class="rv mt-9 flex flex-wrap gap-3">
-        <Button href="/sign-up/" size="lg">Create a free account</Button>
-        <Button href={site.demoUrl} variant="outline" size="lg">Book a demo</Button>
+      <div class="rv mt-9 flex flex-wrap justify-center gap-3">
+        <Button shape="app" href="/sign-up/" size="lg">Create a free account</Button>
+        <Button shape="app" href={site.demoUrl} variant="outline" size="lg">Book a demo</Button>
       </div>
-      <p class="rv m-0 mt-5 text-[14px] text-ink-3">Connects to ConnectWise, Autotask and HaloPSA in about ten minutes.</p>
+      <p class="rv m-0 mt-5 font-mono text-[12px] text-ink-3">Connects to ConnectWise, Autotask and HaloPSA in about ten minutes.</p>
     </div>
 
-    <div class="rv relative">
-      <div class="relative mx-auto aspect-square w-full max-w-[560px] overflow-hidden rounded-xl bg-card shadow-3">
-        <video autoplay muted loop playsinline preload="metadata" aria-hidden="true" class="size-full object-cover">
+    <div class="rv relative mt-[clamp(48px,6vw,80px)] grid gap-4 lg:grid-cols-12">
+      <Sticker name="revenue-dashboard" tone="cyan" art="w-20" class="absolute -left-3 bottom-10 z-10 -rotate-6 max-md:hidden lg:-left-8" />
+      <Sticker name="tiering" tone="honey" art="w-16" class="absolute -bottom-8 right-[30%] z-10 rotate-6 max-lg:hidden" />
+      <Bee class="absolute -right-2 -top-12 z-10 w-16 md:w-20 lg:-right-6" />
+      <PortfolioHealth class="lg:col-span-8" rows={5} />
+      <div class="relative overflow-hidden rounded-sm border border-rule bg-paper-2 max-lg:aspect-[715/600] lg:col-span-4">
+        <video autoplay muted loop playsinline preload="metadata" aria-hidden="true" class="absolute inset-0 size-full object-cover mix-blend-multiply">
           <source src="/videos/bc_modules_animated.webm" type="video/webm" />
           <source src="/videos/bc_modules_animated.mp4" type="video/mp4" />
         </video>

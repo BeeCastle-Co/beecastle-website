@@ -1,0 +1,15 @@
+---
+/* Small mono label above a section heading: an index and a name. */
+interface Props {
+  index?: string;
+  label: string;
+  onDark?: boolean;
+  class?: string;
+}
+const { index, label, onDark = false, class: extra } = Astro.props;
+---
+<p class:list={['m-0 flex items-center gap-2.5 text-[12px] font-semibold uppercase tracking-[.12em]', onDark ? 'text-cyan-light' : 'text-cyan-deep', extra]}>
+  <span aria-hidden="true" class="size-1.5 rounded-[2px] bg-cyan"></span>
+  {index && <span class:list={['font-mono font-medium', onDark ? 'text-navy-muted' : 'text-ink-3']}>{index}</span>}
+  <span>{label}</span>
+</p>

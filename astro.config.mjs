@@ -88,8 +88,9 @@ export default defineConfig({
 
   integrations: [
     sitemap({
-      /* Thank-you pages are noindex, so they stay out of the sitemap too. */
-      filter: (page) => !/\/thanks\/$/.test(new URL(page).pathname),
+      /* Thank-you pages and the replica preview are noindex, so they stay
+         out of the sitemap too. */
+      filter: (page) => !/(\/thanks\/$|^\/replicas\/$)/.test(new URL(page).pathname),
       serialize: (item) => {
         const date = blogDates.get(new URL(item.url).pathname);
         return date ? { ...item, lastmod: date } : item;

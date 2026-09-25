@@ -1,6 +1,8 @@
 /* The main menu. Products, Solutions and Integrations are read from their
    content collections in Nav.astro, so adding a product .md adds it to the
    menu. Everything else is listed here. */
+import { site } from './site';
+
 export type NavLink = { label: string; href: string; blurb?: string; external?: boolean };
 
 export const resources: { heading: string; links: NavLink[] }[] = [
@@ -10,7 +12,7 @@ export const resources: { heading: string; links: NavLink[] }[] = [
       { label: 'Why BeeCastle', href: '/why-use-beecastle/', blurb: 'See why MSPs across the globe use BeeCastle' },
       { label: 'Blog', href: '/blog/' },
       { label: 'Newsletter', href: '/newsletter/' },
-      { label: 'Help portal', href: 'https://help.beecastle.com/en/', external: true },
+      { label: 'Help portal', href: site.helpUrl, external: true },
     ],
   },
   {
@@ -54,7 +56,7 @@ export const footerColumns: { heading: string; links: NavLink[] }[] = [
     links: [
       { label: 'Blog', href: '/blog/' },
       { label: 'Newsletter', href: '/newsletter/' },
-      { label: 'MSP resource hub', href: 'https://help.beecastle.com/en/', external: true },
+      { label: 'MSP resource hub', href: site.helpUrl, external: true },
       { label: 'ROI calculator', href: '/roi-calculator/' },
       { label: 'E-book', href: '/e-book/' },
     ],

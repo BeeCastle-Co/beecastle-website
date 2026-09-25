@@ -1,0 +1,38 @@
+---
+/* Replica: the meeting planner. Who is overdue a meeting against the cadence
+   their tier calls for. */
+import Frame from './Frame.astro';
+import StatTile from './StatTile.astro';
+import TierBadge from './TierBadge.astro';
+import { meetings } from '../../data/demo';
+
+interface Props {
+  bare?: boolean;
+  class?: string;
+}
+const { bare = false, class: extra } = Astro.props;
+const status = {
+  overdue: ['bg-bad', 'Overdue'], due: ['bg-warn', 'Due now'], ok: ['bg-ok', 'On track'],
+} as Record<string, [string, string]>;
+---
+<Frame active="Meeting planner" bare={bare} class={extra}
+  label="BeeCastle meeting planner: each client's meeting cadence, when you last met, and whether they are overdue">
+  <div class="grid grid-cols-3 gap-2">
+    <StatTile label="Overdue" value="14" tone="bad" />
+    <StatTile label="Due now" value="6" tone="warn" />
+    <StatTile label="On track" value="41" tone="ok" />
+  </div>
+  <div class="mt-3 overflow-hidden rounded-xs border border-rule bg-card">
+    <div class="grid grid-cols-[minmax(0,1.6fr)_76px_minmax(0,1fr)_minmax(0,1fr)] gap-3 border-b border-rule px-3 py-2 text-[9px] font-semibold uppercase tracking-[.06em] text-ink-3">
+      <span>Company</span><span>Status</span><span>Cadence</span><span>Last meeting</span>
+    </div>
+    {meetings.map((m) => (
+      <div class="grid grid-cols-[minmax(0,1.6fr)_76px_minmax(0,1fr)_minmax(0,1fr)] items-center gap-3 border-b border-rule px-3 py-2.5 last:border-b-0">
+        <span class="flex min-w-0 items-center gap-2"><span class="truncate text-[11.5px] font-semibold">{m.name}</span><TierBadge tier={m.tier} label={false} /></span>
+        <span class="flex items-center gap-1.5 text-[11px]"><span class:list={['size-1.5 rounded-full', status[m.status][0]]}></span>{status[m.status][1]}</span>
+        <span class="truncate text-[11px] text-ink-2">{m.cadence}</span>
+        <span class="truncate text-[11px] text-ink-3">{m.last}</span>
+      </div>
+    ))}
+  </div>
+</Frame>

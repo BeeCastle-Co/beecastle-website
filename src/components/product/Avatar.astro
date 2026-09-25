@@ -1,0 +1,14 @@
+---
+/* A company's avatar: its initials on one of the brand tints. */
+import type { Face } from '../../data/demo';
+interface Props {
+  name: string;
+  face: Face;
+  size?: 'sm' | 'md' | 'lg';
+}
+const { name, face, size = 'sm' } = Astro.props;
+const tints = { cyan: 'bg-cyan-soft', honey: 'bg-honey-soft', mint: 'bg-mint-soft', periwinkle: 'bg-periwinkle-soft', magenta: 'bg-magenta-soft' };
+const sizes = { sm: 'size-6 text-[9px]', md: 'size-8 text-[11px]', lg: 'size-12 text-[15px]' };
+const initials = name.split(/\s+/).slice(0, 2).map((w) => w[0]).join('');
+---
+<span class:list={['grid shrink-0 place-items-center rounded-full font-bold text-ink', tints[face], sizes[size]]} aria-hidden="true">{initials}</span>

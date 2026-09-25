@@ -1,0 +1,56 @@
+---
+/* Replica: Whitespace stack alignment. Companies down, the services in the
+   product stack across. A green tick means the client already buys it; an
+   orange plus is an open gap, priced at what similar clients pay a month. */
+import Frame from './Frame.astro';
+import Avatar from './Avatar.astro';
+import TierBadge from './TierBadge.astro';
+import { stack } from '../../data/demo';
+import { money } from '../../lib/inline';
+
+interface Props {
+  /** How many service columns to show. Fewer suits a small space. */
+  columns?: number;
+  bare?: boolean;
+  class?: string;
+}
+const { columns = 6, bare = false, class: extra } = Astro.props;
+const services = stack.services.slice(0, columns);
+const total = stack.services.length;
+const cols = `minmax(0,1.6fr) 70px 64px repeat(${columns}, minmax(0,1fr))`;
+---
+<Frame active="Whitespace" bare={bare} class={extra}
+  label="BeeCastle whitespace grid: for each client, which services in the core stack they already buy and the monthly value of the ones they do not">
+  <p class="m-0 text-[17px] font-bold tracking-[-.01em]">Whitespace</p>
+  <p class="m-0 text-[10.5px] text-ink-3">Core stack · 73 companies · {total} requirements</p>
+  <div class="mt-3 overflow-hidden rounded-xs border border-rule bg-card">
+    <div class="grid items-end gap-2 border-b border-rule px-3 py-2 text-[9px] font-semibold uppercase leading-tight tracking-[.04em] text-ink-3" style={`grid-template-columns: ${cols}`}>
+      <span>Company</span><span>Met</span><span>Gap / mo</span>
+      {services.map((s, i) => (
+        <span class="text-center normal-case tracking-normal"><span class="block truncate text-[9.5px] text-ink-2">{s}</span><span class="font-normal">{stack.adoption[i]}</span></span>
+      ))}
+    </div>
+    {stack.rows.map((r) => (
+      <div class="grid items-center gap-2 border-b border-rule px-3 py-2 last:border-b-0" style={`grid-template-columns: ${cols}`}>
+        <span class="flex min-w-0 items-center gap-2">
+          <Avatar name={r.name} face={r.face} />
+          <span class="truncate text-[11.5px] font-semibold">{r.name}</span>
+          <span class="max-sm:hidden"><TierBadge tier={r.tier} label={false} /></span>
+        </span>
+        <span class="flex items-center gap-1.5">
+          <span class="h-1 w-8 overflow-hidden rounded-full bg-paper-2"><span class="block h-full bg-ok" style={`width: ${(r.met / total) * 100}%`}></span></span>
+          <span class="text-[10px] text-ink-3">{r.met}/{total}</span>
+        </span>
+        <span class="text-[11px] font-semibold">{money(r.gap)}</span>
+        {r.cells.slice(0, columns).map((c) => c === true ? (
+          <span class="grid place-items-center"><span class="grid size-4 place-items-center rounded-full bg-ok text-[9px] font-bold text-card">✓</span></span>
+        ) : (
+          <span class="grid place-items-center">
+            <span class="grid size-4 place-items-center rounded-full border-[1.5px] border-opportunity text-[10px] font-bold leading-none text-opportunity">+</span>
+            <span class="text-[8.5px] font-semibold text-warn-deep">{money(c)}</span>
+          </span>
+        ))}
+      </div>
+    ))}
+  </div>
+</Frame>

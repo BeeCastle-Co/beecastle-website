@@ -1,0 +1,35 @@
+---
+/* A straight navy band that scrolls the integrations past, with a bee between
+   each name. Decorative: the same names are real links in the Integrations
+   section, so the ribbon is hidden from assistive tech. Stops for reduced motion. */
+import { getCollection } from 'astro:content';
+import Illustration from '../Illustration.astro';
+
+const withPages = (await getCollection('integrations', ({ data }) => !data.draft)).sort((a, b) => a.data.order - b.data.order);
+const names = [...withPages.map((i) => i.data.name), 'Microsoft 365', 'Microsoft Teams'];
+const run = [...names, ...names];
+---
+<div aria-hidden="true" class="relative overflow-hidden border-y border-navy-line bg-navy">
+  <div class="py-4">
+    <div class="ribbon flex w-max items-center">
+      {[0, 1].map(() => (
+        <ul class="m-0 flex list-none items-center p-0">
+          {run.map((n) => (
+            <li class="flex items-center gap-6 pr-6 md:gap-8 md:pr-8">
+              <span class="whitespace-nowrap text-[clamp(16px,1.6vw,20px)] font-bold tracking-[-.01em] text-white">{n}</span>
+              <Illustration name="bee" class="w-7" />
+            </li>
+          ))}
+        </ul>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  @keyframes ribbon { to { transform: translateX(-50%); } }
+  .ribbon { animation: ribbon 45s linear infinite; }
+  @media (prefers-reduced-motion: reduce) {
+    .ribbon { animation: none; }
+  }
+</style>

@@ -1,21 +1,20 @@
 ---
 /* The three newest blog posts. */
-import Section from '../Section.astro';
+import Band from './Band.astro';
+import Head from './Head.astro';
 import PostCard from '../PostCard.astro';
-import Button from '../Button.astro';
+import Icon from '../Icon.astro';
 import { getPosts } from '../../lib/blog';
 
 const posts = (await getPosts()).slice(0, 3);
 ---
-<Section tone="tint">
-  <div class="mb-10 flex flex-wrap items-end justify-between gap-4">
-    <div class="rv">
-      <p class="m-0 mb-3 font-mono text-[12px] font-medium uppercase tracking-[.14em] text-cyan-deep">From the blog</p>
-      <h2 class="m-0 text-h2 font-extrabold leading-[1.1]">Ideas for growing MSPs</h2>
-    </div>
-    <Button href="/blog/" variant="outline">All posts</Button>
-  </div>
-  <div class="grid gap-6 md:grid-cols-3">
+<Band>
+  <Head index="09" label="From the blog" heading="Ideas for growing MSPs" mark="growing" markTone="mint">
+    <a href="/blog/" class="group inline-flex items-center gap-2 text-[15px] font-semibold text-cyan-deep no-underline">
+      All posts <Icon name="arrow" class="size-4 transition-transform group-hover:translate-x-1" />
+    </a>
+  </Head>
+  <div class="mt-12 grid gap-4 md:grid-cols-3">
     {posts.map((p) => <PostCard post={p} />)}
   </div>
-</Section>
+</Band>

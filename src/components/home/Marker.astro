@@ -1,0 +1,16 @@
+---
+/* A highlighter swipe behind a word or two of a headline. Built from a token
+   colour, tilted a touch so it looks hand drawn. */
+interface Props {
+  tone?: 'honey' | 'cyan' | 'mint' | 'periwinkle' | 'magenta';
+  /** A thinner underline swipe, for dark grounds where the text sits above it. */
+  thin?: boolean;
+}
+const { tone = 'honey', thin = false } = Astro.props;
+const tones = { honey: 'bg-honey', cyan: 'bg-cyan', mint: 'bg-mint', periwinkle: 'bg-periwinkle', magenta: 'bg-magenta' };
+---
+<span class="relative isolate inline-block"><span aria-hidden="true" class:list={[
+  'absolute -inset-x-1.5 -z-10 -rotate-1 rounded-full',
+  thin ? '-bottom-[.04em] h-[.16em]' : 'bottom-[.04em] h-[.36em]',
+  tones[tone],
+]}></span><slot /></span>

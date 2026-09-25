@@ -1,5 +1,7 @@
 /* The "Get extra support" cards under the pricing table on /plans/.
    icon is an illustration name from src/assets/illustrations/. */
+import { site } from './site';
+
 export interface SupportItem {
   icon: string;
   heading: string;
@@ -17,7 +19,7 @@ export const planSupport: SupportItem[] = [
   {
     icon: 'revenue-dashboard',
     heading: 'Revenue tracking dashboards',
-    body: 'Some folks like to get started by rolling up their sleeves and exploring BeeCastle on their own. For those who get stuck, we have the **Resource Hub, [Help Centre](https://help.beecastle.com/en/) and 24/7 support**.',
+    body: `Some folks like to get started by rolling up their sleeves and exploring BeeCastle on their own. For those who get stuck, we have the **Resource Hub, [Help Centre](${site.helpUrl}) and 24/7 support**.`,
   },
   {
     icon: 'relationships',

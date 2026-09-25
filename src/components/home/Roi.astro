@@ -1,19 +1,28 @@
 ---
-/* ROI calculator teaser. */
-import { Image } from 'astro:assets';
-import Section from '../Section.astro';
-import Button from '../Button.astro';
+/* ROI calculator teaser, with the example table in an app window. */
+import Band from './Band.astro';
+import Eyebrow from './Eyebrow.astro';
+import Marker from './Marker.astro';
+import Sticker from './Sticker.astro';
+import AppWindow from './AppWindow.astro';
+import Icon from '../Icon.astro';
 import roi from '../../assets/img/roi-calculator.webp';
 ---
-<Section>
-  <div class="grid items-center gap-12 lg:grid-cols-[1fr_1.3fr]">
+<Band>
+  <div class="grid items-center gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
     <div class="rv">
-      <p class="m-0 mb-3 font-mono text-[12px] font-medium uppercase tracking-[.14em] text-cyan-deep">ROI calculator</p>
-      <h2 class="m-0 text-h2 font-extrabold leading-[1.1]">Calculate the value BeeCastle can bring to your MSP</h2>
-      <p class="m-0 mt-5 text-lede text-ink-3">See how much time your account managers can save, and how much revenue they can generate, with BeeCastle.</p>
-      <div class="mt-8"><Button href="/roi-calculator/" variant="dark" size="lg">Open the calculator</Button></div>
+      <Eyebrow index="05" label="ROI calculator" />
+      <h2 class="m-0 mt-4 max-w-[18ch] text-h2 font-bold leading-[1.05] tracking-[-.035em]">Calculate the <Marker tone="honey">value</Marker> BeeCastle can bring to your MSP</h2>
+      <p class="m-0 mt-6 max-w-[46ch] text-lede leading-[1.6] text-ink-3">See how much time your account managers can save, and how much revenue they can generate, with BeeCastle.</p>
+      <a href="/roi-calculator/" class="group mt-8 inline-flex items-center gap-2 text-[16px] font-semibold text-cyan-deep no-underline">
+        Open the calculator <Icon name="arrow" class="size-4 transition-transform group-hover:translate-x-1" />
+      </a>
     </div>
-    <Image src={roi} alt="Example ROI table: time saved, total saved and money made per BeeCastle module" widths={[600, 900, 1200]}
-           sizes="(max-width: 1024px) 100vw, 680px" class="rv h-auto w-full rounded-lg shadow-3" />
+    <div class="rv relative min-w-0">
+      <Sticker name="benchmarking" tone="honey" art="w-16" class="absolute -bottom-8 -left-6 z-10 rotate-6 max-sm:hidden" />
+      <AppWindow src={roi} label="beecastle.com/roi-calculator"
+      alt="Example ROI table: time saved, total saved and money made per BeeCastle module"
+      sizes="(max-width: 1024px) 100vw, 680px" widths={[600, 900, 1200, 1600]} />
+    </div>
   </div>
-</Section>
+</Band>

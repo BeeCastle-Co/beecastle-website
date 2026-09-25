@@ -1,0 +1,29 @@
+---
+/* Section heading for the homepage: eyebrow and heading on the left, the lede
+   set against the right edge on wide screens. A slot adds an action. The
+   words in `mark` get the highlighter swipe, so the copy stays one string. */
+import Eyebrow from './Eyebrow.astro';
+import Marker from './Marker.astro';
+interface Props {
+  index: string;
+  label: string;
+  heading: string;
+  lede?: string;
+  mark?: string;
+  markTone?: 'honey' | 'cyan' | 'mint' | 'periwinkle' | 'magenta';
+}
+const { index, label, heading, lede, mark, markTone = 'honey' } = Astro.props;
+const [before, after] = mark && heading.includes(mark) ? heading.split(mark) : [heading, undefined];
+---
+<header class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-end">
+  <div class="rv">
+    <Eyebrow index={index} label={label} />
+    <h2 class="m-0 mt-4 max-w-[18ch] text-h2 font-bold leading-[1.05] tracking-[-.035em]">{before}{after !== undefined && <><span class="whitespace-nowrap"><Marker tone={markTone}>{mark}</Marker></span>{after}</>}</h2>
+  </div>
+  {(lede || Astro.slots.has('default')) && (
+    <div class="rv lg:justify-self-end">
+      {lede && <p class="m-0 max-w-[46ch] text-lede leading-[1.6] text-ink-3">{lede}</p>}
+      <slot />
+    </div>
+  )}
+</header>

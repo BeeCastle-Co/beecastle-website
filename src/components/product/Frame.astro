@@ -1,0 +1,55 @@
+---
+/* A simplified BeeCastle app window, for the product replicas: the navy
+   sidebar, the top bar with search and the honey New button, and the page
+   content in the slot. Drawn in HTML rather than screenshotted, so it stays
+   sharp, never shows a real customer and matches the product's design.
+
+   Decorative: the whole frame is aria-hidden unless a label is given, and
+   nothing in it is interactive. On narrow screens the sidebar folds away. */
+interface Props {
+  /** Which sidebar item is active. */
+  active?: string;
+  /** Accessible description of what the replica shows. */
+  label?: string;
+  /** Hide the sidebar entirely (for small inline replicas). */
+  bare?: boolean;
+  class?: string;
+}
+const { active, label, bare = false, class: extra } = Astro.props;
+
+const nav = [
+  { group: 'Customer success', items: ['My actions', 'Portfolio health', 'Companies', 'Meeting planner'] },
+  { group: 'Sales', items: ['Sales dashboard', 'Whitespace', 'Customer profitability'] },
+];
+---
+<div
+  role={label ? 'img' : undefined}
+  aria-label={label}
+  aria-hidden={label ? undefined : 'true'}
+  class:list={['overflow-hidden rounded-sm border border-rule bg-paper text-left text-ink shadow-3 select-none', extra]}
+>
+  <div class:list={['grid', !bare && 'md:grid-cols-[168px_minmax(0,1fr)]']}>
+    {!bare && (
+      <div class="hidden bg-navy px-2.5 py-3.5 md:block" aria-hidden="true">
+        <img src="/logo-beecastle-full-white-text.svg" alt="" width="104" height="15" class="ml-1.5 h-[15px] w-auto" />
+        {nav.map((g) => (
+          <div class="mt-5">
+            <p class="m-0 mb-1.5 px-1.5 text-[9.5px] font-semibold uppercase tracking-[.1em] text-navy-muted/80">{g.group}</p>
+            {g.items.map((item) => (
+              <p class:list={['m-0 flex items-center gap-2 rounded-xs px-1.5 py-1.5 text-[11.5px]', item === active ? 'bg-navy-2 font-semibold text-white' : 'text-navy-muted']}>
+                <span class:list={['size-3.5 rounded-[4px]', item === active ? 'bg-honey' : 'bg-navy-line']}></span>{item}
+              </p>
+            ))}
+          </div>
+        ))}
+      </div>
+    )}
+    <div class="min-w-0">
+      <div class="flex items-center gap-3 border-b border-rule bg-card px-4 py-2.5" aria-hidden="true">
+        <span class="flex h-7 min-w-0 flex-1 items-center rounded-xs border border-rule bg-paper px-2.5 text-[11px] text-ink-3">Search companies, contacts, interactions...</span>
+        <span class="rounded-xs bg-honey px-2.5 py-1.5 text-[11px] font-semibold text-ink">+ New</span>
+      </div>
+      <div class="p-4 md:p-5"><slot /></div>
+    </div>
+  </div>
+</div>

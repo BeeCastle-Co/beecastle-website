@@ -1,30 +1,50 @@
 ---
-/* The four headline tools, each linking to its product page. */
-import Section from '../Section.astro';
-import SectionIntro from '../SectionIntro.astro';
+/* The four headline tools as a bento grid. The two wide tiles show the
+   product in an app window; the two narrow tiles lead with the illustration. */
+import Band from './Band.astro';
+import Head from './Head.astro';
+import WhitespaceGrid from '../product/WhitespaceGrid.astro';
+import MeetingPlanner from '../product/MeetingPlanner.astro';
 import Illustration from '../Illustration.astro';
 import Icon from '../Icon.astro';
 
 const tools = [
-  { name: 'Whitespace & prospecting', blurb: 'Find the gaps in your service and product penetration across all accounts.', icon: 'whitespace', href: '/products/whitespace-prospecting/' },
-  { name: 'Revenue tracking dashboards', blurb: 'Ready-made dashboards and reporting to visualise, analyse and take action.', icon: 'revenue-dashboard', href: '/products/revenue-analytics/' },
-  { name: 'Customer tiering', blurb: 'Be more intentional about how you nurture accounts through revenue contribution tiering.', icon: 'tiering', href: '/products/account-profitability/' },
-  { name: 'Automated CRM logging', blurb: 'Ditch manual logging. Automatically record activities from M365 and Teams into your CRM.', icon: 'crm-logging', href: '/products/account-insights/' },
+  { name: 'Whitespace & prospecting', blurb: 'Find the gaps in your service and product penetration across all accounts.', icon: 'whitespace', href: '/products/whitespace-prospecting/',
+    tint: 'bg-cyan-soft', wide: true, replica: 'whitespace' },
+  { name: 'Revenue tracking dashboards', blurb: 'Ready-made dashboards and reporting to visualise, analyse and take action.', icon: 'revenue-dashboard', href: '/products/revenue-analytics/', tint: 'bg-honey-soft' },
+  { name: 'Customer tiering', blurb: 'Be more intentional about how you nurture accounts through revenue contribution tiering.', icon: 'tiering', href: '/products/account-profitability/', tint: 'bg-magenta-soft' },
+  { name: 'Automated CRM logging', blurb: 'Ditch manual logging. Automatically record activities from M365 and Teams into your CRM.', icon: 'crm-logging', href: '/products/account-insights/', tint: 'bg-mint-soft',
+    wide: true, replica: 'meetings' },
 ];
 ---
-<Section tone="white">
-  <SectionIntro eyebrow="Products" heading="The account growth tools every MSP needs"
-    lede="BeeCastle can turn any account manager into a data-driven super-closer, with these tools at their fingertips." />
-  <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+<Band>
+<Head index="01" label="Products" heading="The account growth tools every MSP needs" mark="growth tools" markTone="cyan"
+  lede="BeeCastle can turn any account manager into a data-driven super-closer, with these tools at their fingertips." />
+
+  <div class="mt-12 grid gap-4 lg:grid-cols-6">
     {tools.map((t) => (
-      <a href={t.href} class="rv group flex flex-col rounded-lg border border-rule bg-paper p-6 no-underline transition-all duration-300 hover:-translate-y-1 hover:border-cyan hover:bg-card hover:shadow-3">
-        <Illustration name={t.icon} class="h-28 w-auto self-start transition-transform duration-500 group-hover:scale-105" />
-        <h3 class="m-0 mt-6 text-[19px] font-bold">{t.name}</h3>
-        <p class="m-0 mt-2 flex-1 text-[15px] text-ink-3">{t.blurb}</p>
-        <span class="mt-5 inline-flex items-center gap-1.5 text-[14px] font-semibold text-cyan-deep">
-          Learn more <Icon name="arrow" class="size-4 transition-transform group-hover:translate-x-1" />
-        </span>
+      <a href={t.href}
+         class:list={['rv group relative flex overflow-hidden rounded-sm border border-rule bg-card no-underline transition-all duration-300 hover:-translate-y-1 hover:border-rule-2 hover:shadow-2',
+           t.wide ? 'flex-col md:grid md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:col-span-4' : 'flex-col lg:col-span-2']}>
+        <div class="relative z-10 flex flex-col p-[clamp(24px,2.6vw,36px)]">
+          <div class:list={['grid place-items-center self-start overflow-hidden rounded-sm', t.tint, t.wide ? 'size-28 p-4' : 'h-44 w-full p-6']}>
+            <Illustration name={t.icon} class:list={['w-auto max-w-full object-contain transition-transform duration-500 group-hover:-rotate-3 group-hover:scale-105', t.wide ? 'h-20!' : 'h-32!']} />
+          </div>
+          <h3 class="m-0 mt-7 text-[21px] font-bold leading-tight tracking-[-.02em]">{t.name}</h3>
+          <p class="m-0 mt-2.5 flex-1 text-[15px] leading-relaxed text-ink-3">{t.blurb}</p>
+          <span class="mt-6 inline-flex items-center gap-1.5 text-[14px] font-semibold text-cyan-deep">
+            Learn more <Icon name="arrow" class="size-4 transition-transform group-hover:translate-x-1" />
+          </span>
+        </div>
+        {t.replica && (
+          <div class="relative min-h-[240px] overflow-hidden rounded-sm border border-rule bg-paper max-md:mx-4 max-md:mb-4 md:my-4 md:mr-4">
+            <div aria-hidden="true" class="absolute inset-0 bg-[radial-gradient(var(--color-rule-2)_1px,transparent_1px)] [background-size:18px_18px]"></div>
+            <div class="absolute left-6 top-8 w-[170%] transition-transform duration-500 group-hover:-translate-y-1 md:left-8 md:top-10 md:w-[190%]">
+              {t.replica === 'whitespace' ? <WhitespaceGrid bare columns={5} /> : <MeetingPlanner bare />}
+            </div>
+          </div>
+        )}
       </a>
     ))}
   </div>
-</Section>
+</Band>

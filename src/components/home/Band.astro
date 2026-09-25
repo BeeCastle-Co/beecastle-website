@@ -1,0 +1,25 @@
+---
+/* One horizontal band of the homepage. The content column carries
+   hairline rails on its left and right, and each band opens with a hairline
+   across it, so the whole page reads as one ruled sheet. */
+interface Props {
+  id?: string;
+  /** Inner vertical padding. 'sec' is the standard section rhythm. */
+  pad?: 'sec' | 'strip' | 'none';
+  /** Ground inside the rails. */
+  /** Ground inside the rails. navy is the product's sidebar colour. */
+  tone?: 'paper' | 'card' | 'navy';
+  class?: string;
+}
+const { id, pad = 'sec', tone = 'paper', class: extra } = Astro.props;
+const pads = {
+  sec: 'px-5 py-sec sm:px-[clamp(24px,4vw,64px)]',
+  strip: 'px-5 py-[clamp(40px,5vw,64px)] sm:px-[clamp(24px,4vw,64px)]',
+  none: '',
+};
+---
+<section id={id} class="px-gut">
+  <div class:list={['relative mx-auto max-w-wrap border-x border-t border-rule', tone === 'navy' ? 'border-navy-line bg-navy text-navy-muted' : tone === 'card' ? 'bg-card' : 'bg-paper', pads[pad], extra]}>
+    <slot />
+  </div>
+</section>

@@ -1,0 +1,49 @@
+---
+/* Replica: the company revenue chart. Recurring revenue as a filled line (the
+   renewal-safe base) against total revenue, over six months. Plain SVG. */
+import { account } from '../../data/demo';
+import { money } from '../../lib/inline';
+
+interface Props {
+  class?: string;
+}
+const { class: extra } = Astro.props;
+const { months, recurring, total } = account.revenue;
+const W = 320, H = 150, P = { l: 34, r: 8, t: 10, b: 20 };
+const max = Math.ceil(Math.max(...total) / 5000) * 5000;
+const x = (i: number) => P.l + (i * (W - P.l - P.r)) / (months.length - 1);
+const y = (v: number) => P.t + (1 - v / max) * (H - P.t - P.b);
+const line = (vals: number[]) => vals.map((v, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ');
+const area = `${line(recurring)} L${x(months.length - 1)},${y(0)} L${x(0)},${y(0)} Z`;
+const ticks = [0, max / 2, max];
+---
+<div class:list={['rounded-xs border border-rule bg-card p-3', extra]} role="img"
+  aria-label={`Revenue chart: recurring revenue rising steadily to ${money(recurring.at(-1)!)} a month, with total revenue moving around it`}>
+  <div class="flex items-baseline justify-between">
+    <p class="m-0 text-[12.5px] font-bold">Revenue</p>
+    <p class="m-0 text-[13px] font-bold">{money(recurring.at(-1)!)} <span class="text-[10px] font-normal text-ink-3">billed MRR</span></p>
+  </div>
+  <svg viewBox={`0 0 ${W} ${H}`} class="mt-1 w-full" aria-hidden="true">
+    <defs>
+      <linearGradient id="rev-fill" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="var(--color-mint)" stop-opacity=".35" />
+        <stop offset="1" stop-color="var(--color-mint)" stop-opacity="0" />
+      </linearGradient>
+    </defs>
+    {ticks.map((t) => (
+      <>
+        <line x1={P.l} x2={W - P.r} y1={y(t)} y2={y(t)} stroke="var(--color-rule)" stroke-dasharray="2 3" />
+        <text x={P.l - 4} y={y(t) + 3} text-anchor="end" font-size="8" fill="var(--color-ink-3)">${t / 1000}k</text>
+      </>
+    ))}
+    <path d={area} fill="url(#rev-fill)" />
+    <path d={line(total)} fill="none" stroke="var(--color-magenta)" stroke-width="1.5" stroke-dasharray="3 3" />
+    <path d={line(recurring)} fill="none" stroke="var(--color-periwinkle)" stroke-width="2" />
+    {recurring.map((v, i) => <circle cx={x(i)} cy={y(v)} r="2.2" fill="var(--color-card)" stroke="var(--color-periwinkle)" stroke-width="1.5" />)}
+    {months.map((m, i) => <text x={x(i)} y={H - 5} text-anchor="middle" font-size="8" fill="var(--color-ink-3)">{m}</text>)}
+  </svg>
+  <p class="m-0 mt-1 flex gap-3 text-[9.5px] text-ink-3">
+    <span class="flex items-center gap-1"><span class="h-0.5 w-3 bg-periwinkle"></span>Recurring</span>
+    <span class="flex items-center gap-1"><span class="h-0.5 w-3 bg-magenta"></span>Total</span>
+  </p>
+</div>

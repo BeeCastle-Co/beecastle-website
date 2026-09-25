@@ -64,7 +64,7 @@
 #   blob:, googletagmanager, google-analytics   Google Analytics via Partytown
 #   youtube-nocookie                           video embeds in blog posts
 #   app.netlify.com                            deploy-preview feedback drawer
-#   app.beecastle.com                          the sign-up form's action
+#   suite.beecastle.com                        the sign-up form's action (PUBLIC_APP_URL)
 [[headers]]
   for = "/*"
   [headers.values]
@@ -78,7 +78,7 @@
       base-uri 'self'; \
       object-src 'none'; \
       frame-ancestors 'self'; \
-      form-action 'self' https://app.beecastle.com; \
+      form-action 'self' https://suite.beecastle.com; \
       script-src 'self' 'unsafe-inline' blob: https://www.googletagmanager.com; \
       style-src 'self' 'unsafe-inline'; \
       img-src 'self' data: blob: https://i.ytimg.com https://*.google-analytics.com https://*.googletagmanager.com; \

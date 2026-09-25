@@ -1,0 +1,25 @@
+---
+/* "Join BeeCastle": the shared sign-up form in a hairline card, beside the
+   module composite on a dot grid. */
+import { Image } from 'astro:assets';
+import Band from './Band.astro';
+import Eyebrow from './Eyebrow.astro';
+import Marker from './Marker.astro';
+import SignupForm from '../SignupForm.astro';
+import composite from '../../assets/img/bc_module_composite.webp';
+---
+<Band>
+  <div class="grid items-stretch gap-4 lg:grid-cols-2">
+    <div class="rv rounded-sm border border-rule bg-card p-[clamp(24px,4vw,48px)]">
+      <Eyebrow index="07" label="Get started" />
+      <h2 class="m-0 mt-4 text-h2 font-bold leading-[1.05] tracking-[-.035em]">Join <Marker tone="honey">BeeCastle</Marker></h2>
+      <p class="m-0 mt-3 text-lede text-ink-3">Create a free trial account today. No credit card needed.</p>
+      <div class="mt-8"><SignupForm id="home-signup-email" /></div>
+    </div>
+    <div class="rv relative grid place-items-center overflow-hidden rounded-sm bg-magenta-soft p-[clamp(24px,4vw,48px)] max-lg:order-first">
+      <div aria-hidden="true" class="absolute inset-0 bg-[radial-gradient(var(--color-rule-2)_1px,transparent_1px)] [background-size:20px_20px]"></div>
+            <Image src={composite} alt="" widths={[480, 800, 1100]} sizes="(max-width: 1024px) 100vw, 560px"
+             class="relative h-auto w-full max-w-[520px] mix-blend-multiply" />
+    </div>
+  </div>
+</Band>

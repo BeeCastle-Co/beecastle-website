@@ -1,26 +1,53 @@
 ---
-/* Plan summary strip, from the plans collection. Links through to /plans/. */
+/* Plan summary: one ruled strip of four cells from the plans collection,
+   each linking to the pricing table on /plans/. */
 import { getCollection } from 'astro:content';
-import Section from '../Section.astro';
-import SectionIntro from '../SectionIntro.astro';
-import Button from '../Button.astro';
+import Band from './Band.astro';
+import Head from './Head.astro';
+import Icon from '../Icon.astro';
 import { accents } from '../../lib/accents';
 
+/* Full class names, so Tailwind can see them. */
+const hoverTint = {
+  cyan: 'hover:bg-cyan-soft', periwinkle: 'hover:bg-periwinkle-soft', mint: 'hover:bg-mint-soft',
+  magenta: 'hover:bg-magenta-soft', honey: 'hover:bg-honey-soft',
+} as const;
 const plans = (await getCollection('plans')).sort((a, b) => a.data.order - b.data.order);
+/* "From USD $2,000" shows "From" as a small label so the figure stays on one line. */
+const split = (price: string) => {
+  const [, from, amount] = price.match(/^(from\s+)?(.*)$/i) ?? [];
+  return { from: from?.trim(), amount };
+};
 ---
 {plans.length > 0 && (
-  <Section tone="white">
-    <SectionIntro eyebrow="Pricing" heading="Plans to suit every MSP"
+  <Band tone="card">
+    <Head index="06" label="Pricing" heading="Plans to suit every MSP" mark="every MSP" markTone="cyan"
       lede="Whether you're a founder who sells, or an MSP with fully fledged sales and account management teams, there's a BeeCastle plan to suit your business." />
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {plans.map((p) => (
-        <a href="/plans/#pricing-table" class:list={['rv group relative flex flex-col overflow-hidden rounded-lg p-6 no-underline transition-all duration-300 hover:-translate-y-1 hover:shadow-3', accents[p.data.accent].soft]}>
-          <h3 class="m-0 text-[20px] font-bold">{p.data.name}</h3>
-          <p class="m-0 mt-1 text-[14px] text-ink-3">{p.data.tagline}</p>
-          <p class="m-0 mt-6 text-[28px] font-extrabold tracking-tight text-ink">{p.data.price}<span class="text-[14px] font-medium text-ink-3">{p.data.period}</span></p>
-        </a>
-      ))}
+
+    <div class="mt-12 grid overflow-hidden rounded-sm border border-rule sm:grid-cols-2 lg:grid-cols-4">
+      {plans.map((p) => {
+        const { from, amount } = split(p.data.price);
+        return (
+          <a href="/plans/#pricing-table"
+             class:list={['rv group relative flex flex-col border-rule bg-card p-7 no-underline transition-colors', hoverTint[p.data.accent], 'max-sm:[&:not(:first-child)]:border-t sm:max-lg:[&:nth-child(n+3)]:border-t sm:max-lg:[&:nth-child(even)]:border-l lg:[&:not(:first-child)]:border-l']}>
+            <span aria-hidden="true" class:list={['absolute inset-x-0 top-0 h-1', p.data.highlighted ? accents[p.data.accent].solid : 'bg-transparent']}></span>
+            <div class="flex items-center gap-2.5">
+              <span aria-hidden="true" class:list={['size-2.5 rounded-full', accents[p.data.accent].solid]}></span>
+              <h3 class="m-0 text-[19px] font-bold tracking-[-.015em]">{p.data.name}</h3>
+              <Icon name="arrow" class="ml-auto size-4 -translate-x-1 text-ink-3 opacity-0 transition-all group-hover:translate-x-0 group-hover:text-cyan-deep group-hover:opacity-100" />
+            </div>
+            <p class="m-0 mt-1.5 text-[14.5px] text-ink-3">{p.data.tagline}</p>
+            <p class="m-0 mt-10 font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">{from ?? ' '}</p>
+            <p class="m-0 mt-1 flex flex-wrap items-baseline gap-x-1">
+              <span class="text-[28px] font-extrabold leading-none tracking-[-.03em] text-ink">{amount}</span>
+              <span class="text-[14px] text-ink-3">{p.data.period}</span>
+            </p>
+          </a>
+        );
+      })}
     </div>
-    <div class="rv mt-8"><Button href="/plans/" variant="outline">Compare plans</Button></div>
-  </Section>
+    <a href="/plans/" class="group rv mt-8 inline-flex items-center gap-2 text-[15px] font-semibold text-cyan-deep no-underline">
+      Compare plans <Icon name="arrow" class="size-4 transition-transform group-hover:translate-x-1" />
+    </a>
+  </Band>
 )}

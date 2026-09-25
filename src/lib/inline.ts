@@ -20,3 +20,6 @@ export const slugify = (s: string) =>
 
 export const formatDate = (d: Date) =>
   d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
+
+/** Whole dollars with separators: 13712 becomes "$13,712". */
+export const money = (n: number) => `$${Math.round(n).toLocaleString('en-AU')}`;
