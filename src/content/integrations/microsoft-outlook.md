@@ -11,6 +11,9 @@ heroImageAlt: ""
 icon: crm-logging
 accent: periwinkle
 order: 4
+# Hidden for now: the Outlook add-on is not part of the new app. Remove this
+# line (and the redirect in netlify.toml) to publish it again.
+draft: true
 sections:
   - heading: Effortless Contact & Company Management
     bullets:

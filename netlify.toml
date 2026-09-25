@@ -165,6 +165,11 @@
   status = 302
 
 [[redirects]]
+  from = "/integrations/microsoft-outlook/"
+  to = "/products/account-insights/"
+  status = 302
+
+[[redirects]]
   from = "/lp/connectwise-manage/"
   to = "/integrations/connectwise-manage/"
   status = 302
