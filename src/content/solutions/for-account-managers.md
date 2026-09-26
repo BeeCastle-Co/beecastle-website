@@ -25,13 +25,13 @@ sections:
     paragraphs:
       - A powerful tool that looks into the future at what you and your team have planned, and then marries this with activity to date across the broader team to allow you to strategically plan your next moves.
       - "[See Customer Success](/products/enhanced-account-management/)"
-    replica: company-overview
+    carousel: customer-success
   - heading: Whitespace Prospecting
     paragraphs:
       - BeeCastle has created a unique view of your accounts with sophisticated data analysis that is both fast to comprehend and simple to execute suggested actions.
       - Review, take action, measure outcome.
       - "[See Whitespace Prospecting](/products/whitespace-prospecting/)"
-    replica: whitespace-grid
+    carousel: whitespace
     cta: signup
   - heading: Sales Dashboards
     paragraphs:

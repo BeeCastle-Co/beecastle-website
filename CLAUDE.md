@@ -184,6 +184,12 @@ onboarding and more. Preview them all at `/replicas/` (hidden from search).
 Put one on any feature page section with `replica: <name>`; the names are in
 `src/components/product/registry.ts`.
 
+- **Carousels**: for features with more depth than one screen, use
+  `carousel: whitespace` (or customer-success, profitability, sales) on a
+  section instead. Sets of 3 to 5 slides with captions are defined in
+  `src/components/product/carousels.ts`; a slide can pass props to its
+  replica (the whitespace slide uses a compact grid). Swipe on phones, arrows
+  and dots elsewhere, no autoplay.
 - **All data is invented**, in `src/data/demo.ts`. Never copy a real
   customer, contact, email or figure across from the app.
 - Status colours (`ok`, `warn`, `bad`) and tier metals are for replicas only.

@@ -1,0 +1,109 @@
+---
+/* A small carousel of product replicas. Native horizontal scroll with snap,
+   so it swipes on a phone and works with no JavaScript at all; the script
+   only wires up the arrows and dots. No autoplay: people read these.
+
+   Accessible: a labelled region with aria-roledescription "carousel", each
+   slide a group labelled "2 of 5", and the dots are real buttons. */
+import { replicas } from './registry';
+import { carousels, type CarouselName } from './carousels';
+
+interface Props {
+  name: CarouselName;
+  class?: string;
+}
+const { name, class: extra } = Astro.props;
+const set = carousels[name];
+const n = set.slides.length;
+---
+<div class:list={['rc', extra]} role="region" aria-roledescription="carousel" aria-label={set.label} data-carousel>
+  <div class="rc-track flex snap-x snap-mandatory items-start gap-4 overflow-x-auto overscroll-x-contain scroll-smooth pb-1" data-track tabindex="0">
+    {set.slides.map((s, i) => {
+      const R = replicas[s.replica];
+      return (
+        <div class="w-full shrink-0 snap-center" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${n}: ${s.caption}`} data-slide>
+          <R bare {...(s.props ?? {})} />
+        </div>
+      );
+    })}
+  </div>
+  <div class="mt-4 flex items-center gap-3">
+    <button type="button" class="rc-btn" data-prev aria-label="Previous screen">
+      <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6" /></svg>
+    </button>
+    <div class="flex gap-1.5">
+      {set.slides.map((_, i) => (
+        <button type="button" class="rc-dot" data-dot={i} aria-label={`Show screen ${i + 1} of ${n}`} aria-current={i === 0 ? 'true' : undefined}></button>
+      ))}
+    </div>
+    <button type="button" class="rc-btn" data-next aria-label="Next screen">
+      <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
+    </button>
+    <p class="m-0 min-w-0 flex-1 text-[13.5px] leading-snug text-ink-3" aria-live="polite" data-caption>{set.slides[0].caption}</p>
+  </div>
+  <template data-captions set:html={JSON.stringify(set.slides.map((s) => s.caption))} />
+</div>
+
+<style>
+  .rc-track { scrollbar-width: none; transition: height .35s var(--ease-enter); }
+  .rc-track::-webkit-scrollbar { display: none; }
+  .rc-btn {
+    display: grid; place-items: center; flex-shrink: 0;
+    width: 36px; height: 36px; border-radius: var(--radius-xs);
+    border: 1px solid var(--color-rule-2); background: var(--color-card); color: var(--color-ink);
+    cursor: pointer; transition: border-color .2s, background .2s;
+  }
+  .rc-btn:hover { border-color: var(--color-ink); }
+  .rc-btn:disabled { opacity: .4; cursor: default; border-color: var(--color-rule-2); }
+  .rc-dot {
+    width: 8px; height: 8px; border-radius: 99px; border: 0; padding: 0;
+    background: var(--color-rule-2); cursor: pointer; transition: width .25s var(--ease-enter), background .25s;
+  }
+  .rc-dot[aria-current='true'] { width: 22px; background: var(--color-honey); }
+  @media (prefers-reduced-motion: reduce) { .rc-track { scroll-behavior: auto; } }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
+    const track = root.querySelector<HTMLElement>('[data-track]')!;
+    const slides = Array.from(root.querySelectorAll<HTMLElement>('[data-slide]'));
+    const dots = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-dot]'));
+    const prev = root.querySelector<HTMLButtonElement>('[data-prev]')!;
+    const next = root.querySelector<HTMLButtonElement>('[data-next]')!;
+    const caption = root.querySelector<HTMLElement>('[data-caption]')!;
+    const captions: string[] = JSON.parse(root.querySelector('template[data-captions]')?.innerHTML || '[]');
+    let current = 0;
+
+    /* Fit the track to the slide on show, so a short slide does not sit
+       above the empty space a taller one needs. */
+    const fit = () => { track.style.height = `${slides[current].offsetHeight + 4}px`; };
+    const show = (i: number) => {
+      current = i;
+      fit();
+      dots.forEach((d, j) => (j === i ? d.setAttribute('aria-current', 'true') : d.removeAttribute('aria-current')));
+      prev.disabled = i === 0;
+      next.disabled = i === slides.length - 1;
+      if (captions[i]) caption.textContent = captions[i];
+    };
+    const go = (i: number) => {
+      const s = slides[Math.max(0, Math.min(slides.length - 1, i))];
+      track.scrollTo({ left: s.offsetLeft - track.offsetLeft, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    };
+
+    prev.addEventListener('click', () => go(current - 1));
+    next.addEventListener('click', () => go(current + 1));
+    dots.forEach((d, i) => d.addEventListener('click', () => go(i)));
+    track.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); go(current + 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); go(current - 1); }
+    });
+
+    /* Keep the dots in step with swipes and scrolls, not only with clicks. */
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => { if (en.isIntersecting) show(slides.indexOf(en.target as HTMLElement)); });
+    }, { root: track, threshold: 0.6 });
+    slides.forEach((s) => io.observe(s));
+    new ResizeObserver(fit).observe(slides[0].parentElement!);
+    show(0);
+  });
+</script>

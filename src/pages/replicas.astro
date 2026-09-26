@@ -5,6 +5,8 @@
 import Layout from '../layouts/Layout.astro';
 import Section from '../components/Section.astro';
 import { REPLICA_NAMES, replicas } from '../components/product/registry';
+import ReplicaCarousel from '../components/product/ReplicaCarousel.astro';
+import { CAROUSEL_NAMES } from '../components/product/carousels';
 
 const title = (n: string) => n.replace(/-/g, ' ').replace(/^./, (c) => c.toUpperCase());
 ---
@@ -15,6 +17,17 @@ const title = (n: string) => n.replace(/-/g, ' ').replace(/^./, (c) => c.toUpper
       Simplified copies of real BeeCastle screens, built in HTML. Every company, person and number is invented.
       Use one on a product, solution or integration page with <code>replica: name</code> on a section.
     </p>
+    <h2 class="m-0 mt-12 text-h2 font-bold">Carousels</h2>
+    <p class="m-0 mt-2 text-[15px] text-ink-3">Use on a section with <code>carousel: name</code>. Sets live in src/components/product/carousels.ts.</p>
+    <div class="mt-8 grid gap-16 lg:grid-cols-2">
+      {CAROUSEL_NAMES.map((name) => (
+        <div class="min-w-0">
+          <p class="m-0 mb-4 font-mono text-[13px] text-ink-3">carousel: {name}</p>
+          <ReplicaCarousel name={name} />
+        </div>
+      ))}
+    </div>
+    <h2 class="m-0 mt-20 text-h2 font-bold">Single replicas</h2>
     <div class="mt-12 grid gap-16">
       {REPLICA_NAMES.map((name) => {
         const C = replicas[name];

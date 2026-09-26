@@ -5,6 +5,8 @@ import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import Button from './Button.astro';
 import { replicas, type ReplicaName } from './product/registry';
+import ReplicaCarousel from './product/ReplicaCarousel.astro';
+import type { CarouselName } from './product/carousels';
 import { inline } from '../lib/inline';
 import { accents, type Accent } from '../lib/accents';
 import { site } from '../data/site';
@@ -18,14 +20,16 @@ interface Props {
   imageAlt?: string;
   cta?: 'signup' | 'demo';
   replica?: ReplicaName;
+  /** A carousel of replicas, for features with more depth than one screen. */
+  carousel?: CarouselName;
   /** Extra props for the replica, for example the PSA name on the onboarding one. */
   replicaProps?: Record<string, unknown>;
   reverse?: boolean;
   accent?: Accent;
 }
-const { id, heading, paragraphs = [], bullets = [], image, imageAlt = '', cta, reverse = false, accent = 'cyan', replica, replicaProps = {} } = Astro.props;
+const { id, heading, paragraphs = [], bullets = [], image, imageAlt = '', cta, reverse = false, accent = 'cyan', replica, carousel, replicaProps = {} } = Astro.props;
 const Replica = replica ? replicas[replica] : null;
-const hasVisual = !!(image || Replica);
+const hasVisual = !!(image || Replica || carousel);
 const a = accents[accent];
 ---
 <section id={id} class="px-gut py-[clamp(48px,6vw,88px)]">
@@ -55,7 +59,11 @@ const a = accents[accent];
         </div>
       )}
     </div>
-    {Replica ? (
+    {carousel ? (
+      <div class:list={['rv relative min-w-0', reverse && 'lg:order-1']}>
+        <ReplicaCarousel name={carousel} />
+      </div>
+    ) : Replica ? (
       <div class:list={['rv relative min-w-0', reverse && 'lg:order-1']}>
         <div aria-hidden="true" class:list={['absolute inset-6 -z-10 rounded-xl glow', a.solid, 'opacity-25']}></div>
         <Replica bare {...replicaProps} />

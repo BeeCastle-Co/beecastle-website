@@ -285,3 +285,20 @@ export const contacts = [
   { name: 'Morgan Diaz', title: 'Office Coordinator', role: 'Team member', score: 44, last: '19 days ago' },
   { name: 'Riley Chen', title: 'Finance Lead', role: 'Senior influencer', score: 18, last: '5 months ago' },
 ];
+
+/** Product stacks: BeeCastle suggests a core stack from what the book
+    already buys. Each category is one question the whitespace grid asks. */
+export const coreStack = {
+  clients: 73,
+  commonCount: 41,
+  threshold: 4,
+  categories: [
+    { name: 'Managed support', products: 'Managed workstation, managed server, managed network device', have: 65 },
+    { name: 'Microsoft 365 licensing', products: 'Business Premium, Business Standard, Business Basic', have: 60 },
+    { name: 'Microsoft 365 backup', products: 'SaaS backup for Microsoft 365', have: 35 },
+    { name: 'Productivity add-ons', products: 'Power BI Pro, Teams Rooms, email signatures, Copilot', have: 30 },
+    { name: 'Email security', products: 'Exchange Online protection, advanced threat filtering', have: 24 },
+    { name: 'Application control', products: 'Allow-listing, ringfencing', have: 21 },
+    { name: 'Server backup and continuity', products: 'Online backup, BCDR appliance, cloud retention', have: 21 },
+  ],
+};

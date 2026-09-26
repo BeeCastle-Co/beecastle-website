@@ -10,7 +10,10 @@ const REPLICAS = [
   'profitability', 'profitability-table', 'account-profitability', 'meeting-planner', 'health-score',
   'health-breakdown', 'client-stack', 'prospecting', 'product-summary', 'tiering', 'sales-dashboard',
   'activity', 'meeting-note', 'contacts', 'onboarding', 'monthly-profitability', 'profit-drilldown',
+  'stack-builder',
 ] as const;
+/* Named carousels; must match CAROUSEL_NAMES in src/components/product/carousels.ts. */
+const CAROUSELS = ['whitespace', 'customer-success', 'profitability', 'sales'] as const;
 
 /* Every collection here is shaped to become a Contentful content type later:
    one collection is one content type, and each frontmatter field is one field
@@ -51,6 +54,9 @@ const featureSection = ({ image }: SchemaContext) =>
     /** A product replica (src/components/product/) shown instead of the image.
         Preferred over screenshots: sharp, current, and no real customer data. */
     replica: z.enum(REPLICAS).optional(),
+    /** A small carousel of replicas instead of one, for features with more
+        depth than one screen shows. Wins over replica and image. */
+    carousel: z.enum(CAROUSELS).optional(),
     /** Optional button under the text. */
     cta: z.enum(['signup', 'demo']).optional(),
   });

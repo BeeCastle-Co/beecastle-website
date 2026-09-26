@@ -1,0 +1,40 @@
+---
+/* Replica: product stacks. BeeCastle reads what the whole book already buys
+   and suggests a core stack; each category becomes a question the
+   whitespace grid asks of every client. */
+import Frame from './Frame.astro';
+import { coreStack as s } from '../../data/demo';
+
+interface Props {
+  bare?: boolean;
+  class?: string;
+}
+const { bare = false, class: extra } = Astro.props;
+---
+<Frame bare={bare} class={extra}
+  label={`BeeCastle product stacks: a suggested core stack of ${s.categories.length} categories, based on ${s.commonCount} of ${s.clients} clients already having at least ${s.threshold} of them, with adoption for each`}>
+  <div class="flex items-start justify-between gap-3">
+    <p class="m-0"><span class="block text-[17px] font-bold tracking-[-.01em]">Product stacks</span><span class="block text-[10.5px] text-ink-3">Your standard offers. Each category is a question asked of every client.</span></p>
+    <span class="shrink-0 rounded-xs bg-honey px-2.5 py-1.5 text-[10.5px] font-semibold">+ New stack</span>
+  </div>
+  <div class="mt-3 rounded-xs border border-rule bg-card p-3">
+    <p class="m-0 text-[9.5px] font-bold uppercase tracking-[.08em] text-magenta">✦ Suggested stack</p>
+    <p class="m-0 mt-0.5 text-[14px] font-bold">Core stack</p>
+    <p class="m-0 text-[10.5px] text-ink-3">{s.commonCount} of your {s.clients} managed clients already have at least {s.threshold} of these.</p>
+    <div class="mt-2">
+      {s.categories.map((c) => (
+        <div class="grid grid-cols-[minmax(0,1fr)_110px] items-center gap-3 border-t border-rule py-1.5 first:border-t-0">
+          <span class="min-w-0"><span class="block truncate text-[11.5px] font-semibold">{c.name}</span><span class="block truncate text-[9.5px] text-ink-3">{c.products}</span></span>
+          <span class="flex items-center gap-1.5">
+            <span class="h-1.5 flex-1 overflow-hidden rounded-full bg-paper-2"><span class="block h-full rounded-full bg-ok" style={`width: ${(c.have / s.clients) * 100}%`}></span></span>
+            <span class="w-11 text-right text-[9.5px] text-ink-3">{c.have}/{s.clients}</span>
+          </span>
+        </div>
+      ))}
+    </div>
+    <div class="mt-2.5 flex gap-2 text-[10.5px]">
+      <span class="rounded-xs bg-honey px-2.5 py-1.5 font-semibold">Use this stack</span>
+      <span class="rounded-xs border border-rule px-2.5 py-1.5 font-semibold">Edit first</span>
+    </div>
+  </div>
+</Frame>

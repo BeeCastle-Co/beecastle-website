@@ -28,7 +28,7 @@ sections:
     paragraphs:
       - BeeCastle has created a unique view of your accounts with sophisticated data analysis that is both fast to comprehend and simple to execute suggested actions.
       - Review, take action, measure outcome.
-    replica: profitability
+    carousel: profitability
     cta: signup
   - heading: Business Benchmarking
     paragraphs:

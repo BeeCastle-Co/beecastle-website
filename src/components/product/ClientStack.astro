@@ -1,7 +1,8 @@
 ---
 /* Replica: a company's Whitespace tab. How the client measures up against a
    product stack: what they have, what is missing, and what similar clients
-   pay for it, each gap one click from an opportunity. */
+   pay for it. Each gap can go on the next meeting's agenda or become an
+   opportunity in one click. */
 import Frame from './Frame.astro';
 import Pill from './Pill.astro';
 import { clientStack as s } from '../../data/demo';
@@ -29,7 +30,12 @@ const { bare = false, class: extra } = Astro.props;
             <span class="flex items-center gap-2"><span class="truncate text-[11.5px] font-semibold">{i.name}</span><Pill tone={i.has ? 'ok' : 'warn'} label={i.has ? 'Has it' : 'Missing'} /></span>
             {i.note && <span class="block truncate text-[10px] text-ink-3">{i.note} · about {money(i.value!)} a month</span>}
           </span>
-          {!i.has && <span class="shrink-0 rounded-xs border border-rule px-2 py-1 text-[10px] font-semibold text-ink-2 max-sm:hidden">+ Create opportunity</span>}
+          {!i.has && (
+            <span class="flex shrink-0 gap-1.5 max-sm:hidden">
+              <span class="rounded-xs border border-rule px-2 py-1 text-[10px] font-semibold text-ink-3">Add to next meeting</span>
+              <span class="rounded-xs border border-rule px-2 py-1 text-[10px] font-semibold text-ink-2">+ Create opportunity</span>
+            </span>
+          )}
         </div>
       ))}
     </div>

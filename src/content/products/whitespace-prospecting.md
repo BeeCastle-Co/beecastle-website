@@ -32,25 +32,25 @@ sections:
     bullets:
       - Use BeeCastle to generate opportunities by product
       - Push to your PSA and allocate responsibility
-    replica: whitespace-grid
+    carousel: whitespace
     cta: signup
   - heading: Agreement Types
     paragraphs:
       - Instantly visualise what agreements you're invoicing your customers, as well as churned agreements and any gaps. See your data in real time and share insights across your team.
       - Whitespace analysis is the process of examining sales data to find opportunity for cross sell and upsell in your existing customer base. Whitespace simply refers to any gaps in a customer's needs that you could fill with your products or services. Whitespace analysis helps you to uncover areas to grow your accounts and focus your time by allowing you to identify where cross-sell and up-sell is possible.
-    replica: client-stack
+    replica: stack-builder
   - id: agreement-addition-mapping
     heading: Agreement and Addition Mapping
     paragraphs:
       - Whitespace analysis helps account managers focus their next conversation on what the customer is actually likely to purchase next. It saves your reps time by concentrating on real opportunities, and gives them data to have personalised conversations that make customers feel more valued.
       - "Whitespace analysis also gives sales leaders the data to map areas for growth, making it easier to scale revenue effectively. You can also measure your team's sales behaviour: compare product penetration and revenue for each of your sales reps so you can determine which offerings they should focus on."
-    replica: prospecting
+    replica: client-stack
     cta: signup
   - heading: Product Additions
     paragraphs:
       - Analyse which additions and products your accounts have purchased and where their revenue is coming from.
       - Not only can you visualise at a glance any gaps in your customers' agreement and product sets, BeeCastle's intelligent recommender system also automatically uncovers the best prospects for cross-sell and up-sell.
-    replica: whitespace-actions
+    replica: prospecting
     cta: demo
 closing: Ready to see how BeeCastle can improve your upsell and cross-sell?
 ---
