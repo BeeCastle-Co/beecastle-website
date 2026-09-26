@@ -57,20 +57,35 @@ import { usOverlay, usSpelling } from '../i18n';
 
   var locale = fromQuery() || stored() || detect();
 
-  /* The footer flag: shows the current English, a click switches to the
-     other, remembers it and rebuilds the page in it. */
-  var names = { 'en-AU': 'English (Australia)', 'en-US': 'English (US)' };
-  var other = locale === 'en-US' ? 'en-AU' : 'en-US';
-  document.querySelectorAll('[data-locale-toggle]').forEach(function (btn) {
-    btn.querySelector('.locale-au').classList.toggle('hidden', locale === 'en-US');
-    btn.querySelector('.locale-us').classList.toggle('hidden', locale !== 'en-US');
-    btn.setAttribute('aria-label', names[locale] + '. Switch to ' + names[other]);
-    btn.setAttribute('title', 'Switch to ' + names[other]);
-    btn.addEventListener('click', function () {
-      try {
-        localStorage.setItem(KEY, other);
-      } catch (e) {}
-      location.reload();
+  /* The footer language menu: show the current flag, tick the current
+     language, and on a pick remember it and rebuild the page in it. */
+  document.querySelectorAll('[data-locale-menu]').forEach(function (menu) {
+    var btn = menu.querySelector('[data-locale-button]');
+    var list = menu.querySelector('[data-locale-list]');
+    menu.querySelectorAll('[data-flag]').forEach(function (f) {
+      f.classList.toggle('hidden', f.getAttribute('data-flag') !== locale);
+    });
+    var current = menu.querySelector('[data-locale="' + locale + '"]');
+    if (current) {
+      current.setAttribute('aria-current', 'true');
+      btn.setAttribute('aria-label', btn.getAttribute('aria-label').split(':')[0] + ': ' + current.textContent.trim());
+    }
+    var open = function (on) {
+      list.hidden = !on;
+      btn.setAttribute('aria-expanded', String(on));
+    };
+    btn.addEventListener('click', function () { open(list.hidden); });
+    document.addEventListener('click', function (e) { if (!menu.contains(e.target)) open(false); });
+    menu.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !list.hidden) { open(false); btn.focus(); }
+    });
+    menu.querySelectorAll('[data-locale]').forEach(function (choice) {
+      choice.addEventListener('click', function () {
+        var code = choice.getAttribute('data-locale');
+        if (code === locale) { open(false); return; }
+        try { localStorage.setItem(KEY, code); } catch (e) {}
+        location.reload();
+      });
     });
   });
 
