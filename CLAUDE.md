@@ -258,6 +258,7 @@ the browser.
 - **The switcher.** "English (Australia)" and "English (US)" buttons in the
   footer save the choice in `localStorage` (`bc-locale`), which beats the
   browser language, and reload the page.
+- Override with `?lang=en-US` or `?lang=en-AU` on any URL (for sharing or testing). It is remembered like a switcher choice; canonical URLs never include it.
 
 ## Moving to Contentful
 

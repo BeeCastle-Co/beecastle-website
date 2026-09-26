@@ -44,7 +44,18 @@ import { usOverlay, usSpelling } from '../i18n';
     return 'en-AU';
   }
 
-  var locale = stored() || detect();
+  /* ?lang=en-US or ?lang=en-AU overrides everything, for sharing a link or
+     testing, and is remembered like a switcher choice. The page's canonical
+     URL never carries the parameter, so search engines ignore it. */
+  function fromQuery() {
+    var m = /[?&]lang=(en-us|en-au|en-gb)\b/i.exec(location.search);
+    if (!m) return null;
+    var v = m[1].toLowerCase() === 'en-us' ? 'en-US' : 'en-AU';
+    try { localStorage.setItem(KEY, v); } catch (e) {}
+    return v;
+  }
+
+  var locale = fromQuery() || stored() || detect();
 
   /* The footer switcher: remember the choice and rebuild the page in it. */
   document.querySelectorAll('[data-locale-switch] [data-locale]').forEach(function (btn) {
