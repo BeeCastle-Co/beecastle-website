@@ -255,9 +255,9 @@ the browser.
 - **`data-no-i18n`** on an element keeps all of that off it. The legal pages
   (`/terms/`, `/privacy/`, the data processing addendum) use it: they stay
   the Australian original for everyone.
-- **The switcher.** "English (Australia)" and "English (US)" buttons in the
-  footer save the choice in `localStorage` (`bc-locale`), which beats the
-  browser language, and reload the page.
+- **The switcher.** A single flag button in the footer (`Flag.astro`) shows the
+  current English; one click switches to the other, stores it in
+  localStorage `bc-locale` and reloads. Wired up in `Localise.astro`.
 - Override with `?lang=en-US` or `?lang=en-AU` on any URL (for sharing or testing). It is remembered like a switcher choice; canonical URLs never include it.
 
 ## Moving to Contentful
