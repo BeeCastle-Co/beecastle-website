@@ -10,4 +10,6 @@ const { slug, link = true } = Astro.props;
 const c = categories[slug];
 const cls = `inline-flex rounded-full px-2.5 py-1 font-mono text-[11px] font-medium uppercase tracking-[.1em] no-underline ${c.tone}`;
 ---
-{link ? <a href={`/categories/${slug}/`} class={cls}>{c.label}</a> : <span class={cls}>{c.label}</span>}
+{link
+  ? <a href={`/categories/${slug}/`} class={cls} data-i18n={`blog.categories.${slug}.label`}>{c.label}</a>
+  : <span class={cls} data-i18n={`blog.categories.${slug}.label`}>{c.label}</span>}

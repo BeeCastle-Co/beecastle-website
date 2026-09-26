@@ -3,12 +3,15 @@
 import { Image } from 'astro:assets';
 import SignupForm from './SignupForm.astro';
 import composite from '../assets/img/bc_module_composite.webp';
+import { t } from '../i18n';
 
 interface Props {
   heading?: string;
   lede?: string;
 }
-const { heading = 'Join BeeCastle', lede = 'Create a free trial account today. No credit card needed.' } = Astro.props;
+const { heading, lede } = Astro.props;
+const headingKey = heading === undefined ? 'signup.panelHeading' : undefined;
+const ledeKey = lede === undefined ? 'signup.panelLede' : undefined;
 ---
 <section class="px-gut py-sec">
   <div class="mx-auto grid max-w-wrap items-center gap-12 lg:grid-cols-2">
@@ -16,8 +19,8 @@ const { heading = 'Join BeeCastle', lede = 'Create a free trial account today. N
       <Image src={composite} alt="" widths={[480, 800, 1100]} sizes="(max-width: 1024px) 100vw, 560px" class="mx-auto h-auto w-full max-w-[560px] mix-blend-multiply" />
     </div>
     <div class="rv rounded-xl border border-rule bg-card p-[clamp(28px,4vw,48px)] shadow-2">
-      <h2 class="m-0 text-h2 font-extrabold leading-[1.1]">{heading}</h2>
-      <p class="m-0 mt-3 text-lede text-ink-3">{lede}</p>
+      <h2 class="m-0 text-h2 font-extrabold leading-[1.1]" data-i18n={headingKey}>{heading ?? t('signup.panelHeading')}</h2>
+      <p class="m-0 mt-3 text-lede text-ink-3" data-i18n={ledeKey}>{lede ?? t('signup.panelLede')}</p>
       <div class="mt-7"><SignupForm id="signup-panel-email" /></div>
     </div>
   </div>

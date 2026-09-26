@@ -4,6 +4,9 @@
    the form at build time by data-netlify, so it must be in the static HTML.
 
    Fields are data, so a new form is a list of fields rather than new markup. */
+import T from './T.astro';
+import { t } from '../i18n';
+
 export interface FormField {
   name: string;
   label: string;
@@ -30,7 +33,7 @@ const hasRequired = fields.some((f) => f.required !== false);
 <form name={name} method="POST" action={action} data-netlify="true" netlify-honeypot="company-website" class="grid gap-4">
   <input type="hidden" name="form-name" value={name} />
   {Object.entries(hidden).map(([k, v]) => <input type="hidden" name={k} value={v} />)}
-  <p hidden><label>Leave this empty <input name="company-website" /></label></p>
+  <p hidden><label>{t('form.honeypot')} <input name="company-website" /></label></p>
   <div class="grid gap-4 sm:grid-cols-2">
     {fields.map((f) => (
       <label class:list={['grid gap-1.5', (f.wide || f.type === 'textarea') && 'sm:col-span-2']}>
@@ -41,7 +44,7 @@ const hasRequired = fields.some((f) => f.required !== false);
       </label>
     ))}
   </div>
-  {hasRequired && <p class="m-0 text-[13px] text-ink-3">* indicates the field is required.</p>}
+  {hasRequired && <T as="p" k="form.required" class="m-0 text-[13px] text-ink-3" />}
   <button type="submit" class="w-fit cursor-pointer rounded-full bg-honey px-7 py-3 text-[15.5px] font-semibold text-ink transition-colors hover:bg-honey-hover">{submit}</button>
-  <p class="m-0 text-[13px] text-ink-3">We handle your details as set out in our <a href="/privacy/" class="font-semibold text-cyan-deep">Privacy Policy</a>.</p>
+  <T as="p" k="form.privacy" md class="m-0 text-[13px] text-ink-3 [&_a]:font-semibold [&_a]:text-cyan-deep" />
 </form>

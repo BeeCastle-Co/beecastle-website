@@ -1,10 +1,13 @@
 ---
 /* The single HTML shell for every page. Nav, footer, meta tags and analytics
-   live here and nowhere else. */
+   live here and nowhere else. The page is built in en-AU; Localise swaps in
+   US English in the browser for US visitors (see src/i18n). */
 import { Font } from 'astro:assets';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Analytics from '../components/Analytics.astro';
+import Localise from '../components/Localise.astro';
+import T from '../components/T.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -37,7 +40,7 @@ const social = new URL(image, Astro.site).href;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en-AU">
 <head>
   <meta charset="utf-8" />
   <script is:inline>document.documentElement.classList.add('js')</script>
@@ -90,9 +93,9 @@ const social = new URL(image, Astro.site).href;
 </head>
 
 <body>
-  <a
+  <T as="a" k="skipToContent"
     class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-ink focus:px-5 focus:py-3 focus:text-white"
-    href="#main">Skip to content</a>
+    href="#main" />
 
   <Nav />
 
@@ -101,6 +104,8 @@ const social = new URL(image, Astro.site).href;
   </main>
 
   <Footer />
+
+  <Localise />
 
   <script>
     /* Reveal on scroll. Elements marked .rv fade up as they enter the viewport.

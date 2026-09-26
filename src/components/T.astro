@@ -1,0 +1,41 @@
+---
+/* One UI string from src/i18n, on the element that holds it:
+
+     <T k="notFound.heading" as="h1" class="..." />
+     renders <h1 data-i18n="notFound.heading" class="...">This page has buzzed off</h1>
+
+   data-i18n is how the client script (Localise.astro) finds the string to
+   swap for US visitors. `as` defaults to a span; pass the real element
+   instead of wrapping it, so the markup stays as it was.
+
+   vars   fills {placeholders}
+   md     renders **bold** and [links](/x/) (style them from the parent)
+   tone   highlighter colour for [[marked words]] in the string */
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import Marker from './home/Marker.astro';
+import { t, splitMark, type Vars } from '../i18n';
+import { inline } from '../lib/inline';
+
+type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }> & {
+  k: string;
+  vars?: Vars;
+  md?: boolean;
+  tone?: 'honey' | 'cyan' | 'mint' | 'periwinkle' | 'magenta';
+};
+
+const { as: Tag = 'span', k, vars, md = false, tone = 'honey', ...attrs } = Astro.props;
+const text = t(k, vars);
+const marked = text.includes('[[') ? splitMark(text) : null;
+const data = {
+  'data-i18n': k,
+  ...(vars ? { 'data-i18n-vars': JSON.stringify(vars) } : {}),
+  ...(md ? { 'data-i18n-md': '' } : {}),
+};
+---
+{md ? (
+  <Tag {...attrs} {...data} set:html={inline(text)} />
+) : marked ? (
+  <Tag {...attrs} {...data}>{marked.before}<span class="whitespace-nowrap" data-i18n-w><Marker tone={tone}><span data-i18n-m>{marked.mark}</span></Marker>{marked.glue}</span>{marked.after}</Tag>
+) : (
+  <Tag {...attrs} {...data}>{text}</Tag>
+)}

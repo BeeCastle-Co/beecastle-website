@@ -6,7 +6,9 @@ import CategoryPill from '../../components/CategoryPill.astro';
 import PostCard from '../../components/PostCard.astro';
 import CTABand from '../../components/CTABand.astro';
 import Icon from '../../components/Icon.astro';
+import T from '../../components/T.astro';
 import { getPosts } from '../../lib/blog';
+import { t } from '../../i18n';
 import { formatDate } from '../../lib/inline';
 
 /* One page per Markdown file in src/content/blog/, at /blog/<file-name>/. */
@@ -47,8 +49,8 @@ const toc = headings.filter((h) => h.depth === 2);
   <article>
     <header class="px-gut pb-10 pt-[clamp(120px,12vw,160px)]">
       <div class="mx-auto max-w-[860px]">
-        <a href="/blog/" class="rv inline-flex items-center gap-1.5 text-[14px] font-semibold text-cyan-deep no-underline hover:text-ink">
-          <Icon name="arrow" class="size-4 rotate-180" /> All posts
+        <a href="/blog/" class="rv inline-flex items-center gap-1.5 text-[14px] font-semibold text-cyan-deep no-underline hover:text-ink" data-i18n="cta.allPosts">
+          <Icon name="arrow" class="size-4 rotate-180" /> {t('cta.allPosts')}
         </a>
         <div class="rv mt-6 flex flex-wrap items-center gap-2">
           {d.categories.map((c) => <CategoryPill slug={c} />)}
@@ -57,7 +59,7 @@ const toc = headings.filter((h) => h.depth === 2);
         <p class="rv m-0 mt-5 text-lede text-ink-3">{d.summary}</p>
         <p class="rv m-0 mt-5 font-mono text-[13px] text-ink-3">
           <time datetime={d.date.toISOString()}>{formatDate(d.date)}</time>
-          <span aria-hidden="true"> · </span>{minutes} min read
+          <span aria-hidden="true"> · </span><T k="blog.minRead" vars={{ minutes }} />
         </p>
       </div>
     </header>
@@ -76,8 +78,8 @@ const toc = headings.filter((h) => h.depth === 2);
         </div>
         {toc.length > 2 && (
           <aside class="max-lg:hidden">
-            <nav aria-label="In this post" class="sticky top-28">
-              <p class="m-0 mb-3 font-mono text-[12px] uppercase tracking-[.14em] text-ink-3">In this post</p>
+            <nav aria-label={t('blog.inThisPost')} data-i18n-attr="aria-label:blog.inThisPost" class="sticky top-28">
+              <T as="p" k="blog.inThisPost" class="m-0 mb-3 font-mono text-[12px] uppercase tracking-[.14em] text-ink-3" />
               <ul class="m-0 grid list-none gap-2 border-l border-rule p-0 pl-4 text-[14px]">
                 {toc.map((h) => <li><a href={`#${h.slug}`} class="text-ink-2 no-underline hover:text-cyan-deep">{h.text}</a></li>)}
               </ul>
@@ -92,7 +94,7 @@ const toc = headings.filter((h) => h.depth === 2);
 
   <section class="px-gut py-sec">
     <div class="mx-auto max-w-wrap">
-      <h2 class="m-0 mb-8 text-h2 font-bold">Keep reading</h2>
+      <T as="h2" k="blog.keepReading" class="m-0 mb-8 text-h2 font-bold" />
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {related.map((p) => <PostCard post={p} />)}
       </div>

@@ -7,7 +7,12 @@
    outline  navy outline on light grounds
    light    white outline, for navy or gradient grounds
 
-   shape: 'pill' (default) or 'app', the tighter 6px corner the product uses. */
+   shape: 'pill' (default) or 'app', the tighter 6px corner the product uses.
+
+   k: a UI string key from src/i18n for the label, so it can be swapped for
+   US visitors. Pass it instead of slot text wherever the label is fixed copy. */
+import { t } from '../i18n';
+
 interface Props {
   href: string;
   variant?: 'primary' | 'dark' | 'outline' | 'light';
@@ -15,8 +20,9 @@ interface Props {
   external?: boolean;
   shape?: 'pill' | 'app';
   class?: string;
+  k?: string;
 }
-const { href, variant = 'primary', size = 'md', external = /^https?:/.test(href), shape = 'pill', class: extra } = Astro.props;
+const { k, href, variant = 'primary', size = 'md', external = /^https?:/.test(href), shape = 'pill', class: extra } = Astro.props;
 
 const variants = {
   primary: 'bg-honey text-ink hover:bg-honey-hover shadow-[0_6px_18px_-8px_rgba(255,204,0,.8)]',
@@ -28,6 +34,7 @@ const sizes = { md: 'px-5 py-2.5 text-[14.5px]', lg: 'px-7 py-3.5 text-[16px]' }
 ---
 <a
   href={href}
+  data-i18n={k}
   {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
   class:list={[
     'inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold no-underline transition-all duration-200 hover:-translate-y-px',
@@ -36,4 +43,4 @@ const sizes = { md: 'px-5 py-2.5 text-[14.5px]', lg: 'px-7 py-3.5 text-[16px]' }
     shape === 'app' && variant === 'primary' && 'bg-honey text-ink hover:bg-honey-hover',
     sizes[size], extra,
   ]}
-><slot /></a>
+>{k ? t(k) : <slot />}</a>

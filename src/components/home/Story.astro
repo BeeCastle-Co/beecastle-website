@@ -2,25 +2,23 @@
 /* "Science, not serendipity", with the bee equation. */
 import Band from './Band.astro';
 import Eyebrow from './Eyebrow.astro';
-import Marker from './Marker.astro';
+import T from '../T.astro';
 import Illustration from '../Illustration.astro';
 import Icon from '../Icon.astro';
+import { t } from '../../i18n';
 ---
 <Band tone="card">
   <div class="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16">
     <div class="rv">
-      <Eyebrow index="08" label="Our story" />
-      <h2 class="m-0 mt-4 max-w-[20ch] text-h2 font-bold leading-[1.05] tracking-[-.035em]">We believe customer success is <span class="whitespace-nowrap"><Marker tone="cyan">science</Marker>,</span> not serendipity</h2>
-      <p class="m-0 mt-6 max-w-[50ch] text-lede leading-[1.6] text-ink-3">
-        Our systems, algorithms, analytics and platforms are rooted in the belief that anyone can have great relationships by following
-        key rules of engagement, with a little help from BeeCastle.
-      </p>
-      <a href="/about/" class="group mt-8 inline-flex items-center gap-2 text-[16px] font-semibold text-cyan-deep no-underline">
-        Read our story <Icon name="arrow" class="size-4 transition-transform group-hover:translate-x-1" />
+      <Eyebrow index="08" k="home.story.label" />
+      <T as="h2" k="home.story.heading" tone="cyan" class="m-0 mt-4 max-w-[20ch] text-h2 font-bold leading-[1.05] tracking-[-.035em]" />
+      <T as="p" k="home.story.lede" class="m-0 mt-6 max-w-[50ch] text-lede leading-[1.6] text-ink-3" />
+      <a href="/about/" class="group mt-8 inline-flex items-center gap-2 text-[16px] font-semibold text-cyan-deep no-underline" data-i18n="home.story.cta">
+        {t('home.story.cta')} <Icon name="arrow" class="size-4 transition-transform group-hover:translate-x-1" />
       </a>
     </div>
     <div class="rv rounded-sm border border-rule bg-paper p-[clamp(20px,4vw,48px)]">
-      <Illustration name="bee-equation" alt="Bee equals data plus relationships" class="w-full" />
+      <Illustration name="bee-equation" alt={t('home.story.equationAlt')} data-i18n-attr="alt:home.story.equationAlt" class="w-full" />
     </div>
   </div>
 </Band>

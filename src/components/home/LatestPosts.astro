@@ -4,14 +4,15 @@ import Band from './Band.astro';
 import Head from './Head.astro';
 import PostCard from '../PostCard.astro';
 import Icon from '../Icon.astro';
+import { t } from '../../i18n';
 import { getPosts } from '../../lib/blog';
 
 const posts = (await getPosts()).slice(0, 3);
 ---
 <Band>
-  <Head index="09" label="From the blog" heading="Ideas for growing MSPs" mark="growing" markTone="mint">
-    <a href="/blog/" class="group inline-flex items-center gap-2 text-[15px] font-semibold text-cyan-deep no-underline">
-      All posts <Icon name="arrow" class="size-4 transition-transform group-hover:translate-x-1" />
+  <Head index="09" k="home.latestPosts" markTone="mint">
+    <a href="/blog/" class="group inline-flex items-center gap-2 text-[15px] font-semibold text-cyan-deep no-underline" data-i18n="cta.allPosts">
+      {t('cta.allPosts')} <Icon name="arrow" class="size-4 transition-transform group-hover:translate-x-1" />
     </a>
   </Head>
   <div class="mt-12 grid gap-4 md:grid-cols-3">

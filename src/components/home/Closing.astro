@@ -2,8 +2,8 @@
 /* The closing call to action: a centred headline on the dot grid with the
    bee, the honey button and a demo link. Closes the ruled sheet. */
 import Button from '../Button.astro';
+import T from '../T.astro';
 import Bee from './Bee.astro';
-import Marker from './Marker.astro';
 import { site } from '../../data/site';
 ---
 <section class="px-gut pb-[clamp(40px,5vw,72px)]">
@@ -15,11 +15,11 @@ import { site } from '../../data/site';
     </div>
     <div class="relative">
       <Bee class="rv mx-auto w-24" />
-      <h2 class="rv m-0 mx-auto mt-8 max-w-[20ch] text-h1 font-extrabold leading-[1.02] tracking-[-.04em] text-white">Ready to see what BeeCastle can do for <span class="whitespace-nowrap"><Marker tone="honey">your MSP?</Marker></span></h2>
-      <p class="rv m-0 mx-auto mt-6 max-w-[52ch] text-lede text-navy-muted">Connect your PSA in about ten minutes and see your accounts, revenue and whitespace the same day.</p>
+      <T as="h2" k="home.closing.heading" tone="honey" class="rv m-0 mx-auto mt-8 max-w-[20ch] text-h1 font-extrabold leading-[1.02] tracking-[-.04em] text-white" />
+      <T as="p" k="home.closing.lede" class="rv m-0 mx-auto mt-6 max-w-[52ch] text-lede text-navy-muted" />
       <div class="rv mt-9 flex flex-wrap justify-center gap-3">
-        <Button shape="app" href="/sign-up/" size="lg">Start free trial</Button>
-        <Button shape="app" href={site.demoUrl} variant="light" size="lg">Book a demo</Button>
+        <Button shape="app" href="/sign-up/" size="lg" k="cta.startTrial" />
+        <Button shape="app" href={site.demoUrl} variant="light" size="lg" k="cta.bookDemo" />
       </div>
     </div>
   </div>

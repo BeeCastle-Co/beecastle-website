@@ -32,7 +32,7 @@ const testimonials = (await getCollection('testimonials', ({ data }) => data.fea
 
   <Section id="pricing-table">
     <SectionIntro heading="BeeCastle's Plans">
-      <div class="mt-6"><Button href="/contact/" variant="outline">Get in touch</Button></div>
+      <div class="mt-6"><Button href="/contact/" variant="outline" k="cta.getInTouch" /></div>
     </SectionIntro>
     <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
       {plans.map((plan) => <PlanCard plan={plan} />)}

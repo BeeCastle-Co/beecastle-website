@@ -2,19 +2,20 @@
 /* ROI calculator teaser, with the calculator's example result. */
 import Band from './Band.astro';
 import Eyebrow from './Eyebrow.astro';
-import Marker from './Marker.astro';
+import T from '../T.astro';
 import Sticker from './Sticker.astro';
 import RoiTable from '../product/RoiTable.astro';
 import Icon from '../Icon.astro';
+import { t } from '../../i18n';
 ---
 <Band>
   <div class="grid items-center gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
     <div class="rv">
-      <Eyebrow index="05" label="ROI calculator" />
-      <h2 class="m-0 mt-4 max-w-[18ch] text-h2 font-bold leading-[1.05] tracking-[-.035em]">Calculate the <Marker tone="honey">value</Marker> BeeCastle can bring to your MSP</h2>
-      <p class="m-0 mt-6 max-w-[46ch] text-lede leading-[1.6] text-ink-3">See how much time your account managers can save, and how much revenue they can generate, with BeeCastle.</p>
-      <a href="/roi-calculator/" class="group mt-8 inline-flex items-center gap-2 text-[16px] font-semibold text-cyan-deep no-underline">
-        Open the calculator <Icon name="arrow" class="size-4 transition-transform group-hover:translate-x-1" />
+      <Eyebrow index="05" k="home.roi.label" />
+      <T as="h2" k="home.roi.heading" tone="honey" class="m-0 mt-4 max-w-[18ch] text-h2 font-bold leading-[1.05] tracking-[-.035em]" />
+      <T as="p" k="home.roi.lede" class="m-0 mt-6 max-w-[46ch] text-lede leading-[1.6] text-ink-3" />
+      <a href="/roi-calculator/" class="group mt-8 inline-flex items-center gap-2 text-[16px] font-semibold text-cyan-deep no-underline" data-i18n="home.roi.cta">
+        {t('home.roi.cta')} <Icon name="arrow" class="size-4 transition-transform group-hover:translate-x-1" />
       </a>
     </div>
     <div class="rv relative min-w-0">
