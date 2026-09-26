@@ -10,12 +10,9 @@ import T from './T.astro';
 import { footerColumns } from '../data/nav';
 import { site } from '../data/site';
 import { t } from '../i18n';
+import Flag from './Flag.astro';
 
 const year = new Date().getFullYear();
-const locales = [
-  { code: 'en-AU', key: 'locale.enAU' },
-  { code: 'en-US', key: 'locale.enUS' },
-];
 ---
 <footer class="relative mt-10 bg-navy px-gut pb-10 pt-20 text-navy-muted">
   <Illustration name="bee" class="absolute -top-9 right-[max(var(--spacing-gut),calc((100%-var(--container-wrap))/2))] w-20 rotate-[-8deg]" />
@@ -75,11 +72,14 @@ const locales = [
 
   <div class="mx-auto mt-10 flex max-w-wrap flex-wrap items-center justify-between gap-4 border-t border-navy-line pt-6 text-[13px]">
     <T as="p" k="footer.copyright" vars={{ year }} class="m-0" />
-    <div role="group" aria-label={t('locale.label')} data-i18n-attr="aria-label:locale.label" class="flex flex-wrap gap-1" data-locale-switch>
-      {locales.map((l) => (
-        <button type="button" data-locale={l.code} data-i18n={l.key} aria-pressed={l.code === 'en-AU' ? 'true' : 'false'}
-                class="cursor-pointer rounded-full border border-navy-line px-3 py-1.5 text-[13px] text-navy-muted transition-colors hover:border-cyan hover:text-white aria-pressed:border-cyan aria-pressed:text-white">{t(l.key)}</button>
-      ))}
-    </div>
+    <!-- Language: one flag button showing the current English. A click
+         switches to the other. Wired up in Localise.astro. -->
+    <button type="button" data-locale-toggle
+      aria-label={`${t('locale.enAU')}. ${t('locale.switchTo')} ${t('locale.enUS')}`}
+      title={`${t('locale.switchTo')} ${t('locale.enUS')}`}
+      class="group grid size-9 cursor-pointer place-items-center rounded-full border border-navy-line transition-colors hover:border-cyan">
+      <span class="locale-au overflow-hidden rounded-[2px] ring-1 ring-white/20"><Flag code="au" /></span>
+      <span class="locale-us hidden overflow-hidden rounded-[2px] ring-1 ring-white/20"><Flag code="us" /></span>
+    </button>
   </div>
 </footer>

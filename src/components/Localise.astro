@@ -57,12 +57,18 @@ import { usOverlay, usSpelling } from '../i18n';
 
   var locale = fromQuery() || stored() || detect();
 
-  /* The footer switcher: remember the choice and rebuild the page in it. */
-  document.querySelectorAll('[data-locale-switch] [data-locale]').forEach(function (btn) {
-    btn.setAttribute('aria-pressed', String(btn.getAttribute('data-locale') === locale));
+  /* The footer flag: shows the current English, a click switches to the
+     other, remembers it and rebuilds the page in it. */
+  var names = { 'en-AU': 'English (Australia)', 'en-US': 'English (US)' };
+  var other = locale === 'en-US' ? 'en-AU' : 'en-US';
+  document.querySelectorAll('[data-locale-toggle]').forEach(function (btn) {
+    btn.querySelector('.locale-au').classList.toggle('hidden', locale === 'en-US');
+    btn.querySelector('.locale-us').classList.toggle('hidden', locale !== 'en-US');
+    btn.setAttribute('aria-label', names[locale] + '. Switch to ' + names[other]);
+    btn.setAttribute('title', 'Switch to ' + names[other]);
     btn.addEventListener('click', function () {
       try {
-        localStorage.setItem(KEY, btn.getAttribute('data-locale'));
+        localStorage.setItem(KEY, other);
       } catch (e) {}
       location.reload();
     });
