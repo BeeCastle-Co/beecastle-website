@@ -129,6 +129,7 @@ src/
     products/ solutions/ integrations/   feature pages, one schema
     testimonials/ plans/ legal/
   data/           nav.ts, site.ts (emails, URLs), categories.ts
+  i18n/           en-AU.yml (every UI string), en-US.yml (US overlay, spelling map)
   assets/         img/ (photos, screenshots), blog/<slug>/, illustrations/ (brand SVGs)
   styles/         global.css: tokens and base styles
   lib/            inline.ts (tiny Markdown for frontmatter strings), accents.ts
@@ -143,8 +144,9 @@ scripts/          read-only checks
 |---|---|
 | "change a product page" | `src/content/products/<slug>.md` |
 | "add a blog post" | a new `.md` in `src/content/blog/` |
-| "add a link to the menu" | `src/data/nav.ts` (products/solutions/integrations are automatic) |
-| "change the footer" | `footerColumns` in `src/data/nav.ts`, contact details in `src/data/site.ts` |
+| "add a link to the menu" | `src/data/nav.ts` plus its label in `src/i18n/en-AU.yml` (products/solutions/integrations are automatic) |
+| "change the footer" | `footerColumns` in `src/data/nav.ts`, words in `src/i18n/en-AU.yml`, contact details in `src/data/site.ts` |
+| "change a button, menu or homepage wording" | `src/i18n/en-AU.yml` (and `en-US.yml` if US wording differs) |
 | "change pricing" | `src/content/plans/*.md` |
 | "add a testimonial" | a new `.md` in `src/content/testimonials/` |
 | "change the terms / privacy policy" | `src/content/legal/*.md` |
@@ -216,6 +218,46 @@ Filename is the URL. Frontmatter: `title`, `date`, `categories` (slugs from
   dev content cache can go stale (images render broken). In either case:
   `pnpm astro dev stop`, delete `.astro/data-store.json`, start it again.
   `pnpm build` is always the source of truth.
+
+## Localisation
+
+One URL per page, always: no `/us/` prefix, no Astro i18n routing, no
+redirects, no edge functions. The HTML is built in **English (Australia)**,
+which also serves British English. US visitors get US English swapped in by
+the browser.
+
+- **Where strings live.** Every UI string (nav, footer, buttons, forms, CTA
+  bands, the homepage, blog chrome, 404) is in `src/i18n/en-AU.yml`, nested:
+  `nav.products`, `cta.startTrial`, `home.hero.title`. Read one with
+  `t('key', vars?)` from `src/i18n`. A missing key throws and fails the build.
+- **Adding a key.** Add it to `en-AU.yml`, then render it on the element that
+  holds the text so the client can find it: `<T as="h2" k="key" class="..." />`,
+  `<Button k="cta.bookDemo" href=... />`, or by hand
+  `<a data-i18n="key">{t('key')}</a>` when the element also holds an icon.
+  Attributes: `data-i18n-attr="aria-label:key;placeholder:key"`. `{name}`
+  placeholders take `vars`; `[[words]]` in a heading get the highlighter
+  swipe; `md` on `<T>` renders `**bold**` and `[links](/x/)`.
+- **The overlay rule.** `en-US.yml` holds only the keys whose US wording
+  differs, at the same path. Anything missing falls back to en-AU. A key in
+  it that en-AU lacks fails the build.
+- **The spelling map.** The `spelling:` section of `en-US.yml` is a whole-word
+  AU to US list (optimise, organisation, colour...). For US visitors it runs
+  over the text of the header, main and footer, Markdown content included,
+  keeping lower, Title and UPPER case, and skipping code, form fields and
+  URLs. Keep it conservative: only words that are wrong in US English in
+  every sense. Content in `src/content/` stays Markdown and is never keyed.
+- **Who gets US.** `src/components/Localise.astro`, an inline script at the
+  end of `<body>`, reads the first `en-*` entry of `navigator.languages`:
+  `en-US` gets US, every other English (en-AU, en-GB, en-CA, en-NZ, en-IE,
+  en-ZA, en-IN) gets en-AU. It sets `lang="en-US"`, applies the overlay, then
+  the spelling map, then rewrites `<time datetime>` dates as `Sep 26, 2026`.
+  It runs before first paint in testing, so there is no visible flash.
+- **`data-no-i18n`** on an element keeps all of that off it. The legal pages
+  (`/terms/`, `/privacy/`, the data processing addendum) use it: they stay
+  the Australian original for everyone.
+- **The switcher.** "English (Australia)" and "English (US)" buttons in the
+  footer save the choice in `localStorage` (`bc-locale`), which beats the
+  browser language, and reload the page.
 
 ## Moving to Contentful
 

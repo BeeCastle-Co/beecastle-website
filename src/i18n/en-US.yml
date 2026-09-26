@@ -1,0 +1,122 @@
+# US English overlay. Only the keys whose wording differs from en-AU.yml go
+# here, at the same path; everything else falls back to en-AU. Spelling alone
+# (optimise, colour) is not a reason to add a key: the spelling map below
+# fixes that across the page, Markdown content included.
+#
+# A key here that does not exist in en-AU.yml fails the build.
+
+signup:
+  microsoftIntro: "Sign up for BeeCastle with your Microsoft account:"
+  emailLabel: Sign up with your work email address
+
+# Whole-word AU to US spellings, applied on the page for US visitors to the
+# text in the header, main content and footer (not code, form fields, URLs or
+# anything marked data-no-i18n). Written in lower case; Title Case and UPPER
+# CASE are matched and kept. Keep it conservative: a word that is also a
+# correct US word in another sense (licence is only listed as the noun,
+# analyses is left out because it is also the plural of analysis) must not be
+# here.
+spelling:
+  optimise: optimize
+  optimised: optimized
+  optimises: optimizes
+  optimising: optimizing
+  optimisation: optimization
+  optimisations: optimizations
+  analyse: analyze
+  analysed: analyzed
+  analysing: analyzing
+  organisation: organization
+  organisations: organizations
+  organisational: organizational
+  organise: organize
+  organised: organized
+  organises: organizes
+  organising: organizing
+  prioritise: prioritize
+  prioritised: prioritized
+  prioritises: prioritizes
+  prioritising: prioritizing
+  prioritisation: prioritization
+  maximise: maximize
+  maximised: maximized
+  maximises: maximizes
+  maximising: maximizing
+  minimise: minimize
+  minimised: minimized
+  minimises: minimizes
+  minimising: minimizing
+  synchronise: synchronize
+  synchronised: synchronized
+  synchronises: synchronizes
+  synchronising: synchronizing
+  synchronisation: synchronization
+  colour: color
+  colours: colors
+  coloured: colored
+  centre: center
+  centres: centers
+  centred: centered
+  licence: license
+  licences: licenses
+  behaviour: behavior
+  behaviours: behaviors
+  favourite: favorite
+  favourites: favorites
+  catalogue: catalog
+  catalogues: catalogs
+  programme: program
+  programmes: programs
+  recognise: recognize
+  recognised: recognized
+  recognises: recognizes
+  recognising: recognizing
+  realise: realize
+  realised: realized
+  realises: realizes
+  realising: realizing
+  specialise: specialize
+  specialised: specialized
+  specialises: specializes
+  specialising: specializing
+  customise: customize
+  customised: customized
+  customises: customizes
+  customising: customizing
+  customisation: customization
+  utilise: utilize
+  utilised: utilized
+  utilises: utilizes
+  utilising: utilizing
+  utilisation: utilization
+  summarise: summarize
+  summarised: summarized
+  summarises: summarizes
+  summarising: summarizing
+  categorise: categorize
+  categorised: categorized
+  categorises: categorizes
+  categorising: categorizing
+  standardise: standardize
+  standardised: standardized
+  standardises: standardizes
+  standardising: standardizing
+  visualise: visualize
+  visualised: visualized
+  visualises: visualizes
+  visualising: visualizing
+  visualisation: visualization
+  visualisations: visualizations
+  enrol: enroll
+  enrols: enrolls
+  enrolment: enrollment
+  enrolments: enrollments
+  travelling: traveling
+  travelled: traveled
+  cancelled: canceled
+  cancelling: canceling
+  modelling: modeling
+  modelled: modeled
+  fulfil: fulfill
+  fulfils: fulfills
+  fulfilment: fulfillment

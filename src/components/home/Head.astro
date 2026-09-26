@@ -1,28 +1,30 @@
 ---
 /* Section heading for the homepage: eyebrow and heading on the left, the lede
-   set against the right edge on wide screens. A slot adds an action. The
-   words in `mark` get the highlighter swipe, so the copy stays one string. */
+   set against the right edge on wide screens. A slot adds an action.
+
+   `k` is the section's key prefix in src/i18n/en-AU.yml: it reads
+   <k>.label, <k>.heading and, if present, <k>.lede. Words in [[brackets]] in
+   the heading get the highlighter swipe, so the copy stays one string. */
 import Eyebrow from './Eyebrow.astro';
-import Marker from './Marker.astro';
+import T from '../T.astro';
+import { has } from '../../i18n';
+
 interface Props {
   index: string;
-  label: string;
-  heading: string;
-  lede?: string;
-  mark?: string;
+  k: string;
   markTone?: 'honey' | 'cyan' | 'mint' | 'periwinkle' | 'magenta';
 }
-const { index, label, heading, lede, mark, markTone = 'honey' } = Astro.props;
-const [before, after] = mark && heading.includes(mark) ? heading.split(mark) : [heading, undefined];
+const { index, k, markTone = 'honey' } = Astro.props;
+const hasLede = has(`${k}.lede`);
 ---
 <header class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-end">
   <div class="rv">
-    <Eyebrow index={index} label={label} />
-    <h2 class="m-0 mt-4 max-w-[18ch] text-h2 font-bold leading-[1.05] tracking-[-.035em]">{before}{after !== undefined && <><span class="whitespace-nowrap"><Marker tone={markTone}>{mark}</Marker></span>{after}</>}</h2>
+    <Eyebrow index={index} k={`${k}.label`} />
+    <T as="h2" k={`${k}.heading`} tone={markTone} class="m-0 mt-4 max-w-[18ch] text-h2 font-bold leading-[1.05] tracking-[-.035em]" />
   </div>
-  {(lede || Astro.slots.has('default')) && (
+  {(hasLede || Astro.slots.has('default')) && (
     <div class="rv lg:justify-self-end">
-      {lede && <p class="m-0 max-w-[46ch] text-lede leading-[1.6] text-ink-3">{lede}</p>}
+      {hasLede && <T as="p" k={`${k}.lede`} class="m-0 max-w-[46ch] text-lede leading-[1.6] text-ink-3" />}
       <slot />
     </div>
   )}

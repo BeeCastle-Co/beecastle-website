@@ -63,6 +63,5 @@ const schema = [
   )}
 
   {d.signup && sections.length < 2 && <SignupPanel />}
-  <CTABand heading={d.closing} ctaMode={d.ctaMode}
-    lede={d.ctaMode === 'contact' ? 'Talk to us about where your MSP is headed and how we can help.' : undefined} />
+  <CTABand heading={d.closing} ctaMode={d.ctaMode} />
 </Layout>

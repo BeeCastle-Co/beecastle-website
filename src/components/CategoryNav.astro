@@ -2,6 +2,7 @@
 /* The row of category links above blog listings. Real links to real pages,
    so each category listing can be found and shared. */
 import { CATEGORY_SLUGS, categories, type CategorySlug } from '../data/categories';
+import { t } from '../i18n';
 interface Props {
   current?: CategorySlug;
 }
@@ -10,10 +11,11 @@ const base = 'rounded-full border px-4 py-2 text-[14px] font-semibold no-underli
 const on = 'border-ink bg-ink text-white';
 const off = 'border-rule-2 bg-card text-ink-2 hover:border-ink hover:text-ink';
 ---
-<nav aria-label="Blog categories" class="flex flex-wrap gap-2">
-  <a href="/blog/" class:list={[base, current ? off : on]} aria-current={current ? undefined : 'page'}>All posts</a>
+<nav aria-label={t('blog.categoriesLabel')} data-i18n-attr="aria-label:blog.categoriesLabel" class="flex flex-wrap gap-2">
+  <a href="/blog/" class:list={[base, current ? off : on]} aria-current={current ? undefined : 'page'} data-i18n="cta.allPosts">{t('cta.allPosts')}</a>
   {CATEGORY_SLUGS.map((slug) => (
-    <a href={`/categories/${slug}/`} class:list={[base, current === slug ? on : off]} aria-current={current === slug ? 'page' : undefined}>
+    <a href={`/categories/${slug}/`} class:list={[base, current === slug ? on : off]} aria-current={current === slug ? 'page' : undefined}
+       data-i18n={`blog.categories.${slug}.label`}>
       {categories[slug].label}
     </a>
   ))}

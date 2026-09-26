@@ -3,6 +3,7 @@
    left and jump links to each section on the right. */
 import Button from './Button.astro';
 import Icon from './Icon.astro';
+import T from './T.astro';
 import { accents, type Accent } from '../lib/accents';
 import { site } from '../data/site';
 
@@ -19,10 +20,10 @@ const { heading, body, links, accent = 'cyan' } = Astro.props;
     <div class="rv rounded-lg bg-navy p-[clamp(28px,4vw,44px)] text-navy-muted">
       <h2 class="m-0 text-[26px] font-bold text-white">{heading}</h2>
       <p class="m-0 mt-4 text-[16.5px] leading-relaxed">{body}</p>
-      <div class="mt-7"><Button href={site.demoUrl} variant="light">Book a demo</Button></div>
+      <div class="mt-7"><Button href={site.demoUrl} variant="light" k="cta.bookDemo" /></div>
     </div>
     <div class:list={['rv rounded-lg p-[clamp(28px,4vw,44px)]', accents[accent].soft]}>
-      <h2 class="m-0 text-[26px] font-bold">Features</h2>
+      <T as="h2" k="featureOverview.features" class="m-0 text-[26px] font-bold" />
       <ul class="m-0 mt-4 grid list-none gap-1 p-0">
         {links.map((l) => (
           <li>

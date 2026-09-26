@@ -2,15 +2,15 @@
 /* Quiet customer strip: one line of copy and the greyed logo wall. */
 import { Image } from 'astro:assets';
 import Band from './Band.astro';
+import T from '../T.astro';
 import logos from '../../assets/img/bc_logo_grid_sm.webp';
+import { t } from '../../i18n';
 ---
 <Band pad="strip">
   <div class="grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-14">
-    <h2 class="rv m-0 max-w-[34ch] text-[16px] font-semibold leading-snug tracking-[-.01em] text-ink-2">
-      More and more technology companies trust BeeCastle to retain customers, reduce churn and supercharge their growth
-    </h2>
+    <T as="h2" k="home.customers.heading" class="rv m-0 max-w-[34ch] text-[16px] font-semibold leading-snug tracking-[-.01em] text-ink-2" />
     <div class="rv mx-auto w-full max-w-[680px] overflow-hidden [aspect-ratio:680/250] [mask-image:linear-gradient(to_bottom,var(--color-ink)_55%,transparent)]">
-      <Image src={logos} alt="Logos of MSPs using BeeCastle, including Control Networks, Rapid Circle, Belton, AfterDark, Fuse and Turrito"
+      <Image src={logos} alt={t('home.customers.logosAlt')} data-i18n-attr="alt:home.customers.logosAlt"
              widths={[680]} sizes="(max-width: 720px) 100vw, 680px"
              class="h-auto w-full opacity-70 mix-blend-multiply grayscale" />
     </div>

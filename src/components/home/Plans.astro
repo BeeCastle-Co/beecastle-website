@@ -5,6 +5,7 @@ import { getCollection } from 'astro:content';
 import Band from './Band.astro';
 import Head from './Head.astro';
 import Icon from '../Icon.astro';
+import { t } from '../../i18n';
 import { accents } from '../../lib/accents';
 
 /* Full class names, so Tailwind can see them. */
@@ -21,8 +22,7 @@ const split = (price: string) => {
 ---
 {plans.length > 0 && (
   <Band tone="card">
-    <Head index="06" label="Pricing" heading="Plans to suit every MSP" mark="every MSP" markTone="cyan"
-      lede="Whether you're a founder who sells, or an MSP with fully fledged sales and account management teams, there's a BeeCastle plan to suit your business." />
+    <Head index="06" k="home.plans" markTone="cyan" />
 
     <div class="mt-12 grid overflow-hidden rounded-sm border border-rule sm:grid-cols-2 lg:grid-cols-4">
       {plans.map((p) => {
@@ -46,8 +46,8 @@ const split = (price: string) => {
         );
       })}
     </div>
-    <a href="/plans/" class="group rv mt-8 inline-flex items-center gap-2 text-[15px] font-semibold text-cyan-deep no-underline">
-      Compare plans <Icon name="arrow" class="size-4 transition-transform group-hover:translate-x-1" />
+    <a href="/plans/" class="group rv mt-8 inline-flex items-center gap-2 text-[15px] font-semibold text-cyan-deep no-underline" data-i18n="cta.comparePlans">
+      {t('cta.comparePlans')} <Icon name="arrow" class="size-4 transition-transform group-hover:translate-x-1" />
     </a>
   </Band>
 )}

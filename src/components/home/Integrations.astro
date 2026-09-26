@@ -4,11 +4,12 @@
 import { getCollection } from 'astro:content';
 import Band from './Band.astro';
 import Eyebrow from './Eyebrow.astro';
-import Marker from './Marker.astro';
+import T from '../T.astro';
 import Sticker from './Sticker.astro';
 import Illustration from '../Illustration.astro';
 import Button from '../Button.astro';
 import Icon from '../Icon.astro';
+import { t } from '../../i18n';
 
 const withPages = (await getCollection('integrations', ({ data }) => !data.draft)).sort((a, b) => a.data.order - b.data.order);
 const others = ['Microsoft 365', 'Microsoft Teams'];
@@ -16,25 +17,22 @@ const others = ['Microsoft 365', 'Microsoft Teams'];
 <Band tone="navy">
   <div class="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16">
     <div class="rv">
-      <Eyebrow index="04" label="Integrations" onDark />
-      <h2 class="m-0 mt-4 max-w-[18ch] text-h2 font-bold leading-[1.05] tracking-[-.035em] text-white">Leverage the data in your stack without <span class="whitespace-nowrap"><Marker tone="mint">breaking a sweat</Marker></span></h2>
-      <p class="m-0 mt-6 text-lede font-semibold text-white">Have a lot of data, but not a lot of time to invest in understanding it?</p>
-      <p class="m-0 mt-3 max-w-[58ch] text-[16px] leading-relaxed text-navy-muted">
-        BeeCastle integrates with your key systems to analyse activities, customers and revenue, then presents clear actions for you to take.
-        Integrations take about ten minutes to set up, and you can do it yourself or get a hand from us. Data syncs in real time, so everything stays up to date.
-      </p>
+      <Eyebrow index="04" k="home.integrations.label" onDark />
+      <T as="h2" k="home.integrations.heading" tone="mint" class="m-0 mt-4 max-w-[18ch] text-h2 font-bold leading-[1.05] tracking-[-.035em] text-white" />
+      <T as="p" k="home.integrations.question" class="m-0 mt-6 text-lede font-semibold text-white" />
+      <T as="p" k="home.integrations.body" class="m-0 mt-3 max-w-[58ch] text-[16px] leading-relaxed text-navy-muted" />
       <ul class="m-0 mt-8 flex list-none flex-wrap gap-2 p-0">
         {withPages.map((i) => (
           <li><a href={`/integrations/${i.id}/`} class="group inline-flex items-center gap-1.5 rounded-md border border-navy-line bg-navy-2 px-3.5 py-2 text-[14px] font-semibold text-white no-underline transition-colors hover:border-cyan hover:text-cyan-light">{i.data.name}<Icon name="arrow" class="size-3.5 text-navy-muted transition-transform group-hover:translate-x-0.5 group-hover:text-cyan-light" /></a></li>
         ))}
         {others.map((name) => <li class="rounded-md border border-dashed border-navy-line px-3.5 py-2 text-[14px] font-semibold text-navy-muted">{name}</li>)}
       </ul>
-      <div class="mt-9"><Button shape="app" href="/sign-up/" size="lg">Connect your PSA</Button></div>
+      <div class="mt-9"><Button shape="app" href="/sign-up/" size="lg" k="home.integrations.cta" /></div>
     </div>
     <div class="rv relative rounded-sm bg-card p-[clamp(20px,4vw,48px)]">
       <Sticker name="data" tone="card" art="w-14" class="absolute -left-4 -top-6 z-10 -rotate-6 max-sm:hidden" />
       <div aria-hidden="true" class="absolute inset-0 bg-[radial-gradient(var(--color-rule-2)_1px,transparent_1px)] [background-size:20px_20px] [mask-image:radial-gradient(closest-side,var(--color-ink),transparent)]"></div>
-      <Illustration name="integrations-stack" alt="BeeCastle connects with ConnectWise, Microsoft, Datto, HaloPSA and HubSpot" class="relative w-full" />
+      <Illustration name="integrations-stack" alt={t('home.integrations.stackAlt')} data-i18n-attr="alt:home.integrations.stackAlt" class="relative w-full" />
     </div>
   </div>
 </Band>

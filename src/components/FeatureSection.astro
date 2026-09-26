@@ -54,8 +54,8 @@ const a = accents[accent];
       {cta && (
         <div class="mt-7">
           {cta === 'signup'
-            ? <Button href="/sign-up/">Start free trial</Button>
-            : <Button href={site.demoUrl} variant="outline">Book a demo</Button>}
+            ? <Button href="/sign-up/" k="cta.startTrial" />
+            : <Button href={site.demoUrl} variant="outline" k="cta.bookDemo" />}
         </div>
       )}
     </div>

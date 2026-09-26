@@ -5,32 +5,33 @@ import Head from './Head.astro';
 import Illustration from '../Illustration.astro';
 import Button from '../Button.astro';
 import Onboarding from '../product/Onboarding.astro';
+import T from '../T.astro';
 
+/* Words for each step are in src/i18n under home.howItWorks.steps.<key>. */
 const steps = [
-  { title: 'Create an account', body: 'Create a **free account** on BeeCastle.', icon: 'bee', tint: 'bg-honey-soft', tilt: '-rotate-2' },
-  { title: 'Connect your data', body: 'Connect your **ConnectWise, Autotask or HaloPSA** instance as a source of contacts and information for BeeCastle to review.', icon: 'data', tint: 'bg-cyan-soft', tilt: 'rotate-2' },
-  { title: 'Connect your M365', body: 'Connect your **Microsoft 365** account (email and calendar) to automate data input.', icon: 'crm-logging', tint: 'bg-mint-soft', tilt: '-rotate-2' },
-  { title: "That's it!", body: 'Start reviewing your business metrics, grow sales and drive profitability.', icon: 'honeycomb', tint: 'bg-magenta-soft', tilt: 'rotate-2' },
+  { key: 'account', icon: 'bee', tint: 'bg-honey-soft', tilt: '-rotate-2' },
+  { key: 'data', icon: 'data', tint: 'bg-cyan-soft', tilt: 'rotate-2' },
+  { key: 'm365', icon: 'crm-logging', tint: 'bg-mint-soft', tilt: '-rotate-2' },
+  { key: 'done', icon: 'honeycomb', tint: 'bg-magenta-soft', tilt: 'rotate-2' },
 ];
-const bold = (s: string) => s.replace(/\*\*(.+?)\*\*/g, '<strong class="font-semibold text-ink">$1</strong>');
 ---
 <Band>
-  <Head index="03" label="How it works" heading="Up and running before your coffee goes cold" mark="coffee" markTone="mint">
-    <Button shape="app" href="/sign-up/" size="lg">Get started free</Button>
+  <Head index="03" k="home.howItWorks" markTone="mint">
+    <Button shape="app" href="/sign-up/" size="lg" k="cta.getStartedFree" />
   </Head>
 
   <ol class="mt-12 grid list-none overflow-hidden rounded-sm border border-rule bg-card p-0 sm:grid-cols-2 lg:grid-cols-4">
     {steps.map((s, i) => (
       <li class="rv relative flex flex-col border-rule p-[clamp(24px,2.4vw,32px)] max-sm:[&:not(:first-child)]:border-t sm:max-lg:[&:nth-child(n+3)]:border-t sm:max-lg:[&:nth-child(even)]:border-l lg:[&:not(:first-child)]:border-l">
         <div class="flex items-center justify-between">
-          <span class="font-mono text-[12px] font-medium tracking-[.14em] text-ink-3">STEP {String(i + 1).padStart(2, '0')}</span>
+          <T k="home.howItWorks.step" vars={{ n: String(i + 1).padStart(2, '0') }} class="font-mono text-[12px] font-medium tracking-[.14em] text-ink-3" />
           {i === steps.length - 1 && <span aria-hidden="true" class="size-2 rounded-full bg-honey"></span>}
         </div>
         <div class:list={['mt-6 grid h-32 w-36 place-items-center rounded-sm p-4 transition-transform duration-300 hover:rotate-0', s.tint, s.tilt]}>
           <Illustration name={s.icon} class="max-h-24 w-auto" />
         </div>
-        <h3 class="m-0 mt-6 text-[19px] font-bold tracking-[-.015em]">{s.title}</h3>
-        <p class="m-0 mt-2 text-[15px] leading-relaxed text-ink-3" set:html={bold(s.body)} />
+        <T as="h3" k={`home.howItWorks.steps.${s.key}.title`} class="m-0 mt-6 text-[19px] font-bold tracking-[-.015em]" />
+        <T as="p" k={`home.howItWorks.steps.${s.key}.body`} md class="m-0 mt-2 text-[15px] leading-relaxed text-ink-3 [&_strong]:font-semibold [&_strong]:text-ink" />
       </li>
     ))}
   </ol>

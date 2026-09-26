@@ -12,6 +12,8 @@ import { getCollection } from 'astro:content';
 import Button from './Button.astro';
 import Icon from './Icon.astro';
 import Illustration from './Illustration.astro';
+import T from './T.astro';
+import { t } from '../i18n';
 import { resources, pricing } from '../data/nav';
 import { site } from '../data/site';
 
@@ -37,15 +39,15 @@ const itemClass = 'block rounded-md px-3 py-2.5 no-underline transition-colors h
     aria-label="Main"
     class="mx-auto flex max-w-wrap items-center gap-2 rounded-full border border-rule/80 bg-card/95 py-2 pl-5 pr-2 shadow-2 lg:bg-card/85 lg:backdrop-blur-xl lg:backdrop-saturate-150"
   >
-    <a href="/" aria-label="BeeCastle home" class="mr-4 shrink-0">
+    <a href="/" aria-label={t('nav.home')} data-i18n-attr="aria-label:nav.home" class="mr-4 shrink-0">
       <img src="/logo-beecastle-full.svg" alt="BeeCastle" width="150" height="21" class="h-[21px] w-auto" />
     </a>
 
     <ul class="m-0 flex list-none items-center gap-0.5 p-0 max-lg:hidden" data-menus>
       <li class="relative">
         <details name="nav" class="group">
-          <summary class:list={[summaryClass, inSection('/products') && 'text-ink']}>
-            Products <Icon name="chevron" class="size-3.5 transition-transform group-open:rotate-180" />
+          <summary class:list={[summaryClass, inSection('/products') && 'text-ink']} data-i18n="nav.products">
+            {t('nav.products')} <Icon name="chevron" class="size-3.5 transition-transform group-open:rotate-180" />
           </summary>
           <div class:list={[panelClass, 'grid w-[720px] grid-cols-2 gap-1']}>
             {products.map((p) => (
@@ -63,8 +65,8 @@ const itemClass = 'block rounded-md px-3 py-2.5 no-underline transition-colors h
 
       <li class="relative">
         <details name="nav" class="group">
-          <summary class:list={[summaryClass, inSection('/solutions') && 'text-ink']}>
-            Solutions <Icon name="chevron" class="size-3.5 transition-transform group-open:rotate-180" />
+          <summary class:list={[summaryClass, inSection('/solutions') && 'text-ink']} data-i18n="nav.solutions">
+            {t('nav.solutions')} <Icon name="chevron" class="size-3.5 transition-transform group-open:rotate-180" />
           </summary>
           <div class:list={[panelClass, 'w-[400px]']}>
             {solutions.map((s) => (
@@ -79,20 +81,20 @@ const itemClass = 'block rounded-md px-3 py-2.5 no-underline transition-colors h
 
       <li class="relative">
         <details name="nav" class="group">
-          <summary class:list={[summaryClass, (inSection('/blog') || inSection('/integrations')) && 'text-ink']}>
-            Resources <Icon name="chevron" class="size-3.5 transition-transform group-open:rotate-180" />
+          <summary class:list={[summaryClass, (inSection('/blog') || inSection('/integrations')) && 'text-ink']} data-i18n="nav.resources">
+            {t('nav.resources')} <Icon name="chevron" class="size-3.5 transition-transform group-open:rotate-180" />
           </summary>
           <div class:list={[panelClass, 'grid w-[820px] grid-cols-4 gap-4 p-5']}>
             {resources.map((group) => (
               <div>
-                <p class="m-0 mb-2 px-3 font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">{group.heading}</p>
+                <T as="p" k={group.heading} class="m-0 mb-2 px-3 font-mono text-[11px] uppercase tracking-[.14em] text-ink-3" />
                 {group.links.map((l) => (
-                  <a href={l.href} class:list={[itemClass, 'py-2 text-[14px] font-semibold text-ink']} {...(l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{l.label}</a>
+                  <a href={l.href} class:list={[itemClass, 'py-2 text-[14px] font-semibold text-ink']} data-i18n={l.key} {...(l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{t(l.key)}</a>
                 ))}
               </div>
             ))}
             <div>
-              <p class="m-0 mb-2 px-3 font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">Integrations</p>
+              <T as="p" k="nav.integrations" class="m-0 mb-2 px-3 font-mono text-[11px] uppercase tracking-[.14em] text-ink-3" />
               {integrations.map((i) => (
                 <a href={`/integrations/${i.id}/`} class:list={[itemClass, 'py-2 text-[14px] font-semibold text-ink']}>{i.data.name}</a>
               ))}
@@ -103,30 +105,33 @@ const itemClass = 'block rounded-md px-3 py-2.5 no-underline transition-colors h
 
       <li class="relative">
         <details name="nav" class="group">
-          <summary class:list={[summaryClass, (inSection('/plans') || inSection('/roi-calculator')) && 'text-ink']}>
-            Pricing <Icon name="chevron" class="size-3.5 transition-transform group-open:rotate-180" />
+          <summary class:list={[summaryClass, (inSection('/plans') || inSection('/roi-calculator')) && 'text-ink']} data-i18n="nav.pricing">
+            {t('nav.pricing')} <Icon name="chevron" class="size-3.5 transition-transform group-open:rotate-180" />
           </summary>
           <div class:list={[panelClass, 'w-[240px]']}>
-            {pricing.map((l) => <a href={l.href} class:list={[itemClass, 'text-[14.5px] font-semibold text-ink']}>{l.label}</a>)}
+            {pricing.map((l) => <a href={l.href} class:list={[itemClass, 'text-[14.5px] font-semibold text-ink']} data-i18n={l.key}>{t(l.key)}</a>)}
           </div>
         </details>
       </li>
 
       <li>
-        <a href="/about/" aria-current={inSection('/about') ? 'page' : undefined} class:list={[summaryClass, 'no-underline']}>About</a>
+        <a href="/about/" aria-current={inSection('/about') ? 'page' : undefined} class:list={[summaryClass, 'no-underline']} data-i18n="nav.about">{t('nav.about')}</a>
       </li>
     </ul>
 
     <div class="ml-auto flex items-center gap-2 max-lg:hidden">
-      <a href={site.signInUrl} class="px-3 text-[14.5px] font-semibold text-ink-2 no-underline hover:text-ink">Sign in</a>
-      <Button href={site.demoUrl} variant="outline">Book a demo</Button>
-      <Button href="/sign-up/">Get started</Button>
+      <T as="a" k="cta.signIn" href={site.signInUrl} class="px-3 text-[14.5px] font-semibold text-ink-2 no-underline hover:text-ink" />
+      <Button href={site.demoUrl} variant="outline" k="cta.bookDemo" />
+      <Button href="/sign-up/" k="cta.getStarted" />
     </div>
 
     <button
       id="navBurger"
       type="button"
-      aria-label="Open menu"
+      aria-label={t('nav.menu.open')}
+      data-label-open={t('nav.menu.open')}
+      data-label-close={t('nav.menu.close')}
+      data-i18n-attr="aria-label:nav.menu.open;data-label-open:nav.menu.open;data-label-close:nav.menu.close"
       aria-expanded="false"
       aria-controls="navPanel"
       class="ml-auto hidden size-11 cursor-pointer place-items-center rounded-full border border-rule bg-card text-ink max-lg:grid"
@@ -142,28 +147,28 @@ const itemClass = 'block rounded-md px-3 py-2.5 no-underline transition-colors h
     class="mx-auto mt-2 max-h-[calc(100dvh-90px)] max-w-wrap overflow-y-auto rounded-lg border border-rule bg-card p-4 shadow-3 lg:hidden"
   >
     {[
-      { label: 'Products', links: products.map((p) => ({ label: p.data.name, href: `/products/${p.id}/` })) },
-      { label: 'Solutions', links: solutions.map((s) => ({ label: s.data.name, href: `/solutions/${s.id}/` })) },
-      { label: 'Integrations', links: integrations.map((i) => ({ label: i.data.name, href: `/integrations/${i.id}/` })) },
-      { label: 'Resources', links: resources.flatMap((g) => g.links) },
-      { label: 'Pricing', links: pricing },
+      { key: 'nav.products', links: products.map((p) => ({ label: p.data.name, href: `/products/${p.id}/` })) },
+      { key: 'nav.solutions', links: solutions.map((s) => ({ label: s.data.name, href: `/solutions/${s.id}/` })) },
+      { key: 'nav.integrations', links: integrations.map((i) => ({ label: i.data.name, href: `/integrations/${i.id}/` })) },
+      { key: 'nav.resources', links: resources.flatMap((g) => g.links).map((l) => ({ ...l, label: t(l.key) })) },
+      { key: 'nav.pricing', links: pricing.map((l) => ({ ...l, label: t(l.key) })) },
     ].map((group) => (
       <details class="group border-b border-rule">
-        <summary class="flex cursor-pointer list-none items-center justify-between py-3.5 text-[16px] font-bold text-ink [&::-webkit-details-marker]:hidden">
-          {group.label} <Icon name="chevron" class="size-4 transition-transform group-open:rotate-180" />
+        <summary class="flex cursor-pointer list-none items-center justify-between py-3.5 text-[16px] font-bold text-ink [&::-webkit-details-marker]:hidden" data-i18n={group.key}>
+          {t(group.key)} <Icon name="chevron" class="size-4 transition-transform group-open:rotate-180" />
         </summary>
         <ul class="m-0 list-none pb-3 pl-0">
-          {group.links.map((l) => (
-            <li><a href={l.href} class="block rounded-md px-2 py-2 text-[15px] font-medium text-ink-2 no-underline hover:bg-paper-2">{l.label}</a></li>
+          {group.links.map((l: { label: string; href: string; key?: string }) => (
+            <li><a href={l.href} data-i18n={l.key} class="block rounded-md px-2 py-2 text-[15px] font-medium text-ink-2 no-underline hover:bg-paper-2">{l.label}</a></li>
           ))}
         </ul>
       </details>
     ))}
-    <a href="/about/" class="block border-b border-rule py-3.5 text-[16px] font-bold text-ink no-underline">About</a>
-    <a href={site.signInUrl} class="block py-3.5 text-[16px] font-bold text-ink no-underline">Sign in</a>
+    <T as="a" k="nav.about" href="/about/" class="block border-b border-rule py-3.5 text-[16px] font-bold text-ink no-underline" />
+    <T as="a" k="cta.signIn" href={site.signInUrl} class="block py-3.5 text-[16px] font-bold text-ink no-underline" />
     <div class="mt-2 grid gap-2">
-      <Button href="/sign-up/" size="lg">Get started</Button>
-      <Button href={site.demoUrl} variant="outline" size="lg">Book a demo</Button>
+      <Button href="/sign-up/" size="lg" k="cta.getStarted" />
+      <Button href={site.demoUrl} variant="outline" size="lg" k="cta.bookDemo" />
     </div>
   </div>
 </header>
@@ -185,7 +190,9 @@ const itemClass = 'block rounded-md px-3 py-2.5 no-underline transition-colors h
     if (!burger || !panel) return;
     panel.hidden = !open;
     burger.setAttribute('aria-expanded', String(open));
-    burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    /* The labels come from src/i18n via data attributes, so they follow the
+       visitor's locale. */
+    burger.setAttribute('aria-label', (open ? burger.dataset.labelClose : burger.dataset.labelOpen) ?? '');
   };
 
   burger?.addEventListener('click', () => setPanel(!!panel?.hidden));

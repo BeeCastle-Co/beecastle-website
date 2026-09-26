@@ -15,6 +15,6 @@ const c = categories[category];
 const posts = (await getPosts()).filter((p) => p.data.categories.includes(category));
 ---
 <Layout title={`${c.label} | BeeCastle blog`} description={c.blurb}>
-  <BlogListing heading={c.label} lede={c.blurb} posts={posts} current={category} />
+  <BlogListing headingKey={`blog.categories.${category}.label`} ledeKey={`blog.categories.${category}.blurb`} posts={posts} current={category} />
   <CTABand />
 </Layout>

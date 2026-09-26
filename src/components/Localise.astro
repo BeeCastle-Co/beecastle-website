@@ -1,0 +1,195 @@
+---
+/* Picks the visitor's English and applies it, in the browser, with no change
+   of URL. The HTML is always built in en-AU (which also serves British
+   English). A browser whose first English language is en-US gets:
+
+   1. document lang set to en-US
+   2. every [data-i18n] string and [data-i18n-attr] attribute swapped for the
+      en-US.yml overlay (keys missing there keep their en-AU text)
+   3. the spelling map run over the text of the header, main and footer,
+      skipping code, form fields, URLs and anything under [data-no-i18n]
+   4. <time datetime> dates rewritten US style (Sep 26, 2026)
+
+   A choice made with the footer switcher is kept in localStorage (bc-locale)
+   and wins over the browser.
+
+   Included once, at the end of <body> in Layout, and inline so it runs
+   before first paint as far as the browser allows: no request, no module
+   deferral. It declares nothing global. */
+import { usOverlay, usSpelling } from '../i18n';
+---
+<script is:inline define:vars={{ overlay: usOverlay, spelling: usSpelling }}>
+  var KEY = 'bc-locale';
+  var SKIP = 'script,style,code,pre,input,textarea,select,[data-no-i18n]';
+
+  function stored() {
+    try {
+      var v = localStorage.getItem(KEY);
+      return v === 'en-US' || v === 'en-AU' ? v : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /* The first specific English in the browser's list decides: en-US (and its
+     variants such as en-US-posix) is US, any other region (en-AU, en-GB, en-CA,
+     en-NZ, en-IE, en-ZA, en-IN...) is en-AU. */
+  function detect() {
+    var langs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ''];
+    for (var i = 0; i < langs.length; i++) {
+      var l = String(langs[i]).toLowerCase();
+      if (l.indexOf('en-') !== 0) continue;
+      return l === 'en-us' || l.indexOf('en-us-') === 0 ? 'en-US' : 'en-AU';
+    }
+    return 'en-AU';
+  }
+
+  var locale = stored() || detect();
+
+  /* The footer switcher: remember the choice and rebuild the page in it. */
+  document.querySelectorAll('[data-locale-switch] [data-locale]').forEach(function (btn) {
+    btn.setAttribute('aria-pressed', String(btn.getAttribute('data-locale') === locale));
+    btn.addEventListener('click', function () {
+      try {
+        localStorage.setItem(KEY, btn.getAttribute('data-locale'));
+      } catch (e) {}
+      location.reload();
+    });
+  });
+
+  if (locale === 'en-US') toUS();
+
+  function toUS() {
+    document.documentElement.lang = 'en-US';
+
+    var skipped = function (el) {
+      return !!(el && el.closest && el.closest('[data-no-i18n]'));
+    };
+
+    function fill(text, el) {
+      var raw = el.getAttribute('data-i18n-vars');
+      if (!raw) return text;
+      var vars = JSON.parse(raw);
+      return text.replace(/\{(\w+)\}/g, function (m, name) {
+        return name in vars ? String(vars[name]) : m;
+      });
+    }
+
+    /* Same subset as inline() in src/lib/inline.ts: **bold** and [text](url). */
+    function inline(text) {
+      return text
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g, '<em>$1</em>')
+        .replace(/\[(.+?)\]\((.+?)\)/g, function (_, label, href) {
+          var ext = /^https?:/.test(href);
+          return '<a href="' + href + '"' + (ext ? ' target="_blank" rel="noopener noreferrer"' : '') + '>' + label + '</a>';
+        });
+    }
+
+    /* Sets the text beside a child element, creating the text node if needed. */
+    function beside(node, where, text) {
+      var sib = where === 'before' ? node.previousSibling : node.nextSibling;
+      if (sib && sib.nodeType === 3) sib.nodeValue = text;
+      else if (text) node.parentNode.insertBefore(document.createTextNode(text), where === 'before' ? node : node.nextSibling);
+    }
+
+    function setText(el, text) {
+      if (el.hasAttribute('data-i18n-md')) {
+        el.innerHTML = inline(text);
+        return;
+      }
+      /* [[marked words]]: the same split as splitMark() in src/i18n/index.ts. */
+      var wrap = el.querySelector('[data-i18n-w]');
+      var m = wrap && /^([\s\S]*?)\[\[([\s\S]+?)\]\]([.,!?;:]*)([\s\S]*)$/.exec(text);
+      if (m) {
+        wrap.querySelector('[data-i18n-m]').textContent = m[2];
+        var glue = wrap.lastChild;
+        if (glue && glue.nodeType === 3) glue.nodeValue = m[3];
+        else if (m[3]) wrap.appendChild(document.createTextNode(m[3]));
+        beside(wrap, 'before', m[1]);
+        beside(wrap, 'after', m[4]);
+        return;
+      }
+      if (!el.children.length) {
+        el.textContent = text;
+        return;
+      }
+      /* Text beside an icon: replace the words, keep the icon and spacing. */
+      for (var n = el.firstChild; n; n = n.nextSibling) {
+        if (n.nodeType === 3 && n.nodeValue.trim()) {
+          var v = n.nodeValue;
+          n.nodeValue = v.slice(0, v.length - v.trimStart().length) + text + v.slice(v.trimEnd().length);
+          return;
+        }
+      }
+      el.insertBefore(document.createTextNode(text), el.firstChild);
+    }
+
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      var text = overlay[el.getAttribute('data-i18n')];
+      if (text !== undefined && !skipped(el)) setText(el, fill(text, el));
+    });
+
+    document.querySelectorAll('[data-i18n-attr]').forEach(function (el) {
+      if (skipped(el)) return;
+      el.getAttribute('data-i18n-attr').split(';').forEach(function (pair) {
+        var i = pair.indexOf(':');
+        var text = overlay[pair.slice(i + 1).trim()];
+        if (i > 0 && text !== undefined) el.setAttribute(pair.slice(0, i).trim(), text);
+      });
+    });
+
+    /* Spelling. One regex of every listed word, whole words only. Case is kept:
+       lower, Title and UPPER. Tokens that look like URLs, paths or emails are
+       left alone. */
+    var words = Object.keys(spelling);
+    if (words.length) {
+      var re = new RegExp('\\b(' + words.join('|') + ')\\b', 'gi');
+      var fix = function (word) {
+        var us = spelling[word.toLowerCase()];
+        if (!us) return word;
+        if (word === word.toUpperCase()) return us.toUpperCase();
+        if (word[0] === word[0].toUpperCase()) return us[0].toUpperCase() + us.slice(1);
+        return us;
+      };
+      var urlish = /^(https?:|www\.|\/)|@|\.(com|org|net|au|io)\b/i;
+      var respell = function (text) {
+        return text.replace(/\S+/g, function (token) {
+          return urlish.test(token) ? token : token.replace(re, fix);
+        });
+      };
+
+      document.querySelectorAll('body > header, main, body > footer').forEach(function (root) {
+        if (skipped(root)) return;
+        var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+          acceptNode: function (node) {
+            var p = node.parentElement;
+            return p && !p.closest(SKIP) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+          },
+        });
+        for (var node = walker.nextNode(); node; node = walker.nextNode()) {
+          re.lastIndex = 0;
+          if (re.test(node.nodeValue)) node.nodeValue = respell(node.nodeValue);
+        }
+        root.querySelectorAll('[alt], [title], [aria-label], [placeholder]').forEach(function (el) {
+          if (el.closest(SKIP.replace('input,textarea,select,', ''))) return;
+          ['alt', 'title', 'aria-label', 'placeholder'].forEach(function (name) {
+            var v = el.getAttribute(name);
+            if (v) el.setAttribute(name, respell(v));
+          });
+        });
+      });
+      if (!document.querySelector('main > [data-no-i18n]')) document.title = respell(document.title);
+    }
+
+    /* Dates: en-AU "26 Sept 2026" becomes "Sep 26, 2026". The datetime
+       attribute is the source, read as UTC like the build. */
+    var fmt = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+    document.querySelectorAll('time[datetime]').forEach(function (el) {
+      if (skipped(el)) return;
+      var d = new Date(el.getAttribute('datetime'));
+      if (!isNaN(d.getTime())) el.textContent = fmt.format(d);
+    });
+  }
+</script>

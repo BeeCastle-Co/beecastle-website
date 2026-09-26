@@ -1,0 +1,251 @@
+# Every UI string on the site, in English (Australia). This file is the
+# primary copy and also serves British English. en-US.yml overrides only the
+# keys whose wording differs; anything it leaves out falls back to here.
+#
+# Read with t('section.key') from src/i18n. A key that does not exist fails
+# the build, so a typo cannot ship.
+#
+# {name} is a placeholder filled by t('key', { name }).
+# [[words]] in a heading marks the words that get the highlighter swipe.
+# **bold** and [links](/x/) work only where the component renders Markdown
+# (the keys that already use them).
+# Markdown content (src/content/**) is not in here: it stays Markdown and US
+# visitors get it through the spelling map in en-US.yml.
+
+skipToContent: Skip to content
+
+cta:
+  startTrial: Start free trial
+  bookDemo: Book a demo
+  getInTouch: Get in touch
+  getStarted: Get started
+  getStartedFree: Get started free
+  createFreeAccount: Create a free account
+  learnMore: Learn more
+  comparePlans: Compare plans
+  readTheBlog: Read the blog
+  allPosts: All posts
+  signIn: Sign in
+
+nav:
+  home: BeeCastle home
+  products: Products
+  solutions: Solutions
+  resources: Resources
+  integrations: Integrations
+  pricing: Pricing
+  about: About
+  menu:
+    open: Open menu
+    close: Close menu
+  groups:
+    learn: Learn
+    downloads: Free downloads
+    getInTouch: Get in touch
+  links:
+    whyBeeCastle: Why BeeCastle
+    blog: Blog
+    newsletter: Newsletter
+    helpPortal: Help portal
+    excellence: Excellence in Account Management
+    securityPaper: Security white paper
+    ebook: E-book
+    contactUs: Contact us
+    channelPartners: Channel partners
+    plans: Plans
+    roiCalculator: ROI calculator
+
+footer:
+  blurb: Customer success, revenue analytics and whitespace for managed service providers.
+  contactHeading: Get in touch
+  columns:
+    company: BeeCastle
+    resources: Resources
+    legal: Legal
+  links:
+    about: About
+    plans: Plans
+    whyBeeCastle: Why BeeCastle
+    security: Security
+    contact: Contact
+    blog: Blog
+    newsletter: Newsletter
+    resourceHub: MSP resource hub
+    roiCalculator: ROI calculator
+    ebook: E-book
+    terms: Terms of use
+    privacy: Privacy statement
+    dpa: Data processing addendum
+  mailingList:
+    heading: Join the mailing list
+    body: New features, PSA integrations and practical ideas for growing your MSP.
+  copyright: "© {year} BeeCastle. All rights reserved."
+
+locale:
+  label: Language
+  enAU: English (Australia)
+  enUS: English (US)
+
+ctaBand:
+  heading: Ready to see what BeeCastle can do for your MSP?
+  lede: Connect your PSA in about ten minutes and see your accounts, revenue and whitespace the same day.
+  contactLede: Talk to us about where your MSP is headed and how we can help.
+
+signup:
+  panelHeading: Join BeeCastle
+  panelLede: Create a free trial account today. No credit card needed.
+  microsoftIntro: "Sign up to BeeCastle using your Microsoft account:"
+  microsoftButton: Sign up with Microsoft
+  or: or
+  emailLabel: Sign up using your work email address
+  emailPlaceholder: you@yourmsp.com
+  submit: Sign up
+
+form:
+  required: "* indicates the field is required."
+  privacy: We handle your details as set out in our [Privacy Policy](/privacy/).
+  honeypot: Leave this empty
+  downloadConsent: BeeCastle needs the contact information you provide to us to contact you about our services. You may unsubscribe from these communications at any time.
+
+newsletter:
+  name: Name
+  email: Work email
+  submit: Subscribe
+
+featureOverview:
+  features: Features
+
+thanks:
+  back: Back to the home page
+
+blog:
+  eyebrow: The BeeCastle blog
+  heading: Insights for growing MSPs
+  lede: Account management, whitespace, profitability and goal setting, plus everything new in BeeCastle.
+  categoriesLabel: Blog categories
+  minRead: "{minutes} min read"
+  inThisPost: In this post
+  keepReading: Keep reading
+  categories:
+    best-practices:
+      label: Best practices
+      blurb: How the best MSPs run account management, goal setting and growth.
+    feature-release:
+      label: Feature release
+      blurb: What is new in BeeCastle, and how to get the most out of it.
+    insights:
+      label: Insights
+      blurb: Data, benchmarks and ideas for growing a managed services business.
+    news-and-events:
+      label: News and events
+      blurb: Company news, webinars and events from the BeeCastle team.
+    training:
+      label: Training
+      blurb: Step-by-step guides for setting up your PSA and BeeCastle.
+    case-study:
+      label: Case study
+      blurb: How MSPs around the world use BeeCastle.
+
+legal:
+  eyebrow: Legal
+  updated: Last updated
+
+notFound:
+  heading: This page has buzzed off
+  body: It may have moved when we rebuilt the site. Try the homepage or the blog.
+  back: Back to the hive
+
+home:
+  hero:
+    steps:
+      retention: Retention
+      sales: Sales
+      reporting: Reporting
+    title: The customer success platform [[for MSPs]]
+    lede: >-
+      BeeCastle helps you optimise your customers' experience using AI-driven
+      insights uncovered from your PSA and M365 data. It recommends actions
+      that drive results, and empowers everyone in your team to improve
+      retention and win upsell and cross-sell opportunities with our
+      whitespace technology.
+    connects: Connects to ConnectWise, Autotask and HaloPSA in about ten minutes.
+  customers:
+    heading: More and more technology companies trust BeeCastle to retain customers, reduce churn and supercharge their growth
+    logosAlt: Logos of MSPs using BeeCastle, including Control Networks, Rapid Circle, Belton, AfterDark, Fuse and Turrito
+  tools:
+    label: Products
+    heading: The account [[growth tools]] every MSP needs
+    lede: BeeCastle can turn any account manager into a data-driven super-closer, with these tools at their fingertips.
+    whitespace:
+      name: Whitespace & prospecting
+      blurb: Find the gaps in your service and product penetration across all accounts.
+    revenue:
+      name: Revenue tracking dashboards
+      blurb: Ready-made dashboards and reporting to visualise, analyse and take action.
+    tiering:
+      name: Customer tiering
+      blurb: Be more intentional about how you nurture accounts through revenue contribution tiering.
+    crm:
+      name: Automated CRM logging
+      blurb: Ditch manual logging. Automatically record activities from M365 and Teams into your CRM.
+  testimonials:
+    label: Customers
+    heading: We get a [[buzz]] out of accurate reporting
+    lede: Join thousands of users across seven countries who trust BeeCastle to report accurately on their accounts and find new whitespace to grow revenue.
+  howItWorks:
+    label: How it works
+    heading: Up and running before your [[coffee]] goes cold
+    step: STEP {n}
+    steps:
+      account:
+        title: Create an account
+        body: Create a **free account** on BeeCastle.
+      data:
+        title: Connect your data
+        body: Connect your **ConnectWise, Autotask or HaloPSA** instance as a source of contacts and information for BeeCastle to review.
+      m365:
+        title: Connect your M365
+        body: Connect your **Microsoft 365** account (email and calendar) to automate data input.
+      done:
+        title: That's it!
+        body: Start reviewing your business metrics, grow sales and drive profitability.
+  integrations:
+    label: Integrations
+    heading: Leverage the data in your stack without [[breaking a sweat]]
+    question: Have a lot of data, but not a lot of time to invest in understanding it?
+    body: >-
+      BeeCastle integrates with your key systems to analyse activities,
+      customers and revenue, then presents clear actions for you to take.
+      Integrations take about ten minutes to set up, and you can do it yourself
+      or get a hand from us. Data syncs in real time, so everything stays up to
+      date.
+    cta: Connect your PSA
+    stackAlt: BeeCastle connects with ConnectWise, Microsoft, Datto, HaloPSA and HubSpot
+  roi:
+    label: ROI calculator
+    heading: Calculate the [[value]] BeeCastle can bring to your MSP
+    lede: See how much time your account managers can save, and how much revenue they can generate, with BeeCastle.
+    cta: Open the calculator
+  plans:
+    label: Pricing
+    heading: Plans to suit [[every MSP]]
+    lede: Whether you're a founder who sells, or an MSP with fully fledged sales and account management teams, there's a BeeCastle plan to suit your business.
+  signup:
+    label: Get started
+    heading: Join [[BeeCastle]]
+    lede: Create a free trial account today. No credit card needed.
+  story:
+    label: Our story
+    heading: We believe customer success is [[science]], not serendipity
+    lede: >-
+      Our systems, algorithms, analytics and platforms are rooted in the belief
+      that anyone can have great relationships by following key rules of
+      engagement, with a little help from BeeCastle.
+    cta: Read our story
+    equationAlt: Bee equals data plus relationships
+  latestPosts:
+    label: From the blog
+    heading: Ideas for [[growing]] MSPs
+  closing:
+    heading: Ready to see what BeeCastle can do for [[your MSP?]]
+    lede: Connect your PSA in about ten minutes and see your accounts, revenue and whitespace the same day.
