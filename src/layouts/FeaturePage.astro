@@ -10,6 +10,7 @@ import PageHero from '../components/PageHero.astro';
 import FeatureOverview from '../components/FeatureOverview.astro';
 import FeatureSection from '../components/FeatureSection.astro';
 import SignupPanel from '../components/SignupPanel.astro';
+import MobileCta from '../components/MobileCta.astro';
 import CTABand from '../components/CTABand.astro';
 import { slugify } from '../lib/inline';
 
@@ -53,6 +54,7 @@ const schema = [
     <>
       {d.signup && i === signupAt && <SignupPanel />}
       <FeatureSection {...s} reverse={i % 2 === 1} accent={d.accent} replicaProps={{ psa: d.name }} />
+      {i === 0 && <MobileCta ctaMode={d.ctaMode} />}
     </>
   ))}
 

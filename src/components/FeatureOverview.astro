@@ -15,20 +15,21 @@ interface Props {
 }
 const { heading, body, links, accent = 'cyan' } = Astro.props;
 ---
-<section class="px-gut py-12">
+<section class="px-gut py-12 max-md:py-4">
   <div class="mx-auto grid max-w-wrap gap-5 md:grid-cols-2">
-    <div class="rv rounded-lg bg-navy p-[clamp(28px,4vw,44px)] text-navy-muted">
-      <h2 class="m-0 text-[26px] font-bold text-white">{heading}</h2>
-      <p class="m-0 mt-4 text-[16.5px] leading-relaxed">{body}</p>
-      <div class="mt-7"><Button href={site.demoUrl} variant="light" k="cta.bookDemo" /></div>
+    <!-- On phones: a plain intro and a row of chips, not two big cards. -->
+    <div class="rv text-ink-2 md:rounded-lg md:bg-navy md:p-[clamp(28px,4vw,44px)] md:text-navy-muted">
+      <h2 class="m-0 text-[22px] font-bold md:text-[26px] md:text-white">{heading}</h2>
+      <p class="m-0 mt-2 text-[16.5px] leading-relaxed md:mt-4">{body}</p>
+      <div class="mt-7 max-md:hidden"><Button href={site.demoUrl} variant="light" k="cta.bookDemo" /></div>
     </div>
-    <div class:list={['rv rounded-lg p-[clamp(28px,4vw,44px)]', accents[accent].soft]}>
-      <T as="h2" k="featureOverview.features" class="m-0 text-[26px] font-bold" />
-      <ul class="m-0 mt-4 grid list-none gap-1 p-0">
+    <div class:list={['rv md:rounded-lg md:p-[clamp(28px,4vw,44px)]', accents[accent].softMd]}>
+      <T as="h2" k="featureOverview.features" class="m-0 text-[26px] font-bold max-md:sr-only" />
+      <ul class="m-0 mt-4 grid list-none gap-1 p-0 max-md:mt-0 max-md:flex max-md:flex-wrap max-md:gap-2">
         {links.map((l) => (
           <li>
-            <a href={`#${l.id}`} class="group flex items-center justify-between rounded-md px-3 py-2.5 text-[16px] font-semibold text-ink no-underline transition-colors hover:bg-card">
-              {l.label}<Icon name="arrow" class="size-4 transition-transform group-hover:translate-x-1" />
+            <a href={`#${l.id}`} class="group flex items-center justify-between rounded-md px-3 py-2.5 text-[16px] font-semibold text-ink no-underline transition-colors hover:bg-card max-md:rounded-full max-md:border max-md:border-rule max-md:bg-card max-md:py-1.5 max-md:text-[14px]">
+              {l.label}<Icon name="arrow" class="size-4 transition-transform group-hover:translate-x-1 max-md:hidden" />
             </a>
           </li>
         ))}

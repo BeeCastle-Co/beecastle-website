@@ -43,8 +43,10 @@ const a = accents[accent];
             ))}
           </ul>
         )}
+        {/* On phones the buttons wait until after the first feature section
+            (MobileCta in FeaturePage), so the reader reaches the detail first. */}
         {ctas && (
-          <div class="rv mt-8 flex flex-wrap gap-3">
+          <div class="rv mt-8 flex flex-wrap gap-3 max-md:hidden">
             {ctaMode === 'contact'
               ? <Button href="/contact/" size="lg" k="cta.getInTouch" />
               : <Button href={site.signupUrl} size="lg" k="cta.startTrial" />}
@@ -54,7 +56,7 @@ const a = accents[accent];
         <slot />
       </div>
       {image && (
-        <div class="rv">
+        <div class="rv max-md:hidden">
           <Image src={image} alt={imageAlt} widths={[480, 800, 1100]} sizes="(max-width: 1024px) 100vw, 560px"
                  loading="eager" fetchpriority="high" class="mx-auto h-auto w-full max-w-[560px] drop-shadow-[0_24px_40px_rgba(23,39,57,.18)]" />
         </div>

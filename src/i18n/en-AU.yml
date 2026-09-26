@@ -99,6 +99,9 @@ signup:
   point2: Connect ConnectWise, Autotask or HaloPSA in about ten minutes
   point3: Sign up with your Microsoft account or your work email
   haveAccount: Already have an account?
+mobileCta:
+  heading: See it with your own data
+
 form:
   required: "* indicates the field is required."
   privacy: We handle your details as set out in our [Privacy Policy](/privacy/).
