@@ -3,6 +3,9 @@
    so it swipes on a phone and works with no JavaScript at all; the script
    only wires up the arrows and dots. No autoplay: people read these.
 
+   The height never changes: every slide's app window stretches to the
+   tallest one, so the frame stays still and only the screen inside changes.
+
    Accessible: a labelled region with aria-roledescription "carousel", each
    slide a group labelled "2 of 5", and the dots are real buttons. */
 import { replicas } from './registry';
@@ -17,12 +20,12 @@ const set = carousels[name];
 const n = set.slides.length;
 ---
 <div class:list={['rc', extra]} role="region" aria-roledescription="carousel" aria-label={set.label} data-carousel>
-  <div class="rc-track flex snap-x snap-mandatory items-start gap-4 overflow-x-auto overscroll-x-contain scroll-smooth pb-1" data-track tabindex="0">
+  <div class="rc-track flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain scroll-smooth pb-1" data-track tabindex="0">
     {set.slides.map((s, i) => {
       const R = replicas[s.replica];
       return (
-        <div class="w-full shrink-0 snap-center" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${n}: ${s.caption}`} data-slide>
-          <R bare {...(s.props ?? {})} />
+        <div class="flex w-full shrink-0 snap-center" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${n}: ${s.caption}`} data-slide>
+          <R bare class="w-full" {...(s.props ?? {})} />
         </div>
       );
     })}
@@ -39,13 +42,13 @@ const n = set.slides.length;
     <button type="button" class="rc-btn" data-next aria-label="Next screen">
       <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
     </button>
-    <p class="m-0 min-w-0 flex-1 text-[13.5px] leading-snug text-ink-3" aria-live="polite" data-caption>{set.slides[0].caption}</p>
+    <p class="m-0 min-h-[5.6em] min-w-0 flex-1 text-[13.5px] leading-snug text-ink-3 sm:min-h-[2.8em]" aria-live="polite" data-caption>{set.slides[0].caption}</p>
   </div>
   <template data-captions set:html={JSON.stringify(set.slides.map((s) => s.caption))} />
 </div>
 
 <style>
-  .rc-track { scrollbar-width: none; transition: height .35s var(--ease-enter); }
+  .rc-track { scrollbar-width: none; }
   .rc-track::-webkit-scrollbar { display: none; }
   .rc-btn {
     display: grid; place-items: center; flex-shrink: 0;
@@ -74,12 +77,8 @@ const n = set.slides.length;
     const captions: string[] = JSON.parse(root.querySelector('template[data-captions]')?.innerHTML || '[]');
     let current = 0;
 
-    /* Fit the track to the slide on show, so a short slide does not sit
-       above the empty space a taller one needs. */
-    const fit = () => { track.style.height = `${slides[current].offsetHeight + 4}px`; };
     const show = (i: number) => {
       current = i;
-      fit();
       dots.forEach((d, j) => (j === i ? d.setAttribute('aria-current', 'true') : d.removeAttribute('aria-current')));
       prev.disabled = i === 0;
       next.disabled = i === slides.length - 1;
@@ -103,7 +102,6 @@ const n = set.slides.length;
       entries.forEach((en) => { if (en.isIntersecting) show(slides.indexOf(en.target as HTMLElement)); });
     }, { root: track, threshold: 0.6 });
     slides.forEach((s) => io.observe(s));
-    new ResizeObserver(fit).observe(slides[0].parentElement!);
     show(0);
   });
 </script>
