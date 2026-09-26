@@ -16,7 +16,7 @@ const total = a.costs.reduce((s, c) => s + c.value, 0);
 const share = a.costs[0].value / total;
 const R = 30, C = 2 * Math.PI * R;
 const W = 300, H = 120, P = { l: 30, b: 16, t: 6 };
-const max = 20000;
+const max = 25000;
 const bw = (W - P.l) / a.months.length;
 const y = (v: number) => P.t + (1 - v / max) * (H - P.t - P.b);
 ---
@@ -49,7 +49,7 @@ const y = (v: number) => P.t + (1 - v / max) * (H - P.t - P.b);
     <div class="rounded-xs border border-rule bg-card p-3">
       <p class="m-0 text-[12px] font-bold">Monthly profitability</p>
       <svg viewBox={`0 0 ${W} ${H}`} class="mt-1 w-full" aria-hidden="true">
-        {[0, 10000, 20000].map((t) => (
+        {[0, 12500, 25000].map((t) => (
           <>
             <line x1={P.l} x2={W} y1={y(t)} y2={y(t)} stroke="var(--color-rule)" stroke-dasharray="2 3" />
             <text x={P.l - 4} y={y(t) + 3} text-anchor="end" font-size="7.5" fill="var(--color-ink-3)">${t / 1000}k</text>

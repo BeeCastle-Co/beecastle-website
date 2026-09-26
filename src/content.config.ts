@@ -9,7 +9,7 @@ const REPLICAS = [
   'portfolio-health', 'company-overview', 'revenue-chart', 'whitespace-grid', 'whitespace-actions',
   'profitability', 'profitability-table', 'account-profitability', 'meeting-planner', 'health-score',
   'health-breakdown', 'client-stack', 'prospecting', 'product-summary', 'tiering', 'sales-dashboard',
-  'activity', 'meeting-note', 'contacts', 'onboarding',
+  'activity', 'meeting-note', 'contacts', 'onboarding', 'monthly-profitability', 'profit-drilldown',
 ] as const;
 
 /* Every collection here is shaped to become a Contentful content type later:

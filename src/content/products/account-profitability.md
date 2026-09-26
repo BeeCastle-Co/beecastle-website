@@ -23,7 +23,7 @@ sections:
       - Territory
       - Account Manager, or
       - Tier (Platinum, Gold, Silver and Bronze) to narrow the data set for review
-    replica: account-profitability
+    replica: profit-drilldown
     cta: signup
   - heading: Customer Profitability
     paragraphs:

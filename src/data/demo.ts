@@ -127,20 +127,38 @@ export const meetings = [
 
 /** One company's profitability tab. */
 export const accountProfit = {
-  revenue: 16133,
-  directCosts: 6921,
-  grossProfit: 9212,
-  margin: 57.1,
+  /* The latest month (September) in the series below. */
+  revenue: 16100,
+  directCosts: 6800,
+  grossProfit: 9300,
+  margin: 57.8,
   effectiveRate: 394,
   hours: 41,
   costs: [
     { label: 'Products, licensing and expenses', value: 5023 },
     { label: 'Contract labour', value: 1805 },
   ],
-  /** Monthly revenue and direct costs, $. */
+  /** Monthly revenue and direct costs, $. July carries a one-off project
+      whose labour was bought in, so its margin dips: the drill-down story. */
   months: ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
-  revenueByMonth: [14200, 15100, 14800, 16900, 15600, 16133],
-  costsByMonth: [6100, 6400, 9800, 7200, 6600, 6921],
+  revenueByMonth: [14800, 11200, 11900, 22400, 17600, 16100],
+  costsByMonth: [6900, 4700, 4900, 16800, 9900, 6800],
+  /** The month opened in the drill-down, and what made up its costs. */
+  drillMonth: 'Jul',
+  drill: {
+    labour: { hours: 58.5, value: 2950 },
+    lines: [
+      { name: 'Network upgrade project labour', value: 9400 },
+      { name: 'Laptop, 16" business model + 3yr onsite warranty', value: 1690 },
+      { name: 'Microsoft 365 Business Standard (annual, monthly billing)', value: 940 },
+      { name: 'Cloud backup, 1yr retention', value: 680 },
+      { name: 'Firewall licence renewal', value: 400 },
+      { name: 'Microsoft 365 Business Basic (annual, monthly billing)', value: 290 },
+      { name: 'Planner and Project Plan 3', value: 200 },
+      { name: 'Teams Phone Standard', value: 180 },
+      { name: 'Power BI Pro (month to month)', value: 70 },
+    ],
+  },
 };
 
 /** Customer profitability table rows. */

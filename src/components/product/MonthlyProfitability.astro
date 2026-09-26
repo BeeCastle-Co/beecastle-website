@@ -1,0 +1,17 @@
+---
+/* Replica: a company's monthly profitability. Six months of revenue against
+   direct costs, gross profit, and the margin month by month. */
+import Frame from './Frame.astro';
+import MonthlyChart from './MonthlyChart.astro';
+
+interface Props {
+  bare?: boolean;
+  class?: string;
+}
+const { bare = false, class: extra } = Astro.props;
+---
+<Frame active="Companies" bare={bare} class={extra}
+  label="A BeeCastle company's monthly profitability: six months of revenue against direct costs, gross profit each month, and the gross margin, which dips to 25% in July">
+  <p class="m-0 mb-2.5 text-[15px] font-bold">Harbourline Dental <span class="text-[11px] font-normal text-ink-3">· Profitability · Apr to Sep</span></p>
+  <MonthlyChart />
+</Frame>

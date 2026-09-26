@@ -25,7 +25,7 @@ sections:
     paragraphs:
       - Your account management strategy starts with BeeCastle's [Account Profitability](/products/account-profitability/) tool to determine the underlying profit contribution of an account and to consider the relative contribution of that account.
       - Armed with this knowledge you can make strategic decisions to supercharge or fix this account to maximise profitability.
-    replica: profitability-table
+    replica: monthly-profitability
     cta: signup
   - heading: Sales Dashboards
     paragraphs:

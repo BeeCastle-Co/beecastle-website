@@ -1,0 +1,63 @@
+---
+/* Replica: drilling into a month on a company's Profitability tab. The month
+   with the dipped margin is selected, and the drawer lists exactly what made
+   up its direct costs: logged labour hours, then every product, licence and
+   expense line from the PSA. */
+import Frame from './Frame.astro';
+import MonthlyChart from './MonthlyChart.astro';
+import { accountProfit as a } from '../../data/demo';
+import { money } from '../../lib/inline';
+
+interface Props {
+  bare?: boolean;
+  class?: string;
+}
+const { bare = false, class: extra } = Astro.props;
+const d = a.drill;
+const products = d.lines.reduce((s, l) => s + l.value, 0);
+const total = d.labour.value + products;
+const i = a.months.indexOf(a.drillMonth);
+const rev = a.revenueByMonth[i];
+const pct = Math.round(((rev - total) / rev) * 100);
+const prevPct = Math.round(((a.revenueByMonth[i - 1] - a.costsByMonth[i - 1]) / a.revenueByMonth[i - 1]) * 100);
+const names = { Apr: 'April', May: 'May', Jun: 'June', Jul: 'July', Aug: 'August', Sep: 'September' } as Record<string, string>;
+const prevMonth = names[a.months[i - 1]];
+const month = { Apr: 'April', May: 'May', Jun: 'June', Jul: 'July', Aug: 'August', Sep: 'September' }[a.drillMonth];
+---
+<Frame active="Companies" bare={bare} class={extra}
+  label={`A BeeCastle company's profitability, drilled into ${month}: the margin dipped to 25%, and the breakdown shows ${money(d.labour.value)} of labour and a ${money(d.lines[0].value)} one-off project cost among ${money(total)} of direct costs`}>
+  <p class="m-0 mb-2.5 text-[15px] font-bold">Harbourline Dental <span class="text-[11px] font-normal text-ink-3">· Profitability · Apr to Sep</span></p>
+  <div class="relative">
+    <MonthlyChart highlight table={false} />
+    <!-- The drawer: tucks under the chart's lower edge on wide screens, clear of
+         the highlighted month; sits below it on phones. -->
+    <div class="relative grid gap-2.5 sm:-mt-8 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.8fr)] sm:items-start">
+    <!-- What the selected month did, beside its breakdown (wide screens only). -->
+    <div class="mt-12 hidden rounded-xs border border-rule bg-card p-3 shadow-2 sm:block">
+      <p class="m-0 text-[9px] font-semibold uppercase tracking-[.06em] text-ink-3">{month}</p>
+      <p class="m-0 mt-1.5 flex justify-between text-[10.5px]"><span class="text-ink-3">Revenue</span><span class="font-semibold">{money(rev)}</span></p>
+      <p class="m-0 mt-1 flex justify-between text-[10.5px]"><span class="text-ink-3">Direct costs</span><span class="font-semibold">{money(total)}</span></p>
+      <p class="m-0 mt-2 border-t border-rule pt-2 text-[10px] text-ink-3">Gross margin</p>
+      <p class="m-0 flex items-baseline gap-1.5"><span class="text-[20px] font-bold text-warn">{pct}%</span><span class="text-[10px] text-ink-3">from {prevPct}% in {prevMonth}</span></p>
+    </div>
+    <div class="relative rounded-xs border border-rule bg-card p-3 shadow-3 sm:mr-[-6px]">
+      <p class="m-0 text-[12px] font-bold">Direct costs in {month}</p>
+      <div class="mt-2 grid grid-cols-2 rounded-xs bg-paper-2 p-0.5 text-center text-[10px]">
+        <span class="py-1 text-ink-3">Invoiced revenue</span>
+        <span class="rounded-[4px] bg-card py-1 font-semibold shadow-1">Direct costs</span>
+      </div>
+      <p class="m-0 mt-2.5 flex justify-between text-[9px] font-semibold uppercase tracking-[.06em] text-ink-3"><span>Labour</span><span>{money(d.labour.value)}</span></p>
+      <p class="m-0 mt-1 flex justify-between gap-2 text-[10.5px]"><span class="text-ink-2">Logged time</span><span class="text-ink-3">{d.labour.hours} h</span></p>
+      <p class="m-0 mt-2.5 flex justify-between text-[9px] font-semibold uppercase tracking-[.06em] text-ink-3"><span>Products, licensing and expenses</span><span>{money(products)}</span></p>
+      {d.lines.slice(0, 6).map((l, i) => (
+        <p class:list={['m-0 mt-1 flex items-center justify-between gap-2 text-[10.5px]', i === 0 && 'rounded-[4px] bg-honey-soft px-1 -mx-1 font-semibold']}>
+          <span class="min-w-0 truncate">{l.name}</span>
+          <span class="flex shrink-0 items-center gap-1.5"><span>{money(l.value)}</span><span class="rounded-[3px] border border-rule px-1 text-[7.5px] font-bold tracking-[.04em] text-ink-3">PSA</span></span>
+        </p>
+      ))}
+      <p class="m-0 mt-1 text-[10px] text-ink-3">and {d.lines.length - 6} more lines</p>
+      <p class="m-0 mt-2 flex justify-between border-t border-rule pt-2 text-[11px] font-bold"><span>Total direct costs</span><span>{money(total)}</span></p>
+    </div>
+    </div>
+  </div>
+</Frame>

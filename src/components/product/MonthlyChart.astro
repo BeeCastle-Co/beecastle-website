@@ -1,0 +1,92 @@
+---
+/* The monthly profitability chart and table from a company's Profitability
+   tab: gross profit bars, with revenue and direct costs drawn as lines over
+   them, and the month-by-month table underneath. The drill month is
+   highlighted, as it is in the app when you click into it.
+
+   A part used by MonthlyProfitability and ProfitDrilldown, not a replica on
+   its own. */
+import { accountProfit as a } from '../../data/demo';
+
+interface Props {
+  /** Highlight the drill-down month. */
+  highlight?: boolean;
+  /** Show the table under the chart. */
+  table?: boolean;
+}
+const { highlight = false, table = true } = Astro.props;
+
+const W = 420, H = 150, P = { l: 34, r: 6, t: 8, b: 18 };
+const max = 25000;
+const n = a.months.length;
+const bw = (W - P.l - P.r) / n;
+const cx = (i: number) => P.l + i * bw + bw / 2;
+const y = (v: number) => P.t + (1 - v / max) * (H - P.t - P.b);
+const line = (vals: number[]) => {
+  /* Smooth curve through the points, like the app's chart. */
+  const pts = vals.map((v, i) => [cx(i), y(v)]);
+  return pts.map(([x, yy], i) => {
+    if (!i) return `M${x},${yy}`;
+    const [px, py] = pts[i - 1];
+    const mx = (px + x) / 2;
+    return `C${mx},${py} ${mx},${yy} ${x},${yy}`;
+  }).join(' ');
+};
+const gp = a.months.map((_, i) => a.revenueByMonth[i] - a.costsByMonth[i]);
+const margin = a.months.map((_, i) => Math.round((gp[i] / a.revenueByMonth[i]) * 100));
+const hi = a.months.indexOf(a.drillMonth);
+const cols = `minmax(0,1.5fr) repeat(${n}, minmax(0,1fr))`;
+/* Thousands in the table, so six months fit on a phone: $14.8k. */
+const k = (v: number) => `$${(v / 1000).toFixed(1)}k`;
+const tone = (m: number) => (m < 35 ? 'bg-warn-soft text-warn-deep' : 'bg-ok-soft text-ok-deep');
+---
+<div class="rounded-xs border border-rule bg-card p-3">
+  <div class="flex flex-wrap items-baseline justify-between gap-2">
+    <p class="m-0"><span class="block text-[12px] font-bold">Monthly profitability</span><span class="block text-[9.5px] text-ink-3">Revenue, direct costs and gross profit by month</span></p>
+    <p class="m-0 flex gap-2.5 text-[9px] text-ink-3">
+      <span class="flex items-center gap-1"><span class="size-2 rounded-full bg-ok"></span>Gross profit</span>
+      <span class="flex items-center gap-1"><span class="size-2 rounded-full bg-cyan"></span>Revenue</span>
+      <span class="flex items-center gap-1"><span class="size-2 rounded-full bg-ink-2"></span>Direct costs</span>
+    </p>
+  </div>
+  <svg viewBox={`0 0 ${W} ${H}`} class="mt-2 w-full" aria-hidden="true">
+    {[0, 12500, 25000].map((t) => (
+      <>
+        <line x1={P.l} x2={W - P.r} y1={y(t)} y2={y(t)} stroke="var(--color-rule)" stroke-dasharray="2 3" />
+        <text x={P.l - 4} y={y(t) + 3} text-anchor="end" font-size="7.5" fill="var(--color-ink-3)">${t / 1000}k</text>
+      </>
+    ))}
+    {highlight && <rect x={P.l + hi * bw + 2} y={P.t} width={bw - 4} height={H - P.t - P.b} rx="3" fill="var(--color-honey-soft)" />}
+    {gp.map((v, i) => (
+      <rect x={cx(i) - bw * 0.3} y={y(v)} width={bw * 0.6} height={y(0) - y(v)} rx="2"
+        fill="var(--color-ok)" fill-opacity={highlight && i !== hi ? 0.55 : 1} />
+    ))}
+    <path d={line(a.revenueByMonth)} fill="none" stroke="var(--color-cyan)" stroke-width="2" />
+    <path d={line(a.costsByMonth)} fill="none" stroke="var(--color-ink-2)" stroke-width="1.6" />
+    {a.revenueByMonth.map((v, i) => <circle cx={cx(i)} cy={y(v)} r="2.3" fill="var(--color-cyan)" />)}
+    {a.costsByMonth.map((v, i) => <circle cx={cx(i)} cy={y(v)} r="2.3" fill="var(--color-ink-2)" />)}
+    {a.months.map((m, i) => <text x={cx(i)} y={H - 5} text-anchor="middle" font-size="8" font-weight={i === hi && highlight ? 700 : 400} fill="var(--color-ink-3)">{m}</text>)}
+    {highlight && (
+      <g transform={`translate(${cx(hi) + 6},${y(a.revenueByMonth[hi]) + 18})`}>
+        <path d="M0 0 L0 13 L3.5 9.8 L6 15 L8 14 L5.6 8.8 L10 8.8 Z" fill="var(--color-ink)" stroke="var(--color-card)" stroke-width="1" />
+      </g>
+    )}
+  </svg>
+  {table && (
+    <div class="mt-2 overflow-hidden rounded-xs border border-rule text-[10px]">
+      <div class="grid gap-1.5 border-b border-rule bg-paper px-2 py-1.5 font-semibold text-ink-3" style={`grid-template-columns: ${cols}`}>
+        <span></span>{a.months.map((m, i) => <span class:list={['text-right', highlight && i === hi && 'text-ink']}>{m}</span>)}
+      </div>
+      {[['Invoiced revenue', a.revenueByMonth], ['Direct costs', a.costsByMonth], ['Gross profit', gp]].map(([label, vals]) => (
+        <div class="grid gap-1.5 border-b border-rule px-2 py-1.5" style={`grid-template-columns: ${cols}`}>
+          <span class="truncate text-ink-2">{label as string}</span>
+          {(vals as number[]).map((v) => <span class="text-right">{k(v)}</span>)}
+        </div>
+      ))}
+      <div class="grid gap-1.5 px-2 py-1.5" style={`grid-template-columns: ${cols}`}>
+        <span class="truncate text-ink-2">Gross margin</span>
+        {margin.map((m) => <span class:list={['rounded-[3px] px-1 text-right font-semibold', tone(m)]}>{m}%</span>)}
+      </div>
+    </div>
+  )}
+</div>

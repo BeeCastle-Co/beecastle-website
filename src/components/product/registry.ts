@@ -21,12 +21,14 @@ import Activity from './Activity.astro';
 import MeetingNote from './MeetingNote.astro';
 import Contacts from './Contacts.astro';
 import Onboarding from './Onboarding.astro';
+import MonthlyProfitability from './MonthlyProfitability.astro';
+import ProfitDrilldown from './ProfitDrilldown.astro';
 
 export const REPLICA_NAMES = [
   'portfolio-health', 'company-overview', 'revenue-chart', 'whitespace-grid', 'whitespace-actions',
   'profitability', 'profitability-table', 'account-profitability', 'meeting-planner', 'health-score',
   'health-breakdown', 'client-stack', 'prospecting', 'product-summary', 'tiering', 'sales-dashboard',
-  'activity', 'meeting-note', 'contacts', 'onboarding',
+  'activity', 'meeting-note', 'contacts', 'onboarding', 'monthly-profitability', 'profit-drilldown',
 ] as const;
 
 export type ReplicaName = (typeof REPLICA_NAMES)[number];
@@ -52,4 +54,6 @@ export const replicas: Record<ReplicaName, (props: Record<string, unknown>) => u
   'meeting-note': MeetingNote,
   contacts: Contacts,
   onboarding: Onboarding,
+  'monthly-profitability': MonthlyProfitability,
+  'profit-drilldown': ProfitDrilldown,
 };
