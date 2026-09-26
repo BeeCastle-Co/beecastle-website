@@ -1,13 +1,13 @@
 ---
-/* Thank-you pages for the gated downloads: /security/thanks/,
-   /e-book/thanks/ and /excellence_in_account_management/thanks/. Netlify
-   shows one after the page's form is sent. Kept out of search. */
+/* Thank-you pages for the gated downloads, at /<slug>/thanks-<token>/ (see
+   src/data/downloads.ts). Netlify shows one after the page's form is sent;
+   it is the only place the PDF is linked. Kept out of search and the sitemap. */
 import Layout from '../../layouts/Layout.astro';
 import ThanksPanel from '../../components/ThanksPanel.astro';
 import { downloads, type Download } from '../../data/downloads';
 
 export function getStaticPaths() {
-  return Object.values(downloads).map((download) => ({ params: { download: download.slug }, props: { download } }));
+  return Object.values(downloads).map((download) => ({ params: { download: download.slug, thanks: `thanks-${download.thanksToken}` }, props: { download } }));
 }
 const { download } = Astro.props as { download: Download };
 ---

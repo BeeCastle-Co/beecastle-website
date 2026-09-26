@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import FormSplit from '../components/FormSplit.astro';
-import SignupForm from '../components/SignupForm.astro';
+import SignupCta from '../components/SignupCta.astro';
 import { site } from '../data/site';
 
 const steps = [
@@ -30,6 +30,6 @@ const steps = [
       By signing up, you accept our <a href="/terms/">Terms of Service</a> and <a href="/privacy/">Privacy Policy</a>.
     </p>
     <p class="m-0 mt-2 text-[15px] text-ink-2">Already have an account? <a href={site.signInUrl} class="font-semibold text-cyan-deep">Log in</a></p>
-    <SignupForm slot="form" />
+    <SignupCta slot="form" />
   </FormSplit>
 </Layout>

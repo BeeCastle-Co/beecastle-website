@@ -21,14 +21,14 @@
 
    Events sent (GA4 recommended names where one exists):
      sign_up_start   clicked a link to the app's sign-up page (method: link)
-     sign_up         submitted the email sign-up form (method: email)
      login           clicked Sign in
      book_demo       clicked through to the demo booking page
      generate_lead   submitted any Netlify form (form_name: which one)
    Outbound clicks, scrolls, file downloads and site search come from GA4's
    enhanced measurement, switched on in the GA4 admin, not here.
 
-   In GA4, mark sign_up, book_demo and generate_lead as key events. */
+   In GA4, mark sign_up_start, book_demo and generate_lead as key events.
+   (Accounts are created in the app, so the completed sign-up is the app's event.) */
 import { site } from '../data/site';
 
 const GA_ID = import.meta.env.PUBLIC_GA_ID;
@@ -86,8 +86,6 @@ const cfg = {
         if (!(form instanceof HTMLFormElement)) return;
         if (form.hasAttribute('data-netlify')) {
           track('generate_lead', { form_name: form.getAttribute('name') || 'unknown' });
-        } else if (form.action && new URL(form.action).hostname === cfg.appHost) {
-          track('sign_up', { method: 'email' });
         }
       });
     </script>

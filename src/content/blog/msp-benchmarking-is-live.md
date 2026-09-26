@@ -49,4 +49,4 @@ Most MSPs are good at tracking their own individual performance. However, many o
 
 **Would like to learn more?**
 
-Sign up [here](/sign-up/) for a BeeCastle account here which will provide you free access to benchmarking.
+Sign up [here](https://suite.beecastle.com/signup) for a BeeCastle account here which will provide you free access to benchmarking.

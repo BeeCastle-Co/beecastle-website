@@ -4,7 +4,7 @@
    thank-you page, which links to the PDF. Same fields as the old site. */
 import NetlifyForm, { type FormField } from './NetlifyForm.astro';
 import T from './T.astro';
-import type { Download } from '../data/downloads';
+import { thanksPath, type Download } from '../data/downloads';
 
 interface Props {
   download: Download;
@@ -22,6 +22,6 @@ const fields: FormField[] = [
 ---
 <div class="rounded-xl border border-rule bg-card p-[clamp(24px,3.5vw,40px)] shadow-2">
   {heading && <h2 class="m-0 mb-5 text-h3 font-bold leading-tight">{heading}</h2>}
-  <NetlifyForm name={download.slug} action={`/${download.slug}/thanks/`} fields={fields} submit={download.submitLabel} />
+  <NetlifyForm name={download.slug} action={thanksPath(download)} fields={fields} submit={download.submitLabel} />
   <T as="p" k="form.downloadConsent" class="m-0 mt-4 text-[13px] leading-relaxed text-ink-3" />
 </div>

@@ -47,7 +47,7 @@ const a = accents[accent];
           <div class="rv mt-8 flex flex-wrap gap-3">
             {ctaMode === 'contact'
               ? <Button href="/contact/" size="lg" k="cta.getInTouch" />
-              : <Button href="/sign-up/" size="lg" k="cta.startTrial" />}
+              : <Button href={site.signupUrl} size="lg" k="cta.startTrial" />}
             <Button href={site.demoUrl} variant="outline" size="lg" k="cta.bookDemo" />
           </div>
         )}

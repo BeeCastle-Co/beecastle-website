@@ -208,8 +208,12 @@ Filename is the URL. Frontmatter: `title`, `date`, `categories` (slugs from
 
 ### Forms
 
-- **Sign up**: GETs `site.signupUrl` with `?email=`, as the old site did.
-  Check this against the rewrite before launch.
+- **Sign up**: there is no sign-up form. Every sign-up button links to the
+  app's sign-up page (`site.signupUrl`), and `SignupCta.astro` is the block
+  used in the "Join BeeCastle" panels. `/sign-up/` redirects to the app.
+- **Gated downloads** (security, e-book, excellence): a Netlify form, then a
+  thank-you page at a random address with the PDF from `public/files/<random>/`.
+  Neither is indexed or in the sitemap. See `src/data/downloads.ts`.
 - **Everything else** (contact, newsletter, downloads, demo requests): Netlify
   Forms. Build new ones with `NetlifyForm.astro` from a list of fields, not by
   hand. Submissions appear in the Netlify dashboard; set up notifications there.
@@ -287,9 +291,9 @@ set in Netlify (Site configuration, Environment variables):
 - Tags only render on **production** deploys. Previews and branch deploys
   never send data. Locally, setting the ID in `.env` turns on debug mode.
 - Env vars are read at **build** time: changing one in Netlify needs a redeploy.
-- Events: `sign_up_start`, `sign_up`, `login`, `book_demo`, `generate_lead`
-  (with `form_name`). Mark `sign_up`, `book_demo` and `generate_lead` as key
-  events in GA4. Outbound clicks, scroll and downloads come from GA4's
+- Events: `sign_up_start`, `login`, `book_demo`, `generate_lead` (with
+  `form_name`). Mark `sign_up_start`, `book_demo` and `generate_lead` as key
+  events in GA4 (the completed sign-up happens in the app). Outbound clicks, scroll and downloads come from GA4's
   enhanced measurement, switched on in the GA4 admin.
 - Cross-domain: the tag links this site with the app's domain, so set up the
   same measurement ID (or cross-domain config) in the app to see full journeys.
@@ -308,5 +312,5 @@ Work on a branch; check the preview; merge.
 - [x] Every page on the old sitemap ported (migration notes and open decisions
       are kept locally in `docs/private/`, which is never committed)
 - [ ] Replace legacy app screenshots with screenshots of the rewrite
-- [ ] Sign-up flow pointed at the rewrite
+- [x] Sign-up flow pointed at the rewrite (buttons link to suite.beecastle.com/signup)
 - [ ] Contentful

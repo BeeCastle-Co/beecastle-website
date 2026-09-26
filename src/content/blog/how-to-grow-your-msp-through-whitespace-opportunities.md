@@ -44,6 +44,6 @@ In the comparison above, a manger can easily evaluate Steve’s potential to inc
 
 MSPs generally maintain a wide range of agreement and product data in ConnectWise. You can try to extract this data, map it to your customer data and analyse it. The problem is that this will only give you ‘one off’ data, or the data from a snapshot in time.
 
-At [BeeCastle](/products/whitespace-prospecting/) we have built a **real-time** whitespace analyse tool. [Click here](/sign-up/) to sign up and get started today.
+At [BeeCastle](/products/whitespace-prospecting/) we have built a **real-time** whitespace analyse tool. [Click here](https://suite.beecastle.com/signup) to sign up and get started today.
 
 ![](../../assets/blog/how-to-grow-your-msp-through-whitespace-opportunities/andrew-browne-end-of-blog-post.png)

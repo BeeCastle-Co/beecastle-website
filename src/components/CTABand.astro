@@ -27,7 +27,7 @@ const ledeKey = lede !== undefined ? undefined : ctaMode === 'contact' ? 'ctaBan
         <div class="mt-8 flex flex-wrap gap-3">
           {ctaMode === 'contact'
             ? <Button href="/contact/" size="lg" k="cta.getInTouch" />
-            : <Button href="/sign-up/" size="lg" k="cta.startTrial" />}
+            : <Button href={site.signupUrl} size="lg" k="cta.startTrial" />}
           <Button href={site.demoUrl} variant="light" size="lg" k="cta.bookDemo" />
         </div>
       </div>

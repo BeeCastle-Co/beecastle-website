@@ -17,4 +17,4 @@ On top of helping MSPs understand their current position in the industry, utiliz
 
 Overall, using a recurring revenue benchmark is an invaluable tool for MSPs looking to get ahead in today’s competitive landscape. With thoughtful research and careful application of industry insight, businesses can uncover insights about customer habits that will inform smarter decisions regarding pricing models, product offerings, marketing strategies, and more, ultimately leading to higher profits and sustainable growth over time.
 
-BeeCastle can help MSPs understand where they are placed in the market with its free benchmarking functionality. Recurring Revenue Growth is one of the key data points, and BeeCastle allows you to both find your position in industry, as well as set a goal for the future. [Sign up today for free](/sign-up/).
+BeeCastle can help MSPs understand where they are placed in the market with its free benchmarking functionality. Recurring Revenue Growth is one of the key data points, and BeeCastle allows you to both find your position in industry, as well as set a goal for the future. [Sign up today for free](https://suite.beecastle.com/signup).

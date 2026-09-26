@@ -18,4 +18,4 @@ As with any sales strategy, there is no one-size-fits-all approach when it comes
 
 By utilizing an MSP customer number benchmark as part of your sales strategy, you can gain valuable insight into your industry standing and make data-driven decisions about how best to approach potential customers and increase sales volume overall. So don’t wait – start leveraging this valuable tool today!
 
-MSP customer numbers is included in BeeCastle’s free benchmarking product. MSPs can sign up for free and discover their position in the market, as well as set a goal for the future. [Sign up today for free](/sign-up/).
+MSP customer numbers is included in BeeCastle’s free benchmarking product. MSPs can sign up for free and discover their position in the market, as well as set a goal for the future. [Sign up today for free](https://suite.beecastle.com/signup).

@@ -28,6 +28,6 @@ And now, the buzz is even more electrifying as BeeCastle seamlessly integrates w
 3. **Unlock Automation:** Once connected, enjoy the power of automated CRM. BeeCastle will now intelligently analyze your XERO data as well as your M365 data, providing you with actionable insights.
 
 ## Ready to Elevate Your Relationships?
-[Sign up to BeeCastle](/sign-up/) and connect your XERO and M365 accounts today to witness the transformation of your business relationships.  Experience the future of Relationship Management – where AI meets efficiency! 
+[Sign up to BeeCastle](https://suite.beecastle.com/signup) and connect your XERO and M365 accounts today to witness the transformation of your business relationships.  Experience the future of Relationship Management – where AI meets efficiency! 
   
 Want to know more?  [Book a demo](https://meetings.hubspot.com/david4567) and we'll give you a tour.

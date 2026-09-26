@@ -33,7 +33,7 @@ const steps = ['retention', 'sales', 'reporting'];
       <T as="h1" k="home.hero.title" tone="honey" class="rv m-0 mt-7 text-display font-extrabold leading-[.98] tracking-[-.045em]" />
       <T as="p" k="home.hero.lede" class="rv m-0 mx-auto mt-7 max-w-[62ch] text-lede leading-relaxed text-ink-3" />
       <div class="rv mt-9 flex flex-wrap justify-center gap-3">
-        <Button shape="app" href="/sign-up/" size="lg" k="cta.createFreeAccount" />
+        <Button shape="app" href={site.signupUrl} size="lg" k="cta.createFreeAccount" />
         <Button shape="app" href={site.demoUrl} variant="outline" size="lg" k="cta.bookDemo" />
       </div>
       <T as="p" k="home.hero.connects" class="rv m-0 mt-5 font-mono text-[12px] text-ink-3" />

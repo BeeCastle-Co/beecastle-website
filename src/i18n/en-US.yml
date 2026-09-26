@@ -5,10 +5,6 @@
 #
 # A key here that does not exist in en-AU.yml fails the build.
 
-signup:
-  microsoftIntro: "Sign up for BeeCastle with your Microsoft account:"
-  emailLabel: Sign up with your work email address
-
 # Whole-word AU to US spellings, applied on the page for US visitors to the
 # text in the header, main content and footer (not code, form fields, URLs or
 # anything marked data-no-i18n). Written in lower case; Title Case and UPPER

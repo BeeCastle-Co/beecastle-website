@@ -94,13 +94,11 @@ ctaBand:
 signup:
   panelHeading: Join BeeCastle
   panelLede: Create a free trial account today. No credit card needed.
-  microsoftIntro: "Sign up to BeeCastle using your Microsoft account:"
-  microsoftButton: Sign up with Microsoft
-  or: or
-  emailLabel: Sign up using your work email address
-  emailPlaceholder: you@yourmsp.com
-  submit: Sign up
-
+  cta: Create your free account
+  point1: Free trial, no credit card needed
+  point2: Connect ConnectWise, Autotask or HaloPSA in about ten minutes
+  point3: Sign up with your Microsoft account or your work email
+  haveAccount: Already have an account?
 form:
   required: "* indicates the field is required."
   privacy: We handle your details as set out in our [Privacy Policy](/privacy/).

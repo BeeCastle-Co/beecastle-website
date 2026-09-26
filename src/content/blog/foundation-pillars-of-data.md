@@ -25,7 +25,7 @@ In summary:
 
 We will talk more about our methodology in future emails or request a copy of our free e-book “*The Art and Science of Enhanced Account Management*" [here](mailto:david@beecastle.com).
 
-[![BeeCastle Sign Up Form Screenshot](../../assets/blog/foundation-pillars-of-data/bc-blog-signup-screen.webp "BeeCastle Sign Up Form")](/sign-up/)
+[![BeeCastle Sign Up Form Screenshot](../../assets/blog/foundation-pillars-of-data/bc-blog-signup-screen.webp "BeeCastle Sign Up Form")](https://suite.beecastle.com/signup)
 
 ## BeeCastle consulting - Get the A-team helping you
 

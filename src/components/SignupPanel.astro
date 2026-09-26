@@ -1,7 +1,7 @@
 ---
 /* "Join BeeCastle": the sign-up form beside the module montage. */
 import { Image } from 'astro:assets';
-import SignupForm from './SignupForm.astro';
+import SignupCta from './SignupCta.astro';
 import composite from '../assets/img/bc_module_composite.webp';
 import { t } from '../i18n';
 
@@ -21,7 +21,7 @@ const ledeKey = lede === undefined ? 'signup.panelLede' : undefined;
     <div class="rv rounded-xl border border-rule bg-card p-[clamp(28px,4vw,48px)] shadow-2">
       <h2 class="m-0 text-h2 font-extrabold leading-[1.1]" data-i18n={headingKey}>{heading ?? t('signup.panelHeading')}</h2>
       <p class="m-0 mt-3 text-lede text-ink-3" data-i18n={ledeKey}>{lede ?? t('signup.panelLede')}</p>
-      <div class="mt-7"><SignupForm id="signup-panel-email" /></div>
+      <div class="mt-7"><SignupCta /></div>
     </div>
   </div>
 </section>

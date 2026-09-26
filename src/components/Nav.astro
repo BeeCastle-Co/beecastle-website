@@ -122,7 +122,7 @@ const itemClass = 'block rounded-md px-3 py-2.5 no-underline transition-colors h
     <div class="ml-auto flex items-center gap-2 max-lg:hidden">
       <T as="a" k="cta.signIn" href={site.signInUrl} class="px-3 text-[14.5px] font-semibold text-ink-2 no-underline hover:text-ink" />
       <Button href={site.demoUrl} variant="outline" k="cta.bookDemo" />
-      <Button href="/sign-up/" k="cta.getStarted" />
+      <Button href={site.signupUrl} k="cta.getStarted" />
     </div>
 
     <button
@@ -167,7 +167,7 @@ const itemClass = 'block rounded-md px-3 py-2.5 no-underline transition-colors h
     <T as="a" k="nav.about" href="/about/" class="block border-b border-rule py-3.5 text-[16px] font-bold text-ink no-underline" />
     <T as="a" k="cta.signIn" href={site.signInUrl} class="block py-3.5 text-[16px] font-bold text-ink no-underline" />
     <div class="mt-2 grid gap-2">
-      <Button href="/sign-up/" size="lg" k="cta.getStarted" />
+      <Button href={site.signupUrl} size="lg" k="cta.getStarted" />
       <Button href={site.demoUrl} variant="outline" size="lg" k="cta.bookDemo" />
     </div>
   </div>

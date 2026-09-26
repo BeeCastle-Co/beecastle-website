@@ -151,7 +151,8 @@ const plans = defineCollection({
       image: image().optional(),
       highlighted: z.boolean().default(false),
       ctaLabel: z.string().default('Start free trial'),
-      ctaHref: z.string().default('/sign-up/'),
+      /** Where the plan's button goes. Unset: the app's sign-up page. */
+      ctaHref: z.string().optional(),
       order: z.number(),
     }),
 });

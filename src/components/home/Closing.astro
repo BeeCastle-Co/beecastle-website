@@ -18,7 +18,7 @@ import { site } from '../../data/site';
       <T as="h2" k="home.closing.heading" tone="honey" class="rv m-0 mx-auto mt-8 max-w-[20ch] text-h1 font-extrabold leading-[1.02] tracking-[-.04em] text-white" />
       <T as="p" k="home.closing.lede" class="rv m-0 mx-auto mt-6 max-w-[52ch] text-lede text-navy-muted" />
       <div class="rv mt-9 flex flex-wrap justify-center gap-3">
-        <Button shape="app" href="/sign-up/" size="lg" k="cta.startTrial" />
+        <Button shape="app" href={site.signupUrl} size="lg" k="cta.startTrial" />
         <Button shape="app" href={site.demoUrl} variant="light" size="lg" k="cta.bookDemo" />
       </div>
     </div>

@@ -14,10 +14,11 @@ const steps = [
   { key: 'm365', icon: 'crm-logging', tint: 'bg-mint-soft', tilt: '-rotate-2' },
   { key: 'done', icon: 'honeycomb', tint: 'bg-magenta-soft', tilt: 'rotate-2' },
 ];
+import { site } from '../../data/site';
 ---
 <Band>
   <Head index="03" k="home.howItWorks" markTone="mint">
-    <Button shape="app" href="/sign-up/" size="lg" k="cta.getStartedFree" />
+    <Button shape="app" href={site.signupUrl} size="lg" k="cta.getStartedFree" />
   </Head>
 
   <ol class="mt-12 grid list-none overflow-hidden rounded-sm border border-rule bg-card p-0 sm:grid-cols-2 lg:grid-cols-4">

@@ -43,6 +43,6 @@ MSP account managers are data-driven champions. They track key metrics, analyze 
 [BeeCastle](/solutions/for-account-managers/) helps MSP account and relationship managers through actionable insights and recommendations on what to do next to build stronger relationships with customers, to increase revenues and reduce churn.
 
 ## Ready to Elevate Your Relationships?
-[Sign up to BeeCastle](/sign-up/) and PSA and M365 accounts today to witness the transformation of your business relationships.  Experience the future of Relationship Management – where AI meets efficiency! 
+[Sign up to BeeCastle](https://suite.beecastle.com/signup) and PSA and M365 accounts today to witness the transformation of your business relationships.  Experience the future of Relationship Management – where AI meets efficiency! 
   
 Want to know more?  [Book a demo](https://meetings.hubspot.com/david4567) and we'll give you a tour.

@@ -99,4 +99,4 @@ Our main differentiator is not only understanding what HAS happened but understa
 
 **Best of all, we have a free product to get started**
 
-To discover your insights today, signup to our free ProfitTrack product at [beecastle.com/sign-up](/sign-up/). 10 minutes to setup, a day to sync the data and you will be able to visualise your product opportunity.
+To discover your insights today, signup to our free ProfitTrack product at [beecastle.com/sign-up](https://suite.beecastle.com/signup). 10 minutes to setup, a day to sync the data and you will be able to visualise your product opportunity.

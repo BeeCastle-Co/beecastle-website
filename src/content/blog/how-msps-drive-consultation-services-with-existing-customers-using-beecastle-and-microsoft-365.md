@@ -56,6 +56,6 @@ Here are a few examples:
 
 ## Want to know more?
 
-[Sign up to BeeCastle.](/sign-up/)
+[Sign up to BeeCastle.](https://suite.beecastle.com/signup)
 
 To find out more get in touch with us at [sales@beecastle.com](mailto:sales@beecastle.com).

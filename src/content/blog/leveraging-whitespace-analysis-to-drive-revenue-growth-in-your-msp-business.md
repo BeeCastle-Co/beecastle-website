@@ -23,7 +23,7 @@ Whitespace analysis involves the strategic examination of gaps or untapped oppor
 
 BeeCastle’s [automated segmentation](/products/enhanced-account-management/#segments-overview) and [whitespace analysis](/products/whitespace-prospecting/#whitespace-matrix-section-nav) features automate the heavy lifting with data analysis, and provide you with the data and insights to effectively use whitespace analysis to drive revenue growth.
 
-[Sign up for free today](/sign-up/), integrate your PSA, and let BeeCastle take care of the rest.
+[Sign up for free today](https://suite.beecastle.com/signup), integrate your PSA, and let BeeCastle take care of the rest.
 
 ## How Whitespace Analysis Drives Revenue Growth
 

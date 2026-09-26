@@ -32,6 +32,6 @@ If you’re an admin, you can visit the [‘Account Visibility’](https://app.b
 
 If you’re an existing customer and want to learn more about these features, [setup a time here](https://outlook.office365.com/owa/calendar/Bookings@beecastle.com/bookings/s/WJcei9CAIkClvq2cEjYcgg2) for a demo and discussion.
 
-New to BeeCastle? If you’re interested in how feaures like these can help your business grow, [click here](/sign-up/) to sign up and as part of the process you’ll review the opportunity with our expert team.
+New to BeeCastle? If you’re interested in how feaures like these can help your business grow, [click here](https://suite.beecastle.com/signup) to sign up and as part of the process you’ll review the opportunity with our expert team.
 
 ![](../../assets/blog/product-update-product-revenue-performance-and-visibility-restrictions/andrew-browne-end-of-blog-post.png)

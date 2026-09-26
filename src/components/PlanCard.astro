@@ -17,6 +17,7 @@ const { Content } = await render(plan);
 /* "From USD $2,000" shows "From" as a small label so the figure stays on one line. */
 const [, from, amount] = d.price.match(/^(from\s+)?(.*)$/i) ?? [];
 const hasBody = !!plan.body?.trim();
+import { site } from '../data/site';
 ---
 <article class:list={[
   'rv relative flex flex-col overflow-hidden rounded-lg bg-card p-7 shadow-2',
@@ -44,6 +45,6 @@ const hasBody = !!plan.body?.trim();
   )}
   {hasBody && <div class="prose mt-5 text-[14px]"><Content /></div>}
   <div class="mt-auto pt-8">
-    <Button href={d.ctaHref} variant={d.highlighted ? 'primary' : 'outline'} class="w-full">{d.ctaLabel}</Button>
+    <Button href={d.ctaHref ?? site.signupUrl} variant={d.highlighted ? 'primary' : 'outline'} class="w-full">{d.ctaLabel}</Button>
   </div>
 </article>

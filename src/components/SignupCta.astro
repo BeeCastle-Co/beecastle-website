@@ -1,0 +1,28 @@
+---
+/* The sign-up call to action. Accounts are created in the app, not here, so
+   this is one clear button to the app's sign-up page (where Microsoft, Google
+   and email sign-up all live), a demo link, and the few facts that lower the
+   bar. Used inside the "Join BeeCastle" panels. */
+import Button from './Button.astro';
+import T from './T.astro';
+import { site } from '../data/site';
+
+const points = ['signup.point1', 'signup.point2', 'signup.point3'];
+---
+<div>
+  <div class="flex flex-wrap gap-3">
+    <Button k="signup.cta" href={site.signupUrl} size="lg" shape="app" />
+    <Button k="cta.bookDemo" href={site.demoUrl} variant="outline" size="lg" shape="app" />
+  </div>
+  <ul class="m-0 mt-6 grid list-none gap-2.5 p-0">
+    {points.map((k) => (
+      <li class="flex items-start gap-2.5 text-[15.5px] text-ink-2">
+        <svg viewBox="0 0 24 24" class="mt-1 size-4 shrink-0 text-ok" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
+        <T k={k} />
+      </li>
+    ))}
+  </ul>
+  <p class="m-0 mt-6 text-[14.5px] text-ink-3">
+    <T k="signup.haveAccount" /> <a href={site.signInUrl} class="font-semibold text-cyan-deep" data-i18n="cta.signIn">Sign in</a>
+  </p>
+</div>
